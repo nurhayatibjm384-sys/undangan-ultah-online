@@ -32,7 +32,6 @@
 
         .wrap{position:relative;z-index:1;max-width:920px;margin:0 auto;padding:40px 20px 80px}
 
-        /* Header */
         .hdr{text-align:center;margin-bottom:40px;animation:fsd .8s ease-out}
         @keyframes fsd{from{opacity:0;transform:translateY(-30px)}to{opacity:1;transform:translateY(0)}}
         .badge{display:inline-flex;align-items:center;gap:8px;padding:6px 16px;background:var(--accent-g);border:1px solid rgba(232,168,73,.3);border-radius:50px;font-size:12px;font-weight:600;color:var(--accent);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:20px}
@@ -41,7 +40,6 @@
         .hdr h1{font-family:'Playfair Display',serif;font-weight:900;font-size:clamp(30px,6vw,50px);line-height:1.1;margin-bottom:12px;background:linear-gradient(135deg,var(--fg),var(--accent));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
         .hdr p{color:var(--muted);font-size:15px;font-weight:300;max-width:540px;margin:0 auto;line-height:1.6}
 
-        /* Stats */
         .sg{display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:10px;margin-bottom:28px;animation:fsu .5s ease-out both;animation-delay:.05s}
         @keyframes fsu{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
         .sc{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:16px 12px;text-align:center;transition:all .3s ease}
@@ -50,7 +48,6 @@
         .sn.a{color:var(--accent)}.sn.g{color:var(--success)}.sn.r{color:var(--danger)}.sn.y{color:var(--warn)}.sn.b{color:var(--blue)}
         .sl{font-size:9px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.8px}
 
-        /* Cards */
         .cd{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:28px;margin-bottom:22px;transition:border-color .3s,box-shadow .3s;animation:fsu .6s ease-out both}
         .cd:nth-child(2){animation-delay:.07s}.cd:nth-child(3){animation-delay:.12s}.cd:nth-child(4){animation-delay:.17s}.cd:nth-child(5){animation-delay:.22s}.cd:nth-child(6){animation-delay:.27s}.cd:nth-child(7){animation-delay:.32s}
         .cd:hover{border-color:rgba(232,168,73,.2);box-shadow:0 8px 40px rgba(0,0,0,.3)}
@@ -65,22 +62,20 @@
         .st h2{font-size:18px;font-weight:700;letter-spacing:-.3px}
         .st span{font-size:12px;color:var(--muted);font-weight:400}
 
-        /* Form */
         .fg{margin-bottom:14px}.fg:last-child{margin-bottom:0}
         .fl{display:block;font-size:12px;font-weight:600;color:var(--muted);margin-bottom:7px;text-transform:uppercase;letter-spacing:.8px}
         .fi{width:100%;padding:12px 14px;background:var(--bg2);border:1px solid var(--border);border-radius:var(--rs);color:var(--fg);font-family:'DM Sans',sans-serif;font-size:14px;transition:all .3s;outline:none}
         .fi:focus{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-g)}
         .fi::placeholder{color:rgba(138,133,128,.5)}
         textarea.fi{resize:vertical;min-height:140px;line-height:1.7}
-        .ih{display:flex;align-items:center;gap:6px;margin-top:6px;font-size:11px;color:var(--muted)}
-        .ih i{font-size:9px;color:var(--accent)}
+        .ih{display:flex;align-items:flex-start;gap:6px;margin-top:6px;font-size:11px;color:var(--muted);line-height:1.5}
+        .ih i{font-size:9px;color:var(--accent);margin-top:3px;flex-shrink:0}
         .fr{display:grid;grid-template-columns:1fr 1fr;gap:12px}
         @media(max-width:500px){.fr{grid-template-columns:1fr}}
 
         select.fi{appearance:none;-webkit-appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%238a8580' viewBox='0 0 16 16'%3E%3Cpath d='M8 11L3 6h10z'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center;cursor:pointer}
         select.fi option{background:var(--card);color:var(--fg)}
 
-        /* Thumbnail Upload */
         .thumb-zone{position:relative;border:2px dashed var(--border);border-radius:var(--rs);padding:24px;text-align:center;cursor:pointer;transition:all .3s;overflow:hidden;min-height:140px;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:10px}
         .thumb-zone:hover{border-color:var(--accent);background:rgba(232,168,73,.03)}
         .thumb-zone.has-img{padding:0;border-style:solid;border-color:rgba(232,168,73,.3)}
@@ -94,12 +89,10 @@
         .thumb-zone.has-img .thumb-remove{display:flex}
         .thumb-zone.has-img .upload-icon,.thumb-zone.has-img .tz-text{display:none}
 
-        /* Image URL fallback */
         .img-url-row{display:flex;gap:8px;align-items:center;margin-top:10px}
         .img-url-row .fi{flex:1}
         .img-url-or{font-size:11px;color:var(--muted);text-align:center;margin:8px 0;font-weight:500}
 
-        /* Buttons */
         .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:11px 22px;border:none;border-radius:var(--rs);font-family:'DM Sans',sans-serif;font-size:13px;font-weight:600;cursor:pointer;transition:all .25s;text-decoration:none;position:relative;overflow:hidden}
         .btn::after{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(255,255,255,.1),transparent);opacity:0;transition:opacity .25s}
         .btn:hover::after{opacity:1}
@@ -118,15 +111,15 @@
         .bs.sd{color:var(--wa);border-color:rgba(37,211,102,.2)}.bs.sd:hover{background:rgba(37,211,102,.1);border-color:rgba(37,211,102,.4)}
         .bs.st{color:var(--warn);border-color:rgba(251,191,36,.2)}.bs.st:hover{background:var(--warn-g);border-color:rgba(251,191,36,.4)}
 
-        /* Send mode selector */
         .send-modes{display:flex;gap:6px;margin-top:10px;flex-wrap:wrap}
-        .mode-btn{padding:8px 14px;border-radius:var(--rs);font-size:12px;font-weight:600;cursor:pointer;transition:all .2s;border:1px solid var(--border);background:var(--bg2);color:var(--muted);display:flex;align-items:center;gap:6px}
+        .mode-btn{padding:10px 14px;border-radius:var(--rs);font-size:12px;font-weight:600;cursor:pointer;transition:all .2s;border:1px solid var(--border);background:var(--bg2);color:var(--muted);display:flex;align-items:center;gap:8px;width:100%}
         .mode-btn:hover{border-color:var(--accent);color:var(--fg)}
         .mode-btn.active{border-color:var(--wa);background:rgba(37,211,102,.08);color:var(--wa)}
-        .mode-btn .mode-check{font-size:10px;opacity:0;transition:opacity .2s}
+        .mode-btn .mode-check{font-size:10px;opacity:0;transition:opacity .2s;margin-left:auto}
         .mode-btn.active .mode-check{opacity:1}
+        .mode-desc{font-size:10px;font-weight:400;color:var(--muted);margin-top:2px;display:block}
+        .mode-btn.active .mode-desc{color:rgba(37,211,102,.7)}
 
-        /* List */
         .lc{display:flex;flex-direction:column;gap:8px}
         .li{display:flex;align-items:center;gap:14px;padding:14px 16px;background:var(--bg2);border:1px solid var(--border);border-radius:var(--rs);transition:all .25s;animation:ii .35s ease-out both}
         @keyframes ii{from{opacity:0;transform:translateX(-16px)}to{opacity:1;transform:translateX(0)}}
@@ -137,7 +130,6 @@
         .imt{font-size:11px;color:var(--muted);margin-top:3px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
         .ia{display:flex;gap:5px;flex-shrink:0;flex-wrap:wrap;justify-content:flex-end}
 
-        /* Badges */
         .bdg{display:inline-flex;align-items:center;gap:4px;padding:2px 8px;border-radius:50px;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.5px}
         .bdg-s{background:rgba(37,211,102,.12);border:1px solid rgba(37,211,102,.2);color:var(--wa)}
         .bdg-p{background:rgba(232,168,73,.1);border:1px solid rgba(232,168,73,.2);color:var(--accent)}
@@ -156,7 +148,6 @@
 
         .divd{height:1px;background:var(--border);margin:8px 0 22px}
 
-        /* Toast */
         .tc{position:fixed;top:24px;right:24px;z-index:9999;display:flex;flex-direction:column;gap:10px}
         .tt{display:flex;align-items:center;gap:12px;padding:14px 20px;background:var(--card);border:1px solid var(--border);border-radius:var(--rs);box-shadow:0 12px 40px rgba(0,0,0,.5);font-size:13px;font-weight:500;animation:ti .4s ease-out;min-width:260px;max-width:400px}
         .tt.to{animation:too .3s ease-in forwards}
@@ -166,17 +157,18 @@
         @keyframes ti{from{opacity:0;transform:translateX(40px)}to{opacity:1;transform:translateX(0)}}
         @keyframes too{from{opacity:1;transform:translateX(0)}to{opacity:0;transform:translateX(40px)}}
 
-        /* Modal */
         .mo{position:fixed;inset:0;background:rgba(0,0,0,.7);backdrop-filter:blur(8px);z-index:1000;display:flex;align-items:center;justify-content:center;padding:20px;opacity:0;visibility:hidden;transition:all .3s}
         .mo.on{opacity:1;visibility:visible}
         .mb{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:28px;width:100%;max-width:480px;transform:scale(.9) translateY(20px);transition:transform .3s;max-height:90vh;overflow-y:auto}
         .mo.on .mb{transform:scale(1) translateY(0)}
         .mt{font-size:18px;font-weight:700;margin-bottom:18px}
-        .ma{display:flex;gap:10px;margin-top:20px;justify-content:flex-end}
+        .ma{display:flex;gap:10px;margin-top:20px;justify-content:flex-end;flex-wrap:wrap}
 
-        /* Send preview modal */
         .send-preview-thumb{width:100%;max-height:260px;object-fit:cover;border-radius:var(--rs);margin-bottom:14px}
         .send-preview-msg{background:var(--bg2);border:1px solid var(--border);border-radius:var(--rs);padding:16px;font-size:13px;line-height:1.7;white-space:pre-wrap;word-break:break-word;margin-bottom:14px}
+
+        .cap-info{display:flex;align-items:center;gap:8px;padding:10px 14px;background:rgba(251,191,36,.06);border:1px solid rgba(251,191,36,.15);border-radius:var(--rs);font-size:11px;color:var(--warn);margin-bottom:14px}
+        .cap-info i{font-size:13px;flex-shrink:0}
 
         #confetti-canvas{position:fixed;inset:0;pointer-events:none;z-index:9998}
 
@@ -185,6 +177,7 @@
         @media(max-width:600px){
             .wrap{padding:24px 14px 60px}.cd{padding:18px}.sc{padding:14px 10px}.sn{font-size:22px}.ia{gap:4px}.li{padding:12px;gap:10px}.tt{min-width:auto;max-width:calc(100vw - 48px)}.tc{left:24px}
             .send-modes{flex-direction:column}.mode-btn{width:100%}
+            .bs.sd{font-size:10px;padding:6px 8px}
         }
         @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
     </style>
@@ -197,16 +190,86 @@
 <div class="tc" id="toastC"></div>
 
 <!-- Modal: Edit Teman -->
-<div class="mo" id="mEditF"><div class="mb"><h3 class="mt">Edit Nama Teman</h3><div class="fg"><label class="fl">Nama Teman</label><input type="text" class="fi" id="efInp" maxlength="50"></div><div class="ma"><button class="btn btn-gh" onclick="clM('mEditF')"><i class="fa-solid fa-xmark"></i> Batal</button><button class="btn btn-p" onclick="svEF()"><i class="fa-solid fa-check"></i> Simpan</button></div></div></div>
+<div class="mo" id="mEditF">
+    <div class="mb">
+        <h3 class="mt">Edit Nama Teman</h3>
+        <div class="fg">
+            <label class="fl">Nama Teman</label>
+            <input type="text" class="fi" id="efInp" maxlength="50">
+        </div>
+        <div class="ma">
+            <button class="btn btn-gh" onclick="clM('mEditF')"><i class="fa-solid fa-xmark"></i> Batal</button>
+            <button class="btn btn-p" onclick="svEF()"><i class="fa-solid fa-check"></i> Simpan</button>
+        </div>
+    </div>
+</div>
 
 <!-- Modal: Edit Tamu -->
-<div class="mo" id="mEditG"><div class="mb"><h3 class="mt">Edit Data Tamu</h3><div class="fg"><label class="fl">Nama Tamu</label><input type="text" class="fi" id="egName" maxlength="50"></div><div class="fr"><div class="fg"><label class="fl">Status Kehadiran</label><select class="fi" id="egStat"><option value="menunggu">Menunggu Konfirmasi</option><option value="hadir">Hadir</option><option value="tidak">Tidak Hadir</option></select></div><div class="fg"><label class="fl">Jumlah Tamu</label><input type="number" class="fi" id="egCnt" min="1" max="20" value="1"></div></div><div class="fg"><label class="fl">Catatan</label><input type="text" class="fi" id="egNote" maxlength="100"></div><div class="ma"><button class="btn btn-gh" onclick="clM('mEditG')"><i class="fa-solid fa-xmark"></i> Batal</button><button class="btn btn-p" onclick="svEG()"><i class="fa-solid fa-check"></i> Simpan</button></div></div></div>
+<div class="mo" id="mEditG">
+    <div class="mb">
+        <h3 class="mt">Edit Data Tamu</h3>
+        <div class="fg">
+            <label class="fl">Nama Tamu</label>
+            <input type="text" class="fi" id="egName" maxlength="50">
+        </div>
+        <div class="fr">
+            <div class="fg">
+                <label class="fl">Status Kehadiran</label>
+                <select class="fi" id="egStat">
+                    <option value="menunggu">Menunggu Konfirmasi</option>
+                    <option value="hadir">Hadir</option>
+                    <option value="tidak">Tidak Hadir</option>
+                </select>
+            </div>
+            <div class="fg">
+                <label class="fl">Jumlah Tamu</label>
+                <input type="number" class="fi" id="egCnt" min="1" max="20" value="1">
+            </div>
+        </div>
+        <div class="fg">
+            <label class="fl">Catatan</label>
+            <input type="text" class="fi" id="egNote" maxlength="100">
+        </div>
+        <div class="ma">
+            <button class="btn btn-gh" onclick="clM('mEditG')"><i class="fa-solid fa-xmark"></i> Batal</button>
+            <button class="btn btn-p" onclick="svEG()"><i class="fa-solid fa-check"></i> Simpan</button>
+        </div>
+    </div>
+</div>
 
 <!-- Modal: Quick Status -->
-<div class="mo" id="mQS"><div class="mb" style="max-width:360px"><h3 class="mt">Ubah Status Kehadiran</h3><p style="font-size:13px;color:var(--muted);margin-bottom:16px" id="qsName"></p><div style="display:flex;flex-direction:column;gap:8px"><button class="btn btn-gh" style="justify-content:flex-start;gap:10px" onclick="setQS('hadir')"><i class="fa-solid fa-circle-check" style="color:var(--success)"></i> Hadir</button><button class="btn btn-gh" style="justify-content:flex-start;gap:10px" onclick="setQS('tidak')"><i class="fa-solid fa-circle-xmark" style="color:var(--danger)"></i> Tidak Hadir</button><button class="btn btn-gh" style="justify-content:flex-start;gap:10px" onclick="setQS('menunggu')"><i class="fa-solid fa-clock" style="color:var(--warn)"></i> Menunggu Konfirmasi</button></div><div class="ma" style="margin-top:16px"><button class="btn btn-gh" onclick="clM('mQS')"><i class="fa-solid fa-xmark"></i> Batal</button></div></div></div>
+<div class="mo" id="mQS">
+    <div class="mb" style="max-width:360px">
+        <h3 class="mt">Ubah Status Kehadiran</h3>
+        <p style="font-size:13px;color:var(--muted);margin-bottom:16px" id="qsName"></p>
+        <div style="display:flex;flex-direction:column;gap:8px">
+            <button class="btn btn-gh" style="justify-content:flex-start;gap:10px" onclick="setQS('hadir')">
+                <i class="fa-solid fa-circle-check" style="color:var(--success)"></i> Hadir
+            </button>
+            <button class="btn btn-gh" style="justify-content:flex-start;gap:10px" onclick="setQS('tidak')">
+                <i class="fa-solid fa-circle-xmark" style="color:var(--danger)"></i> Tidak Hadir
+            </button>
+            <button class="btn btn-gh" style="justify-content:flex-start;gap:10px" onclick="setQS('menunggu')">
+                <i class="fa-solid fa-clock" style="color:var(--warn)"></i> Menunggu Konfirmasi
+            </button>
+        </div>
+        <div class="ma" style="margin-top:16px">
+            <button class="btn btn-gh" onclick="clM('mQS')"><i class="fa-solid fa-xmark"></i> Batal</button>
+        </div>
+    </div>
+</div>
 
 <!-- Modal: Send Preview -->
-<div class="mo" id="mSend"><div class="mb" style="max-width:420px"><h3 class="mt">Konfirmasi Kirim</h3><div id="sendPreviewContent"></div><div class="ma"><button class="btn btn-gh" onclick="clM('mSend')"><i class="fa-solid fa-xmark"></i> Batal</button><button class="btn btn-w" id="sendConfirmBtn" onclick="confirmSend()"><i class="fa-brands fa-whatsapp"></i> Kirim Sekarang</button></div></div></div>
+<div class="mo" id="mSend">
+    <div class="mb" style="max-width:440px">
+        <h3 class="mt">Kirim via WhatsApp</h3>
+        <div id="sendPreviewContent"></div>
+        <div class="ma">
+            <button class="btn btn-gh" onclick="clM('mSend')"><i class="fa-solid fa-xmark"></i> Batal</button>
+            <button class="btn btn-w" id="sendConfirmBtn" onclick="confirmSend()"><i class="fa-brands fa-whatsapp"></i> Kirim Sekarang</button>
+        </div>
+    </div>
+</div>
 
 <main class="wrap">
 
@@ -227,33 +290,71 @@
 
     <!-- Tambah Teman -->
     <section class="cd">
-        <div class="st"><div class="si am"><i class="fa-solid fa-user-plus"></i></div><div><h2>Tambah Teman</h2><span>Daftar teman yang akan dikirimi undangan</span></div></div>
-        <div class="fg"><label class="fl" for="fInp">Nama Teman</label><input type="text" class="fi" id="fInp" placeholder="Contoh: Rina Saputra" maxlength="50"></div>
+        <div class="st">
+            <div class="si am"><i class="fa-solid fa-user-plus"></i></div>
+            <div><h2>Tambah Teman</h2><span>Daftar teman yang akan dikirimi undangan</span></div>
+        </div>
+        <div class="fg">
+            <label class="fl" for="fInp">Nama Teman</label>
+            <input type="text" class="fi" id="fInp" placeholder="Contoh: Rina Saputra" maxlength="50">
+        </div>
         <button class="btn btn-p" onclick="addF()" style="margin-top:4px"><i class="fa-solid fa-plus"></i> Tambah ke Daftar</button>
     </section>
 
     <!-- Daftar Teman -->
     <section class="cd">
-        <div class="st"><div class="si gr"><i class="fa-solid fa-users"></i></div><div><h2>Daftar Teman</h2><span id="fCnt">Belum ada teman ditambahkan</span></div></div>
-        <div id="fList" class="lc"><div class="empty"><i class="fa-solid fa-user-group"></i><p>Daftar teman masih kosong.</p></div></div>
+        <div class="st">
+            <div class="si gr"><i class="fa-solid fa-users"></i></div>
+            <div><h2>Daftar Teman</h2><span id="fCnt">Belum ada teman ditambahkan</span></div>
+        </div>
+        <div id="fList" class="lc">
+            <div class="empty"><i class="fa-solid fa-user-group"></i><p>Daftar teman masih kosong.</p></div>
+        </div>
     </section>
 
     <!-- Daftar Tamu -->
     <section class="cd">
-        <div class="st"><div class="si yl"><i class="fa-solid fa-clipboard-list"></i></div><div><h2>Daftar Tamu</h2><span id="gCnt">Catat tamu yang datang ke acara</span></div></div>
+        <div class="st">
+            <div class="si yl"><i class="fa-solid fa-clipboard-list"></i></div>
+            <div><h2>Daftar Tamu</h2><span id="gCnt">Catat tamu yang datang ke acara</span></div>
+        </div>
         <div style="background:var(--bg2);border:1px solid var(--border);border-radius:var(--rs);padding:18px;margin-bottom:16px">
-            <div class="fg"><label class="fl" for="gNInp">Nama Tamu</label><input type="text" class="fi" id="gNInp" placeholder="Contoh: Budi Hartono" maxlength="50"></div>
-            <div class="fr"><div class="fg"><label class="fl">Status</label><select class="fi" id="gSInp"><option value="menunggu">Menunggu Konfirmasi</option><option value="hadir">Hadir</option><option value="tidak">Tidak Hadir</option></select></div><div class="fg"><label class="fl">Jumlah</label><input type="number" class="fi" id="gCInp" min="1" max="20" value="1"></div></div>
-            <div class="fg"><label class="fl" for="gTInp">Catatan (opsional)</label><input type="text" class="fi" id="gTInp" placeholder="Contoh: bawa kue, alergi kacang" maxlength="100"></div>
+            <div class="fg">
+                <label class="fl" for="gNInp">Nama Tamu</label>
+                <input type="text" class="fi" id="gNInp" placeholder="Contoh: Budi Hartono" maxlength="50">
+            </div>
+            <div class="fr">
+                <div class="fg">
+                    <label class="fl">Status</label>
+                    <select class="fi" id="gSInp">
+                        <option value="menunggu">Menunggu Konfirmasi</option>
+                        <option value="hadir">Hadir</option>
+                        <option value="tidak">Tidak Hadir</option>
+                    </select>
+                </div>
+                <div class="fg">
+                    <label class="fl">Jumlah</label>
+                    <input type="number" class="fi" id="gCInp" min="1" max="20" value="1">
+                </div>
+            </div>
+            <div class="fg">
+                <label class="fl" for="gTInp">Catatan (opsional)</label>
+                <input type="text" class="fi" id="gTInp" placeholder="Contoh: bawa kue, alergi kacang" maxlength="100">
+            </div>
             <button class="btn btn-p" onclick="addG()" style="margin-top:4px"><i class="fa-solid fa-plus"></i> Tambah Tamu</button>
         </div>
         <div class="divd"></div>
-        <div id="gList" class="lc"><div class="empty"><i class="fa-solid fa-clipboard-list"></i><p>Belum ada data tamu.</p></div></div>
+        <div id="gList" class="lc">
+            <div class="empty"><i class="fa-solid fa-clipboard-list"></i><p>Belum ada data tamu.</p></div>
+        </div>
     </section>
 
     <!-- Thumbnail Undangan -->
     <section class="cd">
-        <div class="st"><div class="si pu"><i class="fa-solid fa-image"></i></div><div><h2>Thumbnail Undangan</h2><span>Gambar yang akan dikirim bersama pesan WhatsApp</span></div></div>
+        <div class="st">
+            <div class="si pu"><i class="fa-solid fa-image"></i></div>
+            <div><h2>Thumbnail Undangan</h2><span>Gambar yang akan dikirim bersama pesan WhatsApp</span></div>
+        </div>
         <div class="fg">
             <label class="fl">Upload Gambar</label>
             <div class="thumb-zone" id="thumbZone">
@@ -268,383 +369,751 @@
                 <input type="url" class="fi" id="thumbUrl" placeholder="https://contoh.com/gambar-undangan.jpg" oninput="handleThumbUrl()">
                 <button class="btn btn-i" onclick="handleThumbUrl()" title="Gunakan URL"><i class="fa-solid fa-check"></i></button>
             </div>
-            <div class="ih"><i class="fa-solid fa-circle-info"></i> Gambar akan dikirim saat menggunakan mode "Gambar + Teks" di WhatsApp Web</div>
+            <div class="ih">
+                <i class="fa-solid fa-circle-info"></i>
+                <span>Gambar akan otomatis dikirim bersama pesan saat menggunakan mode Share atau URL Embed. Di HP, mode Share langsung membuka WhatsApp dengan gambar terlampir.</span>
+            </div>
         </div>
     </section>
 
     <!-- Link Undangan -->
     <section class="cd">
-        <div class="st"><div class="si bl"><i class="fa-solid fa-link"></i></div><div><h2>Link Undangan</h2><span>Paste link halaman undangan</span></div></div>
-        <div class="fg"><label class="fl" for="linkInp">URL Undangan</label><input type="url" class="fi" id="linkInp" placeholder="https://contoh.com/undangan-ulang-tahun" oninput="svL()"><div class="ih"><i class="fa-solid fa-circle-info"></i> Otomatis tersimpan di browser</div></div>
+        <div class="st">
+            <div class="si bl"><i class="fa-solid fa-link"></i></div>
+            <div><h2>Link Undangan</h2><span>Paste link halaman undangan</span></div>
+        </div>
+        <div class="fg">
+            <label class="fl" for="linkInp">URL Undangan</label>
+            <input type="url" class="fi" id="linkInp" placeholder="https://contoh.com/undangan-ulang-tahun" oninput="svL()">
+            <div class="ih"><i class="fa-solid fa-circle-info"></i> Otomatis tersimpan di browser</div>
+        </div>
     </section>
 
     <!-- Template Pesan -->
     <section class="cd">
-        <div class="st"><div class="si rd"><i class="fa-solid fa-message"></i></div><div><h2>Template Pesan WhatsApp</h2><span>Sesuaikan pesan yang dikirim</span></div></div>
-        <div class="fg"><label class="fl" for="msgInp">Isi Pesan</label><textarea class="fi" id="msgInp" oninput="svMsg();upPrev()" placeholder="Tulis pesan undangan..."></textarea><div class="ih"><i class="fa-solid fa-circle-info"></i> Gunakan <strong>[Nama Teman]</strong> dan <strong>[Link Undangan]</strong> sebagai placeholder</div></div>
-        <div class="pbox"><div class="pc" id="prevC">Pesan akan muncul di sini...</div></div>
+        <div class="st">
+            <div class="si rd"><i class="fa-solid fa-message"></i></div>
+            <div><h2>Template Pesan WhatsApp</h2><span>Sesuaikan pesan yang dikirim</span></div>
+        </div>
+        <div class="fg">
+            <label class="fl" for="msgInp">Isi Pesan</label>
+            <textarea class="fi" id="msgInp" oninput="svMsg();upPrev()" placeholder="Tulis pesan undangan..."></textarea>
+            <div class="ih"><i class="fa-solid fa-circle-info"></i> Gunakan <strong>[Nama Teman]</strong> dan <strong>[Link Undangan]</strong> sebagai placeholder</div>
+        </div>
+        <div class="pbox">
+            <div class="pc" id="prevC">Pesan akan muncul di sini...</div>
+        </div>
     </section>
 
 </main>
 
 <script>
-// ==============================
-// Konstanta & State
-// ==============================
-const SKF='bday_f_v3',SKG='bday_g_v3',SKL='bday_l_v3',SKM='bday_m_v3',SKT='bday_thumb_v3';
-const COLS=['#e8a849','#e85454','#4ecb71','#38bdf8','#c084fc','#f472b6','#fb923c','#a3e635','#22d3ee','#f87171','#fbbf24','#34d399'];
-const DMSG=`Halo [Nama Teman]! \uD83D\uDC4B\nDi hari spesialku ini, aku pengen banget kamu ada di acara ulang tahunku.\nYuk, luangkan waktuku buat dateng ya! Detail tempat dan jamnya bisa cek di link ini ya:\n\uD83D\uDC49 [Link Undangan]\nDitunggu kehadiran dan keseruannya! \u2728`;
+/* =============================================
+   KONSTANTA & STATE
+   ============================================= */
+var SKF = 'bday_f_v4';
+var SKG = 'bday_g_v4';
+var SKL = 'bday_l_v4';
+var SKM = 'bday_m_v4';
+var SKT = 'bday_thumb_v4';
 
-let friends=[],guests=[],thumbData={type:'none',value:''};
-let efi=-1,egi=-1,qsi=-1,sendIdx=-1,sendMode='text';
+var COLS = ['#e8a849','#e85454','#4ecb71','#38bdf8','#c084fc','#f472b6','#fb923c','#a3e635','#22d3ee','#f87171','#fbbf24','#34d399'];
 
-// ==============================
-// Init
-// ==============================
-function init(){
+var DMSG = 'Halo [Nama Teman]! \uD83D\uDC4B\nDi hari spesialku ini, aku pengen banget kamu ada di acara ulang tahunku.\nYuk, luangkan waktumu buat dateng ya! Detail tempat dan jamnya bisa cek di link ini ya:\n\uD83D\uDC49 [Link Undangan]\nDitunggu kehadiran dan keseruannya! \u2728';
+
+var friends = [];
+var guests = [];
+var thumbData = { type: 'none', value: '' };
+var efi = -1;
+var egi = -1;
+var qsi = -1;
+var sendIdx = -1;
+var sendMode = 'text';
+
+/* Deteksi dukungan browser */
+var canShare = (typeof navigator !== 'undefined' && typeof navigator.share === 'function');
+
+/* =============================================
+   INIT
+   ============================================= */
+function init() {
     loadAll();
-    renderF();renderG();upStats();upPrev();upThumbUI();
-    document.getElementById('fInp').addEventListener('keydown',e=>{if(e.key==='Enter')addF()});
-    document.getElementById('gNInp').addEventListener('keydown',e=>{if(e.key==='Enter')addG()});
-    document.getElementById('efInp').addEventListener('keydown',e=>{if(e.key==='Enter')svEF()});
-    document.getElementById('egName').addEventListener('keydown',e=>{if(e.key==='Enter')svEG()});
-    document.querySelectorAll('.mo').forEach(m=>{m.addEventListener('click',e=>{if(e.target===m)m.classList.remove('on')})});
-    document.addEventListener('keydown',e=>{if(e.key==='Escape')document.querySelectorAll('.mo.on').forEach(m=>m.classList.remove('on'))});
+    renderF();
+    renderG();
+    upStats();
+    upPrev();
+    upThumbUI();
 
-    // Drag & drop untuk thumbnail
-    const tz=document.getElementById('thumbZone');
-    tz.addEventListener('dragover',e=>{e.preventDefault();tz.style.borderColor='var(--accent)';tz.style.background='rgba(232,168,73,.06)'});
-    tz.addEventListener('dragleave',()=>{tz.style.borderColor='';tz.style.background=''});
-    tz.addEventListener('drop',e=>{
-        e.preventDefault();tz.style.borderColor='';tz.style.background='';
-        if(e.dataTransfer.files.length){
-            document.getElementById('thumbFile').files=e.dataTransfer.files;
-            handleThumbUpload({target:{files:e.dataTransfer.files}});
+    /* Enter key shortcuts */
+    document.getElementById('fInp').addEventListener('keydown', function(e) { if (e.key === 'Enter') addF(); });
+    document.getElementById('gNInp').addEventListener('keydown', function(e) { if (e.key === 'Enter') addG(); });
+    document.getElementById('efInp').addEventListener('keydown', function(e) { if (e.key === 'Enter') svEF(); });
+    document.getElementById('egName').addEventListener('keydown', function(e) { if (e.key === 'Enter') svEG(); });
+
+    /* Klik overlay untuk tutup modal */
+    var modals = document.querySelectorAll('.mo');
+    for (var i = 0; i < modals.length; i++) {
+        (function(m) {
+            m.addEventListener('click', function(e) { if (e.target === m) m.classList.remove('on'); });
+        })(modals[i]);
+    }
+
+    /* Escape untuk tutup semua modal */
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
+            var openMods = document.querySelectorAll('.mo.on');
+            for (var j = 0; j < openMods.length; j++) openMods[j].classList.remove('on');
+        }
+    });
+
+    /* Drag & drop thumbnail */
+    var tz = document.getElementById('thumbZone');
+    tz.addEventListener('dragover', function(e) {
+        e.preventDefault();
+        tz.style.borderColor = 'var(--accent)';
+        tz.style.background = 'rgba(232,168,73,.06)';
+    });
+    tz.addEventListener('dragleave', function() {
+        tz.style.borderColor = '';
+        tz.style.background = '';
+    });
+    tz.addEventListener('drop', function(e) {
+        e.preventDefault();
+        tz.style.borderColor = '';
+        tz.style.background = '';
+        if (e.dataTransfer.files.length) {
+            document.getElementById('thumbFile').files = e.dataTransfer.files;
+            handleThumbUpload({ target: { files: e.dataTransfer.files } });
         }
     });
 }
 
-// ==============================
-// Storage
-// ==============================
-function loadAll(){
-    try{friends=JSON.parse(localStorage.getItem(SKF))||[]}catch{friends=[]}
-    try{guests=JSON.parse(localStorage.getItem(SKG))||[]}catch{guests=[]}
-    try{thumbData=JSON.parse(localStorage.getItem(SKT))||{type:'none',value:''}}catch{thumbData={type:'none',value:''}}
-    document.getElementById('linkInp').value=localStorage.getItem(SKL)||'';
-    document.getElementById('msgInp').value=localStorage.getItem(SKM)||DMSG;
-    if(thumbData.type==='url')document.getElementById('thumbUrl').value=thumbData.value;
+/* =============================================
+   STORAGE
+   ============================================= */
+function loadAll() {
+    try { friends = JSON.parse(localStorage.getItem(SKF)) || []; } catch(e) { friends = []; }
+    try { guests = JSON.parse(localStorage.getItem(SKG)) || []; } catch(e) { guests = []; }
+    try { thumbData = JSON.parse(localStorage.getItem(SKT)) || { type: 'none', value: '' }; } catch(e) { thumbData = { type: 'none', value: '' }; }
+    document.getElementById('linkInp').value = localStorage.getItem(SKL) || '';
+    document.getElementById('msgInp').value = localStorage.getItem(SKM) || DMSG;
+    if (thumbData.type === 'url') document.getElementById('thumbUrl').value = thumbData.value;
 }
-function svF(){localStorage.setItem(SKF,JSON.stringify(friends))}
-function svG(){localStorage.setItem(SKG,JSON.stringify(guests))}
-function svL(){localStorage.setItem(SKL,document.getElementById('linkInp').value.trim());upPrev()}
-function svMsg(){localStorage.setItem(SKM,document.getElementById('msgInp').value)}
-function svThumb(){localStorage.setItem(SKT,JSON.stringify(thumbData))}
 
-// ==============================
-// Thumbnail
-// ==============================
-function handleThumbUpload(e){
-    const file=e.target.files[0];
-    if(!file)return;
-    if(file.size>2*1024*1024){toast('Ukuran gambar maksimal 2MB','error');return}
-    if(!['image/jpeg','image/png','image/webp'].includes(file.type)){toast('Format harus JPG, PNG, atau WebP','error');return}
-    const reader=new FileReader();
-    reader.onload=function(ev){
-        // Kompres gambar agar tidak terlalu besar untuk localStorage
-        const img=new Image();
-        img.onload=function(){
-            const cv=document.createElement('canvas');
-            let w=img.width,h=img.height;
-            const maxW=800;
-            if(w>maxW){h=Math.round(h*maxW/w);w=maxW}
-            cv.width=w;cv.height=h;
-            cv.getContext('2d').drawImage(img,0,0,w,h);
-            let dataUrl=cv.toDataURL('image/jpeg',0.7);
-            // Jika masih terlalu besar (>500KB), kompres lebih
-            if(dataUrl.length>500000){
-                dataUrl=cv.toDataURL('image/jpeg',0.4);
-            }
-            thumbData={type:'base64',value:dataUrl};
-            svThumb();upThumbUI();
-            toast('Gambar berhasil diupload','success');
+function svF() { localStorage.setItem(SKF, JSON.stringify(friends)); }
+function svG() { localStorage.setItem(SKG, JSON.stringify(guests)); }
+function svL() { localStorage.setItem(SKL, document.getElementById('linkInp').value.trim()); upPrev(); }
+function svMsg() { localStorage.setItem(SKM, document.getElementById('msgInp').value); }
+function svThumb() { localStorage.setItem(SKT, JSON.stringify(thumbData)); }
+
+/* =============================================
+   UTILITAS GAMBAR
+   ============================================= */
+
+/* Konversi data URL (base64) ke Blob */
+function dataURLtoBlob(dataURL) {
+    var parts = dataURL.split(',');
+    var mime = parts[0].match(/:(.*?);/)[1];
+    var raw = atob(parts[1]);
+    var arr = new Uint8Array(raw.length);
+    for (var i = 0; i < raw.length; i++) arr[i] = raw.charCodeAt(i);
+    return new Blob([arr], { type: mime });
+}
+
+/* Konversi URL gambar ke dataURL via canvas */
+function urlToDataURL(url) {
+    return new Promise(function(resolve, reject) {
+        var img = new Image();
+        img.crossOrigin = 'anonymous';
+        img.onload = function() {
+            var cv = document.createElement('canvas');
+            var w = img.width, h = img.height;
+            var maxW = 800;
+            if (w > maxW) { h = Math.round(h * maxW / w); w = maxW; }
+            cv.width = w;
+            cv.height = h;
+            cv.getContext('2d').drawImage(img, 0, 0, w, h);
+            resolve(cv.toDataURL('image/jpeg', 0.8));
         };
-        img.src=ev.target.result;
+        img.onerror = function() { reject(new Error('Gagal memuat gambar dari URL')); };
+        img.src = url;
+    });
+}
+
+/* Ambil thumbnail sebagai objek File */
+function getThumbAsFile(filename) {
+    if (thumbData.type === 'base64' && thumbData.value) {
+        var blob = dataURLtoBlob(thumbData.value);
+        return Promise.resolve(new File([blob], filename || 'undangan.jpg', { type: blob.type }));
+    }
+    if (thumbData.type === 'url' && thumbData.value) {
+        return urlToDataURL(thumbData.value).then(function(dataURL) {
+            var blob = dataURLtoBlob(dataURL);
+            return new File([blob], filename || 'undangan.jpg', { type: blob.type });
+        });
+    }
+    return Promise.resolve(null);
+}
+
+/* =============================================
+   THUMBNAIL UPLOAD
+   ============================================= */
+function handleThumbUpload(e) {
+    var file = e.target.files[0];
+    if (!file) return;
+    if (file.size > 2 * 1024 * 1024) { toast('Ukuran gambar maksimal 2MB', 'error'); return; }
+    if (['image/jpeg', 'image/png', 'image/webp'].indexOf(file.type) === -1) { toast('Format harus JPG, PNG, atau WebP', 'error'); return; }
+
+    var reader = new FileReader();
+    reader.onload = function(ev) {
+        var img = new Image();
+        img.onload = function() {
+            var cv = document.createElement('canvas');
+            var w = img.width, h = img.height;
+            var maxW = 800;
+            if (w > maxW) { h = Math.round(h * maxW / w); w = maxW; }
+            cv.width = w;
+            cv.height = h;
+            cv.getContext('2d').drawImage(img, 0, 0, w, h);
+            var dataUrl = cv.toDataURL('image/jpeg', 0.7);
+            if (dataUrl.length > 500000) dataUrl = cv.toDataURL('image/jpeg', 0.4);
+            thumbData = { type: 'base64', value: dataUrl };
+            svThumb();
+            upThumbUI();
+            toast('Gambar berhasil diupload', 'success');
+        };
+        img.src = ev.target.result;
     };
     reader.readAsDataURL(file);
 }
 
-function handleThumbUrl(){
-    const url=document.getElementById('thumbUrl').value.trim();
-    if(!url){thumbData={type:'none',value:''};svThumb();upThumbUI();return}
-    if(!url.startsWith('http://')&&!url.startsWith('https://')){toast('URL harus diawali http:// atau https://','error');return}
-    thumbData={type:'url',value:url};
-    svThumb();upThumbUI();
-    toast('URL gambar disimpan','success');
+function handleThumbUrl() {
+    var url = document.getElementById('thumbUrl').value.trim();
+    if (!url) { thumbData = { type: 'none', value: '' }; svThumb(); upThumbUI(); return; }
+    if (url.indexOf('http://') !== 0 && url.indexOf('https://') !== 0) { toast('URL harus diawali http:// atau https://', 'error'); return; }
+    thumbData = { type: 'url', value: url };
+    svThumb();
+    upThumbUI();
+    toast('URL gambar disimpan', 'success');
 }
 
-function removeThumb(e){
-    e.stopPropagation();e.preventDefault();
-    thumbData={type:'none',value:''};
-    document.getElementById('thumbFile').value='';
-    document.getElementById('thumbUrl').value='';
-    svThumb();upThumbUI();
-    toast('Gambar dihapus','info');
+function removeThumb(e) {
+    e.stopPropagation();
+    e.preventDefault();
+    thumbData = { type: 'none', value: '' };
+    document.getElementById('thumbFile').value = '';
+    document.getElementById('thumbUrl').value = '';
+    svThumb();
+    upThumbUI();
+    toast('Gambar dihapus', 'info');
 }
 
-function upThumbUI(){
-    const zone=document.getElementById('thumbZone');
-    const preview=document.getElementById('thumbPreview');
-    if(thumbData.type==='base64'){
-        preview.src=thumbData.value;
-        preview.style.display='block';
+function upThumbUI() {
+    var zone = document.getElementById('thumbZone');
+    var preview = document.getElementById('thumbPreview');
+    if (thumbData.type === 'base64') {
+        preview.src = thumbData.value;
+        preview.style.display = 'block';
         zone.classList.add('has-img');
-    }else if(thumbData.type==='url'){
-        preview.src=thumbData.value;
-        preview.style.display='block';
-        preview.onerror=()=>{preview.style.display='none';zone.classList.remove('has-img')};
-        preview.onload=()=>{zone.classList.add('has-img')};
+    } else if (thumbData.type === 'url') {
+        preview.src = thumbData.value;
+        preview.style.display = 'block';
+        preview.onerror = function() { preview.style.display = 'none'; zone.classList.remove('has-img'); };
+        preview.onload = function() { zone.classList.add('has-img'); };
         zone.classList.remove('has-img');
-    }else{
-        preview.style.display='none';
-        preview.src='';
+    } else {
+        preview.style.display = 'none';
+        preview.src = '';
         zone.classList.remove('has-img');
     }
 }
 
-// ==============================
-// Render: Teman
-// ==============================
-function renderF(){
-    const box=document.getElementById('fList'),cnt=document.getElementById('fCnt');
-    if(!friends.length){box.innerHTML='<div class="empty"><i class="fa-solid fa-user-group"></i><p>Daftar teman masih kosong.</p></div>';cnt.textContent='Belum ada teman ditambahkan';return}
-    cnt.textContent=friends.length+' teman terdaftar';box.innerHTML='';
-    friends.forEach((f,i)=>{
-        const c=COLS[i%COLS.length];
-        const bg=f.sent?'<span class="bdg bdg-s"><i class="fa-solid fa-check" style="font-size:8px"></i> Terkirim</span>':'<span class="bdg bdg-p"><i class="fa-solid fa-clock" style="font-size:8px"></i> Pending</span>';
-        const el=document.createElement('div');el.className='li';el.style.animationDelay=(i*.04)+'s';
-        el.innerHTML=`<div class="av" style="background:${c}">${esc(f.name).charAt(0).toUpperCase()}</div><div class="inf"><div class="inm">${esc(f.name)}</div><div class="imt">${bg}</div></div><div class="ia"><button class="btn bs sd" onclick="openSend(${i})" title="Kirim WhatsApp"><i class="fa-brands fa-whatsapp"></i> Kirim</button><button class="btn bs ed" onclick="openEF(${i})" title="Edit"><i class="fa-solid fa-pen"></i></button><button class="btn bs dg" onclick="delF(${i})" title="Hapus"><i class="fa-solid fa-trash"></i></button></div>`;
-        box.appendChild(el);
+/* =============================================
+   RENDER: DAFTAR TEMAN
+   ============================================= */
+function renderF() {
+    var box = document.getElementById('fList');
+    var cnt = document.getElementById('fCnt');
+    if (!friends.length) {
+        box.innerHTML = '<div class="empty"><i class="fa-solid fa-user-group"></i><p>Daftar teman masih kosong.</p></div>';
+        cnt.textContent = 'Belum ada teman ditambahkan';
+        return;
+    }
+    cnt.textContent = friends.length + ' teman terdaftar';
+    box.innerHTML = '';
+    for (var i = 0; i < friends.length; i++) {
+        (function(idx) {
+            var f = friends[idx];
+            var c = COLS[idx % COLS.length];
+            var bg = f.sent
+                ? '<span class="bdg bdg-s"><i class="fa-solid fa-check" style="font-size:8px"></i> Terkirim</span>'
+                : '<span class="bdg bdg-p"><i class="fa-solid fa-clock" style="font-size:8px"></i> Pending</span>';
+            var el = document.createElement('div');
+            el.className = 'li';
+            el.style.animationDelay = (idx * 0.04) + 's';
+            el.innerHTML = '<div class="av" style="background:' + c + '">' + esc(f.name).charAt(0).toUpperCase() + '</div>'
+                + '<div class="inf"><div class="inm">' + esc(f.name) + '</div><div class="imt">' + bg + '</div></div>'
+                + '<div class="ia">'
+                + '<button class="btn bs sd" onclick="openSend(' + idx + ')" title="Kirim WhatsApp"><i class="fa-brands fa-whatsapp"></i> Kirim</button>'
+                + '<button class="btn bs ed" onclick="openEF(' + idx + ')" title="Edit"><i class="fa-solid fa-pen"></i></button>'
+                + '<button class="btn bs dg" onclick="delF(' + idx + ')" title="Hapus"><i class="fa-solid fa-trash"></i></button>'
+                + '</div>';
+            box.appendChild(el);
+        })(i);
+    }
+}
+
+/* =============================================
+   RENDER: DAFTAR TAMU
+   ============================================= */
+function renderG() {
+    var box = document.getElementById('gList');
+    var cnt = document.getElementById('gCnt');
+    if (!guests.length) {
+        box.innerHTML = '<div class="empty"><i class="fa-solid fa-clipboard-list"></i><p>Belum ada data tamu.</p></div>';
+        cnt.textContent = 'Catat tamu yang datang ke acara';
+        return;
+    }
+    var total = 0;
+    for (var k = 0; k < guests.length; k++) total += (guests[k].count || 1);
+    cnt.textContent = guests.length + ' tamu (' + total + ' orang)';
+    box.innerHTML = '';
+
+    var sm = {
+        hadir: '<span class="bdg bdg-h"><i class="fa-solid fa-check" style="font-size:8px"></i> Hadir</span>',
+        tidak: '<span class="bdg bdg-t"><i class="fa-solid fa-xmark" style="font-size:8px"></i> Tidak Hadir</span>',
+        menunggu: '<span class="bdg bdg-m"><i class="fa-solid fa-clock" style="font-size:8px"></i> Menunggu</span>'
+    };
+
+    for (var i = 0; i < guests.length; i++) {
+        (function(idx) {
+            var g = guests[idx];
+            var c = COLS[(idx + 6) % COLS.length];
+            var mp = [sm[g.status] || sm.menunggu];
+            if (g.count > 1) mp.push('<span>' + g.count + ' orang</span>');
+            if (g.note) mp.push('<span style="opacity:.7">' + esc(g.note) + '</span>');
+            var el = document.createElement('div');
+            el.className = 'li';
+            el.style.animationDelay = (idx * 0.04) + 's';
+            el.innerHTML = '<div class="av" style="background:' + c + '">' + esc(g.name).charAt(0).toUpperCase() + '</div>'
+                + '<div class="inf"><div class="inm">' + esc(g.name) + '</div><div class="imt">' + mp.join('<span style="color:var(--border)">|</span>') + '</div></div>'
+                + '<div class="ia">'
+                + '<button class="btn bs st" onclick="openQS(' + idx + ')" title="Ubah status"><i class="fa-solid fa-arrows-rotate"></i></button>'
+                + '<button class="btn bs ed" onclick="openEG(' + idx + ')" title="Edit"><i class="fa-solid fa-pen"></i></button>'
+                + '<button class="btn bs dg" onclick="delG(' + idx + ')" title="Hapus"><i class="fa-solid fa-trash"></i></button>'
+                + '</div>';
+            box.appendChild(el);
+        })(i);
+    }
+}
+
+/* =============================================
+   CRUD: TEMAN
+   ============================================= */
+function addF() {
+    var inp = document.getElementById('fInp');
+    var n = inp.value.trim();
+    if (!n) { toast('Nama tidak boleh kosong', 'error'); inp.focus(); return; }
+    if (n.length < 2) { toast('Nama minimal 2 karakter', 'error'); inp.focus(); return; }
+    for (var i = 0; i < friends.length; i++) {
+        if (friends[i].name.toLowerCase() === n.toLowerCase()) { toast('"' + n + '" sudah ada', 'error'); inp.focus(); return; }
+    }
+    friends.push({ name: n, sent: false });
+    svF(); renderF(); upStats();
+    inp.value = ''; inp.focus();
+    toast('"' + n + '" ditambahkan', 'success');
+}
+
+function delF(i) {
+    var n = friends[i].name;
+    friends.splice(i, 1);
+    svF(); renderF(); upStats();
+    toast('"' + n + '" dihapus', 'info');
+}
+
+function openEF(i) {
+    efi = i;
+    document.getElementById('efInp').value = friends[i].name;
+    document.getElementById('mEditF').classList.add('on');
+    setTimeout(function() { document.getElementById('efInp').focus(); }, 200);
+}
+
+function svEF() {
+    if (efi < 0) return;
+    var inp = document.getElementById('efInp');
+    var v = inp.value.trim();
+    if (!v || v.length < 2) { toast('Nama minimal 2 karakter', 'error'); inp.focus(); return; }
+    for (var i = 0; i < friends.length; i++) {
+        if (i !== efi && friends[i].name.toLowerCase() === v.toLowerCase()) { toast('"' + v + '" sudah ada', 'error'); inp.focus(); return; }
+    }
+    var old = friends[efi].name;
+    friends[efi].name = v;
+    svF(); renderF(); clM('mEditF');
+    toast('"' + old + '" diubah ke "' + v + '"', 'success');
+}
+
+/* =============================================
+   CRUD: TAMU
+   ============================================= */
+function addG() {
+    var ni = document.getElementById('gNInp');
+    var si = document.getElementById('gSInp');
+    var ci = document.getElementById('gCInp');
+    var ti = document.getElementById('gTInp');
+    var n = ni.value.trim();
+    if (!n) { toast('Nama tamu tidak boleh kosong', 'error'); ni.focus(); return; }
+    if (n.length < 2) { toast('Nama minimal 2 karakter', 'error'); ni.focus(); return; }
+    guests.push({
+        name: n,
+        status: si.value,
+        count: Math.max(1, Math.min(20, parseInt(ci.value) || 1)),
+        note: ti.value.trim()
     });
+    svG(); renderG(); upStats();
+    ni.value = ''; ti.value = ''; si.value = 'menunggu'; ci.value = '1';
+    ni.focus();
+    toast('"' + n + '" ditambahkan ke daftar tamu', 'success');
 }
 
-// ==============================
-// Render: Tamu
-// ==============================
-function renderG(){
-    const box=document.getElementById('gList'),cnt=document.getElementById('gCnt');
-    if(!guests.length){box.innerHTML='<div class="empty"><i class="fa-solid fa-clipboard-list"></i><p>Belum ada data tamu.</p></div>';cnt.textContent='Catat tamu yang datang ke acara';return}
-    const to=guests.reduce((s,g)=>s+(g.count||1),0);
-    cnt.textContent=guests.length+' tamu ('+to+' orang)';box.innerHTML='';
-    const sm={hadir:'<span class="bdg bdg-h"><i class="fa-solid fa-check" style="font-size:8px"></i> Hadir</span>',tidak:'<span class="bdg bdg-t"><i class="fa-solid fa-xmark" style="font-size:8px"></i> Tidak Hadir</span>',menunggu:'<span class="bdg bdg-m"><i class="fa-solid fa-clock" style="font-size:8px"></i> Menunggu</span>'};
-    guests.forEach((g,i)=>{
-        const c=COLS[(i+6)%COLS.length];
-        const mp=[sm[g.status]||sm.menunggu];
-        if(g.count>1)mp.push('<span>'+g.count+' orang</span>');
-        if(g.note)mp.push('<span style="opacity:.7">'+esc(g.note)+'</span>');
-        const el=document.createElement('div');el.className='li';el.style.animationDelay=(i*.04)+'s';
-        el.innerHTML=`<div class="av" style="background:${c}">${esc(g.name).charAt(0).toUpperCase()}</div><div class="inf"><div class="inm">${esc(g.name)}</div><div class="imt">${mp.join('<span style="color:var(--border)">|</span>')}</div></div><div class="ia"><button class="btn bs st" onclick="openQS(${i})" title="Ubah status"><i class="fa-solid fa-arrows-rotate"></i></button><button class="btn bs ed" onclick="openEG(${i})" title="Edit"><i class="fa-solid fa-pen"></i></button><button class="btn bs dg" onclick="delG(${i})" title="Hapus"><i class="fa-solid fa-trash"></i></button></div>`;
-        box.appendChild(el);
-    });
+function delG(i) {
+    var n = guests[i].name;
+    guests.splice(i, 1);
+    svG(); renderG(); upStats();
+    toast('"' + n + '" dihapus', 'info');
 }
 
-// ==============================
-// CRUD: Teman
-// ==============================
-function addF(){
-    const inp=document.getElementById('fInp'),n=inp.value.trim();
-    if(!n){toast('Nama tidak boleh kosong','error');inp.focus();return}
-    if(n.length<2){toast('Nama minimal 2 karakter','error');inp.focus();return}
-    if(friends.some(f=>f.name.toLowerCase()===n.toLowerCase())){toast('"'+n+'" sudah ada','error');inp.focus();return}
-    friends.push({name:n,sent:false});svF();renderF();upStats();inp.value='';inp.focus();toast('"'+n+'" ditambahkan','success');
-}
-function delF(i){const n=friends[i].name;friends.splice(i,1);svF();renderF();upStats();toast('"'+n+'" dihapus','info')}
-function openEF(i){efi=i;document.getElementById('efInp').value=friends[i].name;document.getElementById('mEditF').classList.add('on');setTimeout(()=>document.getElementById('efInp').focus(),200)}
-function svEF(){
-    if(efi<0)return;const inp=document.getElementById('efInp'),v=inp.value.trim();
-    if(!v||v.length<2){toast('Nama minimal 2 karakter','error');inp.focus();return}
-    if(friends.some((f,i)=>i!==efi&&f.name.toLowerCase()===v.toLowerCase())){toast('"'+v+'" sudah ada','error');inp.focus();return}
-    const old=friends[efi].name;friends[efi].name=v;svF();renderF();clM('mEditF');toast('"'+old+'" diubah ke "'+v+'"','success');
+function openEG(i) {
+    egi = i;
+    var g = guests[i];
+    document.getElementById('egName').value = g.name;
+    document.getElementById('egStat').value = g.status;
+    document.getElementById('egCnt').value = g.count;
+    document.getElementById('egNote').value = g.note || '';
+    document.getElementById('mEditG').classList.add('on');
+    setTimeout(function() { document.getElementById('egName').focus(); }, 200);
 }
 
-// ==============================
-// CRUD: Tamu
-// ==============================
-function addG(){
-    const ni=document.getElementById('gNInp'),si=document.getElementById('gSInp'),ci=document.getElementById('gCInp'),ti=document.getElementById('gTInp');
-    const n=ni.value.trim();
-    if(!n){toast('Nama tamu tidak boleh kosong','error');ni.focus();return}
-    if(n.length<2){toast('Nama minimal 2 karakter','error');ni.focus();return}
-    guests.push({name:n,status:si.value,count:Math.max(1,Math.min(20,parseInt(ci.value)||1)),note:ti.value.trim()});
-    svG();renderG();upStats();ni.value='';ti.value='';si.value='menunggu';ci.value='1';ni.focus();toast('"'+n+'" ditambahkan ke daftar tamu','success');
-}
-function delG(i){const n=guests[i].name;guests.splice(i,1);svG();renderG();upStats();toast('"'+n+'" dihapus','info')}
-function openEG(i){
-    egi=i;const g=guests[i];
-    document.getElementById('egName').value=g.name;document.getElementById('egStat').value=g.status;
-    document.getElementById('egCnt').value=g.count;document.getElementById('egNote').value=g.note||'';
-    document.getElementById('mEditG').classList.add('on');setTimeout(()=>document.getElementById('egName').focus(),200);
-}
-function svEG(){
-    if(egi<0)return;const n=document.getElementById('egName').value.trim();
-    if(!n||n.length<2){toast('Nama minimal 2 karakter','error');return}
-    guests[egi]={name:n,status:document.getElementById('egStat').value,count:Math.max(1,Math.min(20,parseInt(document.getElementById('egCnt').value)||1)),note:document.getElementById('egNote').value.trim()};
-    svG();renderG();upStats();clM('mEditG');toast('Data "'+n+'" diperbarui','success');
-}
-function openQS(i){qsi=i;document.getElementById('qsName').textContent='Tamu: '+guests[i].name;document.getElementById('mQS').classList.add('on')}
-function setQS(s){
-    if(qsi<0)return;guests[qsi].status=s;svG();renderG();upStats();clM('mQS');
-    const lb={hadir:'Hadir',tidak:'Tidak Hadir',menunggu:'Menunggu Konfirmasi'};
-    toast('"'+guests[qsi].name+'" diubah ke '+lb[s],'success');qsi=-1;
+function svEG() {
+    if (egi < 0) return;
+    var n = document.getElementById('egName').value.trim();
+    if (!n || n.length < 2) { toast('Nama minimal 2 karakter', 'error'); return; }
+    guests[egi] = {
+        name: n,
+        status: document.getElementById('egStat').value,
+        count: Math.max(1, Math.min(20, parseInt(document.getElementById('egCnt').value) || 1)),
+        note: document.getElementById('egNote').value.trim()
+    };
+    svG(); renderG(); upStats(); clM('mEditG');
+    toast('Data "' + n + '" diperbarui', 'success');
 }
 
-// ==============================
-// Kirim WhatsApp (dengan preview & pilihan mode)
-// ==============================
-function openSend(i){
-    const link=document.getElementById('linkInp').value.trim();
-    if(!link){toast('Isi link undangan terlebih dahulu','error');document.getElementById('linkInp').focus();return}
-    if(!link.startsWith('http://')&&!link.startsWith('https://')){toast('Link harus diawali http:// atau https://','error');document.getElementById('linkInp').focus();return}
+function openQS(i) {
+    qsi = i;
+    document.getElementById('qsName').textContent = 'Tamu: ' + guests[i].name;
+    document.getElementById('mQS').classList.add('on');
+}
 
-    sendIdx=i;sendMode='text';
-    const f=friends[i];
-    const tmpl=document.getElementById('msgInp').value;
-    const msg=tmpl.replace(/\[Nama Teman\]/g,f.name).replace(/\[Link Undangan\]/g,link);
+function setQS(s) {
+    if (qsi < 0) return;
+    guests[qsi].status = s;
+    svG(); renderG(); upStats(); clM('mQS');
+    var lb = { hadir: 'Hadir', tidak: 'Tidak Hadir', menunggu: 'Menunggu Konfirmasi' };
+    toast('"' + guests[qsi].name + '" diubah ke ' + lb[s], 'success');
+    qsi = -1;
+}
 
-    // Bangun konten modal preview
-    let html='';
+/* =============================================
+   KIRIM WHATSAPP — 3 MODE
+   ============================================= */
+function openSend(i) {
+    var link = document.getElementById('linkInp').value.trim();
+    if (!link) { toast('Isi link undangan terlebih dahulu', 'error'); document.getElementById('linkInp').focus(); return; }
+    if (link.indexOf('http://') !== 0 && link.indexOf('https://') !== 0) { toast('Link harus diawali http:// atau https://', 'error'); document.getElementById('linkInp').focus(); return; }
 
-    // Thumbnail jika ada
-    if(thumbData.type==='base64'){
-        html+='<img src="'+thumbData.value+'" class="send-preview-thumb" alt="Thumbnail">';
-    }else if(thumbData.type==='url'){
-        html+='<img src="'+esc(thumbData.value)+'" class="send-preview-thumb" alt="Thumbnail" onerror="this.style.display=\'none\'">';
+    sendIdx = i;
+    var f = friends[i];
+    var tmpl = document.getElementById('msgInp').value;
+    var msg = tmpl.replace(/\[Nama Teman\]/g, f.name).replace(/\[Link Undangan\]/g, link);
+    var hasImg = thumbData.type !== 'none';
+
+    var html = '';
+
+    /* Thumbnail preview */
+    if (hasImg) {
+        if (thumbData.type === 'base64') {
+            html += '<img src="' + thumbData.value + '" class="send-preview-thumb" alt="Thumbnail">';
+        } else {
+            html += '<img src="' + esc(thumbData.value) + '" class="send-preview-thumb" alt="Thumbnail" onerror="this.style.display=\'none\'">';
+        }
     }
 
-    // Pesan
-    html+='<div class="send-preview-msg">'+esc(msg)+'</div>';
+    /* Preview pesan */
+    html += '<div class="send-preview-msg">' + esc(msg) + '</div>';
 
-    // Pilihan mode kirim
-    html+='<div class="fl" style="margin-bottom:8px">Pilih Mode Kirim</div>';
-    html+='<div class="send-modes">';
+    /* Info penerima */
+    html += '<div class="cap-info"><i class="fa-solid fa-user"></i> Dikirim ke: <strong>' + esc(f.name) + '</strong></div>';
 
-    if(thumbData.type!=='none'){
-        html+='<div class="mode-btn active" id="modeImg" onclick="selectMode(\'image\')"><i class="fa-solid fa-image" style="color:var(--wa)"></i> Gambar + Teks <i class="fa-solid fa-circle-check mode-check" style="color:var(--wa)"></i></div>';
-        sendMode='image';
-    }
-    html+='<div class="mode-btn'+(thumbData.type==='none'?' active':'')+'" id="modeTxt" onclick="selectMode(\'text\')"><i class="fa-brands fa-whatsapp" style="color:var(--wa)"></i> Teks Saja <i class="fa-solid fa-circle-check mode-check" style="color:var(--wa)"></i></div>';
-    html+='</div>';
+    /* Pilihan mode kirim */
+    html += '<div class="fl" style="margin-bottom:8px">Pilih Mode Kirim</div>';
+    html += '<div class="send-modes">';
 
-    // Info mode gambar
-    if(thumbData.type!=='none'){
-        html+='<div class="ih" style="margin-top:10px"><i class="fa-solid fa-circle-info"></i> Mode "Gambar + Teks" membuka WhatsApp Web. Paste gambar & teks lalu pilih kontak.</div>';
-    }
-
-    // Info mode teks
-    html+='<div class="ih"><i class="fa-solid fa-circle-info"></i> Mode "Teks Saja" membuka WhatsApp langsung dengan pesan otomatis.</div>';
-
-    document.getElementById('sendPreviewContent').innerHTML=html;
-
-    // Update tombol konfirmasi
-    const btn=document.getElementById('sendConfirmBtn');
-    if(thumbData.type!=='none'){
-        btn.innerHTML='<i class="fa-solid fa-arrow-up-right-from-square"></i> Buka WhatsApp Web';
-    }else{
-        btn.innerHTML='<i class="fa-brands fa-whatsapp"></i> Kirim Sekarang';
+    /* Mode 1: Share API (terbaik di HP) */
+    if (canShare) {
+        var shareActive = hasImg ? ' active' : '';
+        html += '<div class="mode-btn' + shareActive + '" id="modeShare" onclick="selectMode(\'share\')">';
+        html += '<i class="fa-solid fa-share-nodes" style="color:var(--wa);font-size:14px"></i>';
+        html += '<div><div>Share Gambar + Teks</div>';
+        html += '<span class="mode-desc">' + (hasImg ? 'Gambar & teks langsung terkirim ke WhatsApp' : 'Hanya teks yang dikirim (tidak ada gambar)') + '</span></div>';
+        html += '<i class="fa-solid fa-circle-check mode-check" style="color:var(--wa)"></i>';
+        html += '</div>';
+        sendMode = hasImg ? 'share' : 'text';
     }
 
+    /* Mode 2: Teks saja via wa.me */
+    var txtActive = (!canShare || !hasImg) ? ' active' : '';
+    html += '<div class="mode-btn' + txtActive + '" id="modeTxt" onclick="selectMode(\'text\')">';
+    html += '<i class="fa-brands fa-whatsapp" style="color:var(--wa);font-size:14px"></i>';
+    html += '<div><div>Teks Saja (wa.me)</div>';
+    html += '<span class="mode-desc">Buka WhatsApp dengan pesan otomatis di kolom chat</span></div>';
+    html += '<i class="fa-solid fa-circle-check mode-check" style="color:var(--wa)"></i>';
+    html += '</div>';
+
+    /* Mode 3: URL Embed */
+    if (hasImg) {
+        html += '<div class="mode-btn" id="modeEmbed" onclick="selectMode(\'embed\')">';
+        html += '<i class="fa-solid fa-link" style="color:var(--wa);font-size:14px"></i>';
+        html += '<div><div>Gambar sebagai Link</div>';
+        html += '<span class="mode-desc">URL gambar disisipkan di pesan, bisa diklik di WhatsApp</span></div>';
+        html += '<i class="fa-solid fa-circle-check mode-check" style="color:var(--wa)"></i>';
+        html += '</div>';
+    }
+
+    html += '</div>';
+
+    /* Info tambahan */
+    if (canShare && hasImg) {
+        html += '<div class="ih" style="margin-top:12px"><i class="fa-solid fa-circle-info"></i> <span>Mode "Share Gambar + Teks" adalah cara terbaik untuk mengirim gambar langsung ke WhatsApp, terutama dari HP. Pilih WhatsApp dari menu share yang muncul.</span></div>';
+    }
+
+    document.getElementById('sendPreviewContent').innerHTML = html;
+    updateSendBtn();
     document.getElementById('mSend').classList.add('on');
 }
 
-function selectMode(mode){
-    sendMode=mode;
-    document.querySelectorAll('#mSend .mode-btn').forEach(b=>b.classList.remove('active'));
-    if(mode==='image')document.getElementById('modeImg').classList.add('active');
-    else document.getElementById('modeTxt').classList.add('active');
+function selectMode(mode) {
+    sendMode = mode;
+    var btns = document.querySelectorAll('#mSend .mode-btn');
+    for (var i = 0; i < btns.length; i++) btns[i].classList.remove('active');
+    var map = { share: 'modeShare', text: 'modeTxt', embed: 'modeEmbed' };
+    var el = document.getElementById(map[mode]);
+    if (el) el.classList.add('active');
+    updateSendBtn();
+}
 
-    const btn=document.getElementById('sendConfirmBtn');
-    if(mode==='image'){
-        btn.innerHTML='<i class="fa-solid fa-arrow-up-right-from-square"></i> Buka WhatsApp Web';
-    }else{
-        btn.innerHTML='<i class="fa-brands fa-whatsapp"></i> Kirim Sekarang';
+function updateSendBtn() {
+    var btn = document.getElementById('sendConfirmBtn');
+    if (sendMode === 'share') {
+        btn.innerHTML = '<i class="fa-solid fa-share-nodes"></i> Share ke WhatsApp';
+    } else if (sendMode === 'embed') {
+        btn.innerHTML = '<i class="fa-brands fa-whatsapp"></i> Kirim dengan Link Gambar';
+    } else {
+        btn.innerHTML = '<i class="fa-brands fa-whatsapp"></i> Kirim Sekarang';
     }
 }
 
-function confirmSend(){
-    if(sendIdx<0)return;
-    const f=friends[sendIdx];
-    const link=document.getElementById('linkInp').value.trim();
-    const tmpl=document.getElementById('msgInp').value;
-    const msg=tmpl.replace(/\[Nama Teman\]/g,f.name).replace(/\[Link Undangan\]/g,link);
+function confirmSend() {
+    if (sendIdx < 0) return;
+    var f = friends[sendIdx];
+    var link = document.getElementById('linkInp').value.trim();
+    var tmpl = document.getElementById('msgInp').value;
+    var msg = tmpl.replace(/\[Nama Teman\]/g, f.name).replace(/\[Link Undangan\]/g, link);
+    var hasImg = thumbData.type !== 'none';
 
-    if(sendMode==='image'&&thumbData.type!=='none'){
-        // Buka WhatsApp Web + copy teks ke clipboard
-        navigator.clipboard.writeText(msg).then(()=>{
-            window.open('https://web.whatsapp.com','_blank');
-            toast('Teks pesan disalin ke clipboard. Paste di WhatsApp Web lalu kirim gambarnya.','success');
-        }).catch(()=>{
-            // Fallback jika clipboard gagal
-            window.open('https://web.whatsapp.com','_blank');
-            toast('Buka WhatsApp Web. Salin pesan manual lalu kirim gambarnya.','info');
+    /* ---- MODE SHARE: Web Share API ---- */
+    if (sendMode === 'share') {
+        var safeName = f.name.replace(/\s+/g, '-').toLowerCase();
+        getThumbAsFile('undangan-' + safeName + '.jpg').then(function(file) {
+            var shareData = { text: msg };
+            if (file && navigator.canShare && navigator.canShare({ files: [file] })) {
+                shareData.files = [file];
+            }
+            return navigator.share(shareData);
+        }).then(function() {
+            friends[sendIdx].sent = true;
+            svF(); renderF(); upStats(); clM('mSend');
+            toast('Undangan untuk "' + f.name + '" berhasil dibagikan', 'success');
+            launchConfetti();
+            sendIdx = -1;
+        }).catch(function(err) {
+            if (err.name === 'AbortError') { sendIdx = -1; return; }
+            /* Fallback ke teks saja */
+            console.warn('Share API gagal, fallback ke teks:', err);
+            toast('Share gagal. Membuka WhatsApp dengan teks saja...', 'info');
+            window.open('https://api.whatsapp.com/send?text=' + encodeURIComponent(msg), '_blank');
+            friends[sendIdx].sent = true;
+            svF(); renderF(); upStats(); clM('mSend');
+            launchConfetti();
+            sendIdx = -1;
         });
-    }else{
-        // Mode teks langsung
-        window.open('https://api.whatsapp.com/send?text='+encodeURIComponent(msg),'_blank');
-        toast('Undangan untuk "'+f.name+'" dibuka di WhatsApp','success');
-        launchConfetti();
+        return;
     }
 
-    friends[sendIdx].sent=true;
-    svF();renderF();upStats();
-    clM('mSend');
-    sendIdx=-1;
+    /* ---- MODE EMBED: Gambar sebagai URL di pesan ---- */
+    if (sendMode === 'embed' && hasImg) {
+        var imgUrl = thumbData.value;
+        var embedMsg = msg + '\n\n\uD83D\uDDBC\uFE0F Lihat gambar undangannya:\n' + imgUrl;
+        window.open('https://api.whatsapp.com/send?text=' + encodeURIComponent(embedMsg), '_blank');
+        friends[sendIdx].sent = true;
+        svF(); renderF(); upStats(); clM('mSend');
+        toast('Undangan untuk "' + f.name + '" dibuka di WhatsApp (dengan link gambar)', 'success');
+        launchConfetti();
+        sendIdx = -1;
+        return;
+    }
+
+    /* ---- MODE TEKS: wa.me langsung ---- */
+    window.open('https://api.whatsapp.com/send?text=' + encodeURIComponent(msg), '_blank');
+    friends[sendIdx].sent = true;
+    svF(); renderF(); upStats(); clM('mSend');
+    toast('Undangan untuk "' + f.name + '" dibuka di WhatsApp', 'success');
+    launchConfetti();
+    sendIdx = -1;
 }
 
-// ==============================
-// Preview
-// ==============================
-function upPrev(){
-    const t=document.getElementById('msgInp').value;
-    const l=document.getElementById('linkInp').value.trim()||'https://contoh.com/undangan';
-    if(!t.trim()){document.getElementById('prevC').innerHTML='<span style="color:var(--muted);font-style:italic">Pesan akan muncul di sini...</span>';return}
-    document.getElementById('prevC').innerHTML=t.replace(/\[Nama Teman\]/g,'<span class="hn">Rina Saputra</span>').replace(/\[Link Undangan\]/g,'<span class="hl">'+esc(l)+'</span>');
+/* =============================================
+   PREVIEW PESAN
+   ============================================= */
+function upPrev() {
+    var t = document.getElementById('msgInp').value;
+    var l = document.getElementById('linkInp').value.trim() || 'https://contoh.com/undangan';
+    if (!t.trim()) {
+        document.getElementById('prevC').innerHTML = '<span style="color:var(--muted);font-style:italic">Pesan akan muncul di sini...</span>';
+        return;
+    }
+    document.getElementById('prevC').innerHTML = t
+        .replace(/\[Nama Teman\]/g, '<span class="hn">Rina Saputra</span>')
+        .replace(/\[Link Undangan\]/g, '<span class="hl">' + esc(l) + '</span>');
 }
 
-// ==============================
-// Statistik
-// ==============================
-function upStats(){
-    an('sF',friends.length);
-    an('sS',friends.filter(f=>f.sent).length);
-    an('sU',friends.filter(f=>!f.sent).length);
-    an('sG',guests.reduce((s,g)=>s+(g.count||1),0));
-    an('sH',guests.filter(g=>g.status==='hadir').reduce((s,g)=>s+(g.count||1),0));
-    an('sM',guests.filter(g=>g.status==='menunggu').reduce((s,g)=>s+(g.count||1),0));
-}
-function an(id,tg){
-    const el=document.getElementById(id),cur=parseInt(el.textContent)||0;
-    if(cur===tg)return;const st=performance.now(),dur=350;
-    (function s(n){const p=Math.min((n-st)/dur,1),e=1-Math.pow(1-p,3);el.textContent=Math.round(cur+(tg-cur)*e);if(p<1)requestAnimationFrame(s)})(st);
+/* =============================================
+   STATISTIK
+   ============================================= */
+function upStats() {
+    an('sF', friends.length);
+    var sent = 0, unsent = 0;
+    for (var i = 0; i < friends.length; i++) { if (friends[i].sent) sent++; else unsent++; }
+    an('sS', sent);
+    an('sU', unsent);
+
+    var gTotal = 0, gHadir = 0, gMenunggu = 0;
+    for (var j = 0; j < guests.length; j++) {
+        var cnt = guests[j].count || 1;
+        gTotal += cnt;
+        if (guests[j].status === 'hadir') gHadir += cnt;
+        if (guests[j].status === 'menunggu') gMenunggu += cnt;
+    }
+    an('sG', gTotal);
+    an('sH', gHadir);
+    an('sM', gMenunggu);
 }
 
-// ==============================
-// Utilitas
-// ==============================
-function clM(id){document.getElementById(id).classList.remove('on')}
-function toast(m,t){
-    const c=document.getElementById('toastC'),ic={success:'fa-solid fa-circle-check',error:'fa-solid fa-circle-exclamation',info:'fa-solid fa-circle-info'};
-    const tt=document.createElement('div');tt.className='tt tt-'+t[0];tt.innerHTML='<i class="'+ic[t]+'"></i><span>'+esc(m)+'</span>';
-    c.appendChild(tt);setTimeout(()=>{tt.classList.add('to');tt.addEventListener('animationend',()=>tt.remove())},3500);
+function an(id, tg) {
+    var el = document.getElementById(id);
+    var cur = parseInt(el.textContent) || 0;
+    if (cur === tg) return;
+    var st = performance.now();
+    var dur = 350;
+    (function step(n) {
+        var p = Math.min((n - st) / dur, 1);
+        var e = 1 - Math.pow(1 - p, 3);
+        el.textContent = Math.round(cur + (tg - cur) * e);
+        if (p < 1) requestAnimationFrame(step);
+    })(st);
 }
-function esc(s){const d=document.createElement('div');d.textContent=s;return d.innerHTML}
-function launchConfetti(){
-    const cv=document.getElementById('confetti-canvas'),cx=cv.getContext('2d');
-    cv.width=innerWidth;cv.height=innerHeight;
-    const ps=[],cols=['#e8a849','#e85454','#4ecb71','#38bdf8','#c084fc','#f472b6','#fbbf24'];
-    for(let i=0;i<55;i++)ps.push({x:Math.random()*cv.width,y:-20-Math.random()*100,w:Math.max(4,Math.random()*10),h:Math.max(4,Math.random()*6),c:cols[Math.floor(Math.random()*cols.length)],vx:(Math.random()-.5)*4,vy:Math.random()*3+2,r:Math.random()*360,rs:(Math.random()-.5)*10,o:1,d:.005+Math.random()*.008});
-    let aid;(function lp(){cx.clearRect(0,0,cv.width,cv.height);let a=false;ps.forEach(p=>{if(p.o<=0)return;a=true;p.x+=p.vx;p.vy+=.05;p.y+=p.vy;p.r+=p.rs;p.o-=p.d;cx.save();cx.translate(p.x,p.y);cx.rotate(p.r*Math.PI/180);cx.globalAlpha=Math.max(0,p.o);cx.fillStyle=p.c;cx.fillRect(-p.w/2,-p.h/2,p.w,p.h);cx.restore()});if(a)aid=requestAnimationFrame(lp);else{cx.clearRect(0,0,cv.width,cv.height);cancelAnimationFrame(aid)}})();
+
+/* =============================================
+   UTILITAS UMUM
+   ============================================= */
+function clM(id) { document.getElementById(id).classList.remove('on'); }
+
+function toast(m, t) {
+    var c = document.getElementById('toastC');
+    var ic = { success: 'fa-solid fa-circle-check', error: 'fa-solid fa-circle-exclamation', info: 'fa-solid fa-circle-info' };
+    var tt = document.createElement('div');
+    tt.className = 'tt tt-' + t[0];
+    tt.innerHTML = '<i class="' + ic[t] + '"></i><span>' + esc(m) + '</span>';
+    c.appendChild(tt);
+    setTimeout(function() {
+        tt.classList.add('to');
+        tt.addEventListener('animationend', function() { tt.remove(); });
+    }, 3500);
 }
-window.addEventListener('resize',()=>{const cv=document.getElementById('confetti-canvas');cv.width=innerWidth;cv.height=innerHeight});
+
+function esc(s) {
+    var d = document.createElement('div');
+    d.textContent = s;
+    return d.innerHTML;
+}
+
+function launchConfetti() {
+    var cv = document.getElementById('confetti-canvas');
+    var cx = cv.getContext('2d');
+    cv.width = innerWidth;
+    cv.height = innerHeight;
+    var ps = [];
+    var cols = ['#e8a849','#e85454','#4ecb71','#38bdf8','#c084fc','#f472b6','#fbbf24'];
+    for (var i = 0; i < 55; i++) {
+        ps.push({
+            x: Math.random() * cv.width,
+            y: -20 - Math.random() * 100,
+            w: Math.max(4, Math.random() * 10),
+            h: Math.max(4, Math.random() * 6),
+            c: cols[Math.floor(Math.random() * cols.length)],
+            vx: (Math.random() - 0.5) * 4,
+            vy: Math.random() * 3 + 2,
+            r: Math.random() * 360,
+            rs: (Math.random() - 0.5) * 10,
+            o: 1,
+            d: 0.005 + Math.random() * 0.008
+        });
+    }
+    var aid;
+    (function lp() {
+        cx.clearRect(0, 0, cv.width, cv.height);
+        var alive = false;
+        for (var i = 0; i < ps.length; i++) {
+            var p = ps[i];
+            if (p.o <= 0) continue;
+            alive = true;
+            p.x += p.vx;
+            p.vy += 0.05;
+            p.y += p.vy;
+            p.r += p.rs;
+            p.o -= p.d;
+            cx.save();
+            cx.translate(p.x, p.y);
+            cx.rotate(p.r * Math.PI / 180);
+            cx.globalAlpha = Math.max(0, p.o);
+            cx.fillStyle = p.c;
+            cx.fillRect(-p.w / 2, -p.h / 2, p.w, p.h);
+            cx.restore();
+        }
+        if (alive) {
+            aid = requestAnimationFrame(lp);
+        } else {
+            cx.clearRect(0, 0, cv.width, cv.height);
+            cancelAnimationFrame(aid);
+        }
+    })();
+}
+
+window.addEventListener('resize', function() {
+    var cv = document.getElementById('confetti-canvas');
+    cv.width = innerWidth;
+    cv.height = innerHeight;
+});
+
+/* Jalankan */
 init();
 </script>
 </body>
