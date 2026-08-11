@@ -357,7 +357,7 @@
         <div class="fg">
             <label class="fl" for="linkInp">URL Undangan</label>
             <input type="url" class="fi" id="linkInp" placeholder="https://contoh.com/undangan-ulang-tahun" oninput="svL()">
-            <div class="ih"><i class="fa-solid fa-circle-info"></i> Otomatis tersimpan di browser</div>
+            <div class="ih"><i class="fa-solid fa-circle-info"></i> Otomatis tersimpan di browser. Link ini wajib diisi dan akan selalu disertakan di pesan WhatsApp.</div>
         </div>
     </section>
 
@@ -370,7 +370,7 @@
         <div class="fg">
             <label class="fl" for="msgInp">Isi Pesan</label>
             <textarea class="fi" id="msgInp" oninput="svMsg();upPrev()" placeholder="Tulis pesan undangan..."></textarea>
-            <div class="ih"><i class="fa-solid fa-circle-info"></i> Gunakan <strong>[Nama Teman]</strong> dan <strong>[Link Undangan]</strong> sebagai placeholder</div>
+            <div class="ih"><i class="fa-solid fa-circle-info"></i> Gunakan <strong>[Nama Teman]</strong> dan <strong>[Link Undangan]</strong> sebagai placeholder. Jika placeholder link tidak ditulis, link undangan akan otomatis ditambahkan di akhir pesan.</div>
         </div>
         <div class="pbox">
             <div class="pc" id="prevC">Pesan akan muncul di sini...</div>
@@ -383,11 +383,11 @@
 /* =============================================
    KONSTANTA & STATE
    ============================================= */
-var SKF = 'bday_f_v5';
-var SKG = 'bday_g_v5';
-var SKL = 'bday_l_v5';
-var SKM = 'bday_m_v5';
-var SKT = 'bday_thumb_v5';
+var SKF = 'bday_f_v6';
+var SKG = 'bday_g_v6';
+var SKL = 'bday_l_v6';
+var SKM = 'bday_m_v6';
+var SKT = 'bday_thumb_v6';
 
 var COLS = ['#e8a849','#e85454','#4ecb71','#38bdf8','#c084fc','#f472b6','#fb923c','#a3e635','#22d3ee','#f87171','#fbbf24','#34d399'];
 
@@ -586,6 +586,33 @@ function upThumbUI() {
 }
 
 /* =============================================
+   BANGUN PESAN FINAL (PASTIKAN LINK SELALU ADA)
+   ============================================= */
+function buildFinalMsg(friendName, link) {
+    var tmpl = document.getElementById('msgInp').value;
+
+    /* Ganti placeholder nama */
+    var msg = tmpl.replace(/\[Nama Teman\]/g, friendName);
+
+    /* Cek apakah template sudah mengandung placeholder link */
+    var hasLinkPlaceholder = /\[Link Undangan\]/.test(tmpl);
+
+    if (hasLinkPlaceholder) {
+        /* Ganti placeholder dengan link asli */
+        msg = msg.replace(/\[Link Undangan\]/g, link);
+    } else {
+        /* Placeholder tidak ada di template — cek apakah link sudah ditulis manual */
+        if (msg.indexOf(link) === -1) {
+            /* Link belum ada di pesan, tambahkan di akhir */
+            msg = msg + '\n\n\uD83D\uDC49 Buka undangannya di sini:\n' + link;
+        }
+        /* Jika link sudah ada di teks manual, biarkan apa adanya */
+    }
+
+    return msg;
+}
+
+/* =============================================
    RENDER: DAFTAR TEMAN
    ============================================= */
 function renderF() {
@@ -665,7 +692,7 @@ function renderG() {
 }
 
 /* =============================================
-   KIRIM LANGSUNG KE WHATSAPP
+   KIRIM LANGSUNG KE WHATSAPP (LINK SELALU TERKIRIM)
    ============================================= */
 function sendWA(i) {
     var link = document.getElementById('linkInp').value.trim();
@@ -673,12 +700,14 @@ function sendWA(i) {
     if (link.indexOf('http://') !== 0 && link.indexOf('https://') !== 0) { toast('Link harus diawali http:// atau https://', 'error'); document.getElementById('linkInp').focus(); return; }
 
     var f = friends[i];
-    var tmpl = document.getElementById('msgInp').value;
-    var msg = tmpl.replace(/\[Nama Teman\]/g, f.name).replace(/\[Link Undangan\]/g, link);
+
+    /* Bangun pesan — link dijamin selalu ada di dalamnya */
+    var msg = buildFinalMsg(f.name, link);
+
     var hasImg = thumbData.type !== 'none';
 
     if (hasImg && canShare) {
-        /* Di HP + ada gambar: Share API langsung buka WhatsApp dengan gambar terlampir */
+        /* HP + ada gambar: Share API — gambar terlampir + pesan berisi link */
         var safeName = f.name.replace(/\s+/g, '-').toLowerCase();
         getThumbAsFile('undangan-' + safeName + '.jpg').then(function(file) {
             var shareData = { text: msg };
@@ -689,19 +718,20 @@ function sendWA(i) {
         }).then(function() {
             friends[i].sent = true;
             svF(); renderF(); upStats();
-            toast('Undangan untuk "' + f.name + '" berhasil dibagikan', 'success');
+            toast('Undangan untuk "' + f.name + '" berhasil dibagikan ke WhatsApp', 'success');
             launchConfetti();
         }).catch(function(err) {
             if (err.name === 'AbortError') return;
-            /* Fallback: buka wa.me dengan pesan teks + link gambar */
+            /* Fallback: kirim teks + link gambar via wa.me */
             var fallback = msg + '\n\n\uD83D\uDDBC\uFE0F Lihat gambar undangannya:\n' + thumbData.value;
             window.open('https://api.whatsapp.com/send?text=' + encodeURIComponent(fallback), '_blank');
             friends[i].sent = true;
             svF(); renderF(); upStats();
+            toast('Undangan untuk "' + f.name + '" dibuka di WhatsApp', 'success');
             launchConfetti();
         });
     } else if (hasImg && !canShare) {
-        /* Di desktop + ada gambar: sisipkan URL gambar di pesan */
+        /* Desktop + ada gambar: teks berisi link + URL gambar di akhir */
         var embedMsg = msg + '\n\n\uD83D\uDDBC\uFE0F Lihat gambar undangannya:\n' + thumbData.value;
         window.open('https://api.whatsapp.com/send?text=' + encodeURIComponent(embedMsg), '_blank');
         friends[i].sent = true;
@@ -709,7 +739,7 @@ function sendWA(i) {
         toast('Undangan untuk "' + f.name + '" dibuka di WhatsApp', 'success');
         launchConfetti();
     } else {
-        /* Tanpa gambar: buka wa.me langsung */
+        /* Tanpa gambar: langsung buka wa.me dengan pesan berisi link */
         window.open('https://api.whatsapp.com/send?text=' + encodeURIComponent(msg), '_blank');
         friends[i].sent = true;
         svF(); renderF(); upStats();
@@ -843,9 +873,18 @@ function upPrev() {
         document.getElementById('prevC').innerHTML = '<span style="color:var(--muted);font-style:italic">Pesan akan muncul di sini...</span>';
         return;
     }
-    document.getElementById('prevC').innerHTML = t
-        .replace(/\[Nama Teman\]/g, '<span class="hn">Rina Saputra</span>')
-        .replace(/\[Link Undangan\]/g, '<span class="hl">' + esc(l) + '</span>');
+
+    /* Gunakan logika yang sama dengan buildFinalMsg untuk preview yang akurat */
+    var previewHtml = t.replace(/\[Nama Teman\]/g, '<span class="hn">Rina Saputra</span>');
+    var hasLinkPlaceholder = /\[Link Undangan\]/.test(t);
+
+    if (hasLinkPlaceholder) {
+        previewHtml = previewHtml.replace(/\[Link Undangan\]/g, '<span class="hl">' + esc(l) + '</span>');
+    } else if (t.indexOf(l) === -1) {
+        previewHtml += '\n\n\uD83D\uDC49 Buka undangannya di sini:\n<span class="hl">' + esc(l) + '</span>';
+    }
+
+    document.getElementById('prevC').innerHTML = previewHtml;
 }
 
 /* =============================================
