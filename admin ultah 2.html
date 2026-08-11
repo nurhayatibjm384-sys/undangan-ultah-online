@@ -1,0 +1,1506 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UndanganKu — Admin Panel</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,200..700;1,9..40,200..700&family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        :root {
+            --bg: #FAF7F2;
+            --fg: #2D2319;
+            --muted: #9C8B7A;
+            --accent: #C8956C;
+            --accent-hover: #B37E56;
+            --card: #FFFFFF;
+            --border: #E8DFD5;
+            --input-bg: #FDFCFA;
+            --success: #5A8F6B;
+            --glow: rgba(200, 149, 108, 0.15);
+            --wa: #25D366;
+            --wa-hover: #1EBE57;
+            --wa-glow: rgba(37, 211, 102, 0.12);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: var(--bg);
+            color: var(--fg);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, .font-display {
+            font-family: 'Playfair Display', serif;
+        }
+
+        .bg-decoration {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+        }
+        .bg-decoration::before {
+            content: '';
+            position: absolute;
+            top: -20%;
+            right: -10%;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, var(--glow) 0%, transparent 70%);
+            border-radius: 50%;
+            animation: floatBlob 18s ease-in-out infinite;
+        }
+        .bg-decoration::after {
+            content: '';
+            position: absolute;
+            bottom: -15%;
+            left: -10%;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(200,149,108,0.08) 0%, transparent 70%);
+            border-radius: 50%;
+            animation: floatBlob 22s ease-in-out infinite reverse;
+        }
+
+        @keyframes floatBlob {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            33% { transform: translate(30px, -20px) scale(1.05); }
+            66% { transform: translate(-20px, 15px) scale(0.95); }
+        }
+
+        .pattern-overlay {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 0;
+            opacity: 0.025;
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%232D2319' fill-opacity='1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 14px 16px;
+            background: var(--input-bg);
+            border: 1.5px solid var(--border);
+            border-radius: 12px;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 15px;
+            color: var(--fg);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            outline: none;
+        }
+        .form-input:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 4px var(--glow);
+            background: #fff;
+        }
+        .form-input::placeholder {
+            color: var(--muted);
+            opacity: 0.6;
+        }
+        textarea.form-input {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--fg);
+            margin-bottom: 8px;
+            letter-spacing: 0.02em;
+        }
+        .form-label .label-icon {
+            color: var(--accent);
+            margin-right: 6px;
+            font-size: 12px;
+        }
+
+        .btn-primary {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            padding: 16px 32px;
+            background: var(--accent);
+            color: #fff;
+            border: none;
+            border-radius: 14px;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+        .btn-primary::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(255,255,255,0.15) 0%, transparent 50%);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        .btn-primary:hover {
+            background: var(--accent-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(200, 149, 108, 0.35);
+        }
+        .btn-primary:hover::before { opacity: 1; }
+        .btn-primary:active { transform: translateY(0); }
+
+        .btn-secondary {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 12px 20px;
+            background: transparent;
+            color: var(--accent);
+            border: 1.5px solid var(--border);
+            border-radius: 12px;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .btn-secondary:hover {
+            border-color: var(--accent);
+            background: var(--glow);
+        }
+
+        .btn-whatsapp {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            padding: 14px 22px;
+            background: var(--wa);
+            color: #fff;
+            border: none;
+            border-radius: 14px;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+        .btn-whatsapp::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(255,255,255,0.18) 0%, transparent 50%);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        .btn-whatsapp:hover {
+            background: var(--wa-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 28px rgba(37, 211, 102, 0.35);
+        }
+        .btn-whatsapp:hover::before { opacity: 1; }
+        .btn-whatsapp:active { transform: translateY(0); }
+        .btn-whatsapp i { font-size: 17px; }
+
+        .btn-whatsapp-sm {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 10px 16px;
+            background: var(--wa);
+            color: #fff;
+            border: none;
+            border-radius: 12px;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .btn-whatsapp-sm:hover {
+            background: var(--wa-hover);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 16px rgba(37, 211, 102, 0.3);
+        }
+        .btn-whatsapp-sm:active { transform: translateY(0); }
+
+        .card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            box-shadow: 0 1px 3px rgba(45,35,25,0.04), 0 8px 32px rgba(45,35,25,0.06);
+            transition: box-shadow 0.4s;
+        }
+        .card:hover {
+            box-shadow: 0 1px 3px rgba(45,35,25,0.04), 0 12px 40px rgba(45,35,25,0.09);
+        }
+
+        .link-box {
+            background: var(--input-bg);
+            border: 1.5px dashed var(--border);
+            border-radius: 14px;
+            padding: 16px 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            transition: all 0.3s;
+            word-break: break-all;
+        }
+        .link-box.copied {
+            border-color: var(--success);
+            border-style: solid;
+            background: rgba(90, 143, 107, 0.05);
+        }
+
+        .toast-container {
+            position: fixed;
+            top: 24px;
+            right: 24px;
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .toast {
+            padding: 14px 20px;
+            border-radius: 14px;
+            font-size: 14px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transform: translateX(120%);
+            opacity: 0;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 8px 30px rgba(0,0,0,0.12);
+            max-width: 380px;
+        }
+        .toast.show {
+            transform: translateX(0);
+            opacity: 1;
+        }
+        .toast.success {
+            background: #f0f7f2;
+            color: var(--success);
+            border: 1px solid rgba(90,143,107,0.2);
+        }
+        .toast.error {
+            background: #fdf2f2;
+            color: #b44a4a;
+            border: 1px solid rgba(180,74,74,0.15);
+        }
+        .toast.info {
+            background: #fef8f0;
+            color: var(--accent);
+            border: 1px solid rgba(200,149,108,0.2);
+        }
+
+        .invite-preview {
+            background: linear-gradient(160deg, #FFFDF9 0%, #FBF5ED 100%);
+            border-radius: 16px;
+            border: 1px solid var(--border);
+            padding: 32px 28px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .invite-preview::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--accent), #E4C5A0, var(--accent));
+        }
+        .invite-preview .deco-line {
+            width: 60px;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--accent), transparent);
+            margin: 0 auto;
+        }
+
+        .saved-item {
+            padding: 16px 20px;
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            background: var(--card);
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+        .saved-item:hover {
+            border-color: var(--accent);
+            box-shadow: 0 4px 20px var(--glow);
+            transform: translateY(-1px);
+        }
+
+        .fade-up {
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeUp 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+        }
+        @keyframes fadeUp {
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .sidebar {
+            position: fixed;
+            left: 0; top: 0; bottom: 0;
+            width: 260px;
+            background: var(--card);
+            border-right: 1px solid var(--border);
+            padding: 32px 24px;
+            z-index: 50;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .sidebar-nav-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 16px;
+            border-radius: 12px;
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--muted);
+            cursor: pointer;
+            transition: all 0.25s;
+            margin-bottom: 4px;
+        }
+        .sidebar-nav-item:hover {
+            background: var(--glow);
+            color: var(--fg);
+        }
+        .sidebar-nav-item.active {
+            background: var(--glow);
+            color: var(--accent);
+            font-weight: 600;
+        }
+        .sidebar-nav-item i { width: 20px; text-align: center; font-size: 15px; }
+
+        .main-content {
+            margin-left: 260px;
+            padding: 40px;
+            min-height: 100vh;
+            position: relative;
+            z-index: 1;
+        }
+
+        .stat-card {
+            padding: 20px 24px;
+            border-radius: 16px;
+            border: 1px solid var(--border);
+            background: var(--card);
+            transition: all 0.3s;
+        }
+        .stat-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(45,35,25,0.07);
+        }
+
+        .mobile-header {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            height: 64px;
+            background: var(--card);
+            border-bottom: 1px solid var(--border);
+            z-index: 60;
+            align-items: center;
+            padding: 0 20px;
+            justify-content: space-between;
+        }
+        .hamburger {
+            width: 40px; height: 40px;
+            display: flex; align-items: center; justify-content: center;
+            border-radius: 10px;
+            border: 1px solid var(--border);
+            background: transparent;
+            cursor: pointer;
+            color: var(--fg);
+            font-size: 18px;
+            transition: all 0.2s;
+        }
+        .hamburger:hover { background: var(--glow); }
+
+        .sidebar-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(45,35,25,0.3);
+            backdrop-filter: blur(4px);
+            z-index: 45;
+        }
+
+        .modal-backdrop {
+            position: fixed;
+            inset: 0;
+            background: rgba(45,35,25,0.4);
+            backdrop-filter: blur(6px);
+            z-index: 100;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        .modal-backdrop.active {
+            display: flex;
+            opacity: 1;
+        }
+        .modal-box {
+            background: var(--card);
+            border-radius: 20px;
+            padding: 32px;
+            max-width: 400px;
+            width: 90%;
+            text-align: center;
+            transform: scale(0.9);
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .modal-backdrop.active .modal-box { transform: scale(1); }
+
+        @keyframes waPulse {
+            0% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.4); }
+            70% { box-shadow: 0 0 0 12px rgba(37, 211, 102, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0); }
+        }
+        .btn-whatsapp.pulse-once {
+            animation: waPulse 0.8s ease-out;
+        }
+
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--muted); }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 4px 10px;
+            border-radius: 8px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        @media (max-width: 768px) {
+            .sidebar { transform: translateX(-100%); z-index: 55; }
+            .sidebar.open { transform: translateX(0); }
+            .sidebar-overlay.open { display: block; }
+            .mobile-header { display: flex; }
+            .main-content { margin-left: 0; padding: 84px 20px 40px; }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="bg-decoration"></div>
+    <div class="pattern-overlay"></div>
+
+    <div class="toast-container" id="toastContainer"></div>
+
+    <!-- Mobile header -->
+    <div class="mobile-header">
+        <button class="hamburger" id="hamburgerBtn" aria-label="Buka menu">
+            <i class="fas fa-bars"></i>
+        </button>
+        <div style="display:flex;align-items:center;gap:10px;">
+            <div style="width:32px;height:32px;background:var(--accent);border-radius:10px;display:flex;align-items:center;justify-content:center;">
+                <i class="fas fa-envelope-open-text" style="color:#fff;font-size:14px;"></i>
+            </div>
+            <span class="font-display" style="font-weight:700;font-size:18px;color:var(--fg);">UndanganKu</span>
+        </div>
+        <div style="width:40px;"></div>
+    </div>
+
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
+        <div style="margin-bottom:40px;">
+            <div style="display:flex;align-items:center;gap:12px;margin-bottom:6px;">
+                <div style="width:40px;height:40px;background:var(--accent);border-radius:12px;display:flex;align-items:center;justify-content:center;">
+                    <i class="fas fa-envelope-open-text" style="color:#fff;font-size:16px;"></i>
+                </div>
+                <span class="font-display" style="font-weight:700;font-size:22px;color:var(--fg);">UndanganKu</span>
+            </div>
+            <p style="font-size:12px;color:var(--muted);margin-left:52px;margin-top:-2px;">Admin Panel</p>
+        </div>
+
+        <nav style="flex:1;">
+            <div class="sidebar-nav-item active" data-page="create" onclick="switchPage('create')">
+                <i class="fas fa-plus-circle"></i>
+                <span>Buat Undangan</span>
+            </div>
+            <div class="sidebar-nav-item" data-page="list" onclick="switchPage('list')">
+                <i class="fas fa-list-ul"></i>
+                <span>Daftar Undangan</span>
+            </div>
+            <div class="sidebar-nav-item" data-page="preview" onclick="switchPage('preview')">
+                <i class="fas fa-eye"></i>
+                <span>Preview</span>
+            </div>
+        </nav>
+
+        <div style="padding-top:20px;border-top:1px solid var(--border);">
+            <div style="display:flex;align-items:center;gap:12px;">
+                <div style="width:36px;height:36px;border-radius:10px;background:var(--glow);display:flex;align-items:center;justify-content:center;">
+                    <i class="fas fa-user" style="color:var(--accent);font-size:13px;"></i>
+                </div>
+                <div>
+                    <div style="font-size:13px;font-weight:600;color:var(--fg);">Admin</div>
+                    <div style="font-size:11px;color:var(--muted);">admin@undanganku.id</div>
+                </div>
+            </div>
+        </div>
+    </aside>
+
+    <!-- Konten Utama -->
+    <main class="main-content" id="mainContent">
+
+        <!-- === HALAMAN BUAT UNDANGAN === -->
+        <section id="pageCreate" class="fade-up">
+            <div style="margin-bottom:36px;">
+                <h1 class="font-display" style="font-size:28px;font-weight:700;color:var(--fg);margin-bottom:6px;">Buat Undangan Baru</h1>
+                <p style="font-size:15px;color:var(--muted);">Isi detail di bawah untuk membuat undangan ulang tahun digital</p>
+            </div>
+
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:28px;align-items:start;" id="formGrid">
+                <!-- Form kiri -->
+                <div class="card" style="padding:32px;">
+                    <div id="inviteForm">
+                        <div style="margin-bottom:24px;">
+                            <label class="form-label" for="inputHonored">
+                                <i class="fas fa-user-tie label-icon"></i>Nama yang Terhormat
+                            </label>
+                            <input type="text" class="form-input" id="inputHonored" placeholder="cth: Bapak Ahmad dan Ibu Sari" autocomplete="off">
+                            <p class="field-error" id="errorHonored" style="font-size:12px;color:#b44a4a;margin-top:6px;display:none;"></p>
+                        </div>
+
+                        <div style="margin-bottom:24px;">
+                            <label class="form-label" for="inputBirthday">
+                                <i class="fas fa-birthday-cake label-icon"></i>Nama Yang Berulang Tahun
+                            </label>
+                            <input type="text" class="form-input" id="inputBirthday" placeholder="cth: Rizky Pratama" autocomplete="off">
+                            <p class="field-error" id="errorBirthday" style="font-size:12px;color:#b44a4a;margin-top:6px;display:none;"></p>
+                        </div>
+
+                        <div style="display:grid;grid-template-columns:2fr 1fr;gap:14px;margin-bottom:24px;">
+                            <div>
+                                <label class="form-label" for="inputDate">
+                                    <i class="fas fa-calendar-alt label-icon"></i>Hari & Tanggal
+                                </label>
+                                <input type="date" class="form-input" id="inputDate">
+                                <p class="field-error" id="errorDate" style="font-size:12px;color:#b44a4a;margin-top:6px;display:none;"></p>
+                            </div>
+                            <div>
+                                <label class="form-label" for="inputTime">
+                                    <i class="fas fa-clock label-icon"></i>Waktu
+                                </label>
+                                <input type="time" class="form-input" id="inputTime">
+                                <p class="field-error" id="errorTime" style="font-size:12px;color:#b44a4a;margin-top:6px;display:none;"></p>
+                            </div>
+                        </div>
+
+                        <div style="margin-bottom:24px;">
+                            <label class="form-label" for="inputLocation">
+                                <i class="fas fa-map-marker-alt label-icon"></i>Lokasi / Alamat
+                            </label>
+                            <textarea class="form-input" id="inputLocation" placeholder="cth: Jl. Merdeka No. 45, Jakarta Selatan" rows="2"></textarea>
+                            <p class="field-error" id="errorLocation" style="font-size:12px;color:#b44a4a;margin-top:6px;display:none;"></p>
+                        </div>
+
+                        <div style="margin-bottom:28px;">
+                            <label class="form-label" for="inputMessage">
+                                <i class="fas fa-heart label-icon"></i>Kalimat Ucapan
+                            </label>
+                            <textarea class="form-input" id="inputMessage" placeholder="cth: Semoga panjang umur, sehat selalu, dan segala impian tercapai. Selamat ulang tahun!" rows="4"></textarea>
+                            <div style="display:flex;justify-content:space-between;margin-top:6px;">
+                                <p class="field-error" id="errorMessage" style="font-size:12px;color:#b44a4a;display:none;"></p>
+                                <span style="font-size:12px;color:var(--muted);margin-left:auto;" id="charCount">0 / 500</span>
+                            </div>
+                        </div>
+
+                        <div style="display:flex;gap:12px;">
+                            <button type="button" class="btn-primary" style="flex:1;" id="btnGenerate" onclick="generateLink()">
+                                <i class="fas fa-link"></i>
+                                Buat Link Undangan
+                            </button>
+                            <button type="button" class="btn-secondary" onclick="resetForm()" title="Reset form">
+                                <i class="fas fa-redo-alt"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Hasil kanan -->
+                <div>
+                    <!-- Link hasil -->
+                    <div class="card" style="padding:28px;margin-bottom:20px;" id="resultCard">
+                        <div style="display:flex;align-items:center;gap:10px;margin-bottom:18px;">
+                            <div style="width:36px;height:36px;border-radius:10px;background:var(--glow);display:flex;align-items:center;justify-content:center;">
+                                <i class="fas fa-link" style="color:var(--accent);font-size:14px;"></i>
+                            </div>
+                            <div>
+                                <h3 style="font-size:15px;font-weight:700;color:var(--fg);font-family:'DM Sans',sans-serif;">Link Undangan</h3>
+                                <p style="font-size:12px;color:var(--muted);">Bagikan link ini ke penerima undangan</p>
+                            </div>
+                        </div>
+                        <div class="link-box" id="linkBox">
+                            <i class="fas fa-globe" style="color:var(--muted);font-size:14px;flex-shrink:0;"></i>
+                            <span style="flex:1;font-size:13px;color:var(--muted);font-family:monospace;" id="linkText">Belum ada link yang dibuat</span>
+                        </div>
+
+                        <div style="margin-top:16px;display:flex;flex-direction:column;gap:10px;" id="linkActionsContainer">
+                            <button type="button" class="btn-whatsapp" style="width:100%;display:none;" id="btnWhatsApp" onclick="shareWhatsApp()">
+                                <i class="fab fa-whatsapp"></i>
+                                Kirim via WhatsApp
+                            </button>
+                            <div style="display:flex;gap:10px;">
+                                <button type="button" class="btn-secondary" style="flex:1;display:none;" id="btnCopy" onclick="copyLink()">
+                                    <i class="fas fa-copy"></i> Salin Link
+                                </button>
+                                <button type="button" class="btn-secondary" style="flex:1;display:none;" id="btnShare" onclick="shareLink()">
+                                    <i class="fas fa-share-alt"></i> Bagikan
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Preview mini -->
+                    <div class="card" style="padding:28px;">
+                        <div style="display:flex;align-items:center;gap:10px;margin-bottom:18px;">
+                            <div style="width:36px;height:36px;border-radius:10px;background:var(--glow);display:flex;align-items:center;justify-content:center;">
+                                <i class="fas fa-eye" style="color:var(--accent);font-size:14px;"></i>
+                            </div>
+                            <div>
+                                <h3 style="font-size:15px;font-weight:700;color:var(--fg);font-family:'DM Sans',sans-serif;">Preview Undangan</h3>
+                                <p style="font-size:12px;color:var(--muted);">Tampilan undangan yang akan diterima</p>
+                            </div>
+                        </div>
+                        <div class="invite-preview" id="miniPreview">
+                            <p style="font-size:11px;text-transform:uppercase;letter-spacing:0.15em;color:var(--muted);margin-bottom:12px;">Undangan Ulang Tahun</p>
+                            <p style="font-size:13px;color:var(--muted);margin-bottom:4px;">Kepada Yth.</p>
+                            <h2 class="font-display" style="font-size:22px;font-weight:700;color:var(--fg);margin-bottom:16px;" id="previewHonored">—</h2>
+                            <div class="deco-line" style="margin-bottom:16px;"></div>
+                            <p style="font-size:13px;color:var(--muted);margin-bottom:4px;">Anda diundang dalam acara ulang tahun</p>
+                            <h2 class="font-display" style="font-size:24px;font-weight:700;color:var(--accent);margin-bottom:16px;" id="previewBirthday">—</h2>
+                            <div class="deco-line" style="margin-bottom:16px;"></div>
+                            <div style="display:flex;justify-content:center;gap:24px;margin-bottom:16px;">
+                                <div>
+                                    <i class="fas fa-calendar-alt" style="color:var(--accent);font-size:13px;margin-bottom:4px;display:block;"></i>
+                                    <p style="font-size:13px;font-weight:600;color:var(--fg);" id="previewDate">—</p>
+                                </div>
+                                <div>
+                                    <i class="fas fa-clock" style="color:var(--accent);font-size:13px;margin-bottom:4px;display:block;"></i>
+                                    <p style="font-size:13px;font-weight:600;color:var(--fg);" id="previewTime">—</p>
+                                </div>
+                            </div>
+                            <div style="margin-bottom:16px;">
+                                <i class="fas fa-map-marker-alt" style="color:var(--accent);font-size:13px;margin-bottom:4px;display:block;"></i>
+                                <p style="font-size:13px;color:var(--fg);" id="previewLocation">—</p>
+                            </div>
+                            <div class="deco-line" style="margin-bottom:16px;"></div>
+                            <p style="font-size:13px;font-style:italic;color:var(--muted);line-height:1.7;" id="previewMessage">—</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- === HALAMAN DAFTAR UNDANGAN === -->
+        <section id="pageList" class="fade-up" style="display:none;">
+            <div style="margin-bottom:36px;">
+                <h1 class="font-display" style="font-size:28px;font-weight:700;color:var(--fg);margin-bottom:6px;">Daftar Undangan</h1>
+                <p style="font-size:15px;color:var(--muted);">Kelola semua undangan yang sudah dibuat</p>
+            </div>
+
+            <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:32px;" id="statsGrid">
+                <div class="stat-card">
+                    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;">
+                        <span style="font-size:13px;color:var(--muted);font-weight:500;">Total Undangan</span>
+                        <div style="width:32px;height:32px;border-radius:9px;background:var(--glow);display:flex;align-items:center;justify-content:center;">
+                            <i class="fas fa-envelope" style="color:var(--accent);font-size:13px;"></i>
+                        </div>
+                    </div>
+                    <p style="font-size:28px;font-weight:700;color:var(--fg);" id="statTotal">0</p>
+                </div>
+                <div class="stat-card">
+                    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;">
+                        <span style="font-size:13px;color:var(--muted);font-weight:500;">Bulan Ini</span>
+                        <div style="width:32px;height:32px;border-radius:9px;background:rgba(90,143,107,0.1);display:flex;align-items:center;justify-content:center;">
+                            <i class="fas fa-chart-line" style="color:var(--success);font-size:13px;"></i>
+                        </div>
+                    </div>
+                    <p style="font-size:28px;font-weight:700;color:var(--fg);" id="statMonth">0</p>
+                </div>
+                <div class="stat-card">
+                    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;">
+                        <span style="font-size:13px;color:var(--muted);font-weight:500;">Minggu Ini</span>
+                        <div style="width:32px;height:32px;border-radius:9px;background:rgba(200,149,108,0.1);display:flex;align-items:center;justify-content:center;">
+                            <i class="fas fa-calendar-week" style="color:var(--accent);font-size:13px;"></i>
+                        </div>
+                    </div>
+                    <p style="font-size:28px;font-weight:700;color:var(--fg);" id="statWeek">0</p>
+                </div>
+            </div>
+
+            <div style="margin-bottom:20px;position:relative;max-width:400px;">
+                <i class="fas fa-search" style="position:absolute;left:16px;top:50%;transform:translateY(-50%);color:var(--muted);font-size:14px;"></i>
+                <input type="text" class="form-input" style="padding-left:42px;" placeholder="Cari undangan..." id="searchInput" oninput="renderList()">
+            </div>
+
+            <div id="inviteList" style="display:flex;flex-direction:column;gap:12px;"></div>
+            <div id="emptyState" style="display:none;text-align:center;padding:60px 20px;">
+                <div style="width:64px;height:64px;border-radius:20px;background:var(--glow);display:inline-flex;align-items:center;justify-content:center;margin-bottom:16px;">
+                    <i class="fas fa-inbox" style="color:var(--accent);font-size:24px;"></i>
+                </div>
+                <h3 style="font-size:17px;font-weight:600;color:var(--fg);margin-bottom:6px;font-family:'DM Sans',sans-serif;">Belum ada undangan</h3>
+                <p style="font-size:14px;color:var(--muted);margin-bottom:20px;">Mulai buat undangan pertama Anda</p>
+                <button type="button" class="btn-primary" onclick="switchPage('create')">
+                    <i class="fas fa-plus"></i> Buat Undangan
+                </button>
+            </div>
+        </section>
+
+        <!-- === HALAMAN PREVIEW === -->
+        <section id="pagePreview" class="fade-up" style="display:none;">
+            <div style="margin-bottom:36px;">
+                <h1 class="font-display" style="font-size:28px;font-weight:700;color:var(--fg);margin-bottom:6px;">Preview Undangan</h1>
+                <p style="font-size:15px;color:var(--muted);">Tampilan penuh undangan yang akan diterima tamu</p>
+            </div>
+            <div style="max-width:480px;margin:0 auto;" id="fullPreviewContainer">
+                <div class="card" style="padding:0;overflow:hidden;" id="fullPreviewCard">
+                    <div style="padding:16px 20px;font-size:13px;color:var(--muted);border-bottom:1px solid var(--border);display:flex;align-items:center;gap:8px;background:var(--input-bg);">
+                        <i class="fas fa-mobile-alt" style="font-size:12px;"></i>
+                        <span>Tampilan mobile</span>
+                    </div>
+                    <div style="padding:40px 32px;text-align:center;background:linear-gradient(180deg,#FFFEFB 0%,#FBF5ED 100%);min-height:600px;" id="fullPreviewContent">
+                        <p style="font-size:11px;text-transform:uppercase;letter-spacing:0.2em;color:var(--muted);margin-bottom:20px;">Undangan Ulang Tahun</p>
+                        <p style="font-size:14px;color:var(--muted);margin-bottom:6px;">Kepada Yth.</p>
+                        <h2 class="font-display" style="font-size:28px;font-weight:700;color:var(--fg);margin-bottom:24px;word-break:break-word;" id="fpHonored">—</h2>
+                        <div style="width:80px;height:1.5px;background:linear-gradient(90deg,transparent,var(--accent),transparent);margin:0 auto 24px;"></div>
+                        <p style="font-size:14px;color:var(--muted);margin-bottom:6px;">Anda diundang dalam acara ulang tahun</p>
+                        <h2 class="font-display" style="font-size:32px;font-weight:700;color:var(--accent);margin-bottom:28px;word-break:break-word;" id="fpBirthday">—</h2>
+                        <div style="width:80px;height:1.5px;background:linear-gradient(90deg,transparent,var(--accent),transparent);margin:0 auto 28px;"></div>
+                        <div style="display:flex;justify-content:center;gap:36px;margin-bottom:28px;">
+                            <div>
+                                <i class="fas fa-calendar-alt" style="color:var(--accent);font-size:16px;margin-bottom:8px;display:block;"></i>
+                                <p style="font-size:15px;font-weight:600;color:var(--fg);" id="fpDate">—</p>
+                            </div>
+                            <div>
+                                <i class="fas fa-clock" style="color:var(--accent);font-size:16px;margin-bottom:8px;display:block;"></i>
+                                <p style="font-size:15px;font-weight:600;color:var(--fg);" id="fpTime">—</p>
+                            </div>
+                        </div>
+                        <div style="margin-bottom:28px;">
+                            <i class="fas fa-map-marker-alt" style="color:var(--accent);font-size:16px;margin-bottom:8px;display:block;"></i>
+                            <p style="font-size:14px;color:var(--fg);line-height:1.6;word-break:break-word;" id="fpLocation">—</p>
+                        </div>
+                        <div style="width:80px;height:1.5px;background:linear-gradient(90deg,transparent,var(--accent),transparent);margin:0 auto 28px;"></div>
+                        <p style="font-size:14px;font-style:italic;color:var(--muted);line-height:1.8;max-width:360px;margin:0 auto 32px;word-break:break-word;" id="fpMessage">—</p>
+                        <p style="font-size:12px;color:var(--muted);opacity:0.6;">Dibuat dengan UndanganKu</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Modal Hapus -->
+    <div class="modal-backdrop" id="deleteModal">
+        <div class="modal-box">
+            <div style="width:56px;height:56px;border-radius:16px;background:rgba(180,74,74,0.08);display:inline-flex;align-items:center;justify-content:center;margin-bottom:16px;">
+                <i class="fas fa-trash-alt" style="color:#b44a4a;font-size:20px;"></i>
+            </div>
+            <h3 style="font-size:18px;font-weight:700;color:var(--fg);margin-bottom:8px;font-family:'DM Sans',sans-serif;">Hapus Undangan?</h3>
+            <p style="font-size:14px;color:var(--muted);margin-bottom:24px;">Tindakan ini tidak bisa dibatalkan. Undangan akan dihapus secara permanen.</p>
+            <div style="display:flex;gap:12px;">
+                <button type="button" class="btn-secondary" style="flex:1;" onclick="closeDeleteModal()">Batal</button>
+                <button type="button" class="btn-primary" style="flex:1;background:#b44a4a;" id="confirmDeleteBtn" onclick="confirmDelete()">
+                    <i class="fas fa-trash-alt"></i> Hapus
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        /* =========================================
+           DATA STORE
+        ========================================= */
+        let invitations = JSON.parse(localStorage.getItem('undanganku_data') || '[]');
+        let currentGeneratedLink = '';
+        let currentInviteData = null;
+        let deleteTargetId = null;
+        let currentPage = 'create';
+
+        /* =========================================
+           UTILITAS
+        ========================================= */
+        function generateId() {
+            return 'inv_' + Date.now().toString(36) + Math.random().toString(36).substr(2, 5);
+        }
+
+        function formatTanggal(dateStr) {
+            if (!dateStr) return '—';
+            const hari = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
+            const bulan = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
+            const d = new Date(dateStr + 'T00:00:00');
+            return hari[d.getDay()] + ', ' + d.getDate() + ' ' + bulan[d.getMonth()] + ' ' + d.getFullYear();
+        }
+
+        function formatWaktu(timeStr) {
+            if (!timeStr) return '—';
+            const parts = timeStr.split(':');
+            const h = parts[0];
+            const m = parts[1];
+            return h + ':' + m + ' WIB';
+        }
+
+        // Encode data undangan ke string aman untuk URL
+        function encodeInviteData(data) {
+            try {
+                // Gunakan encodeURIComponent untuk menangani karakter khusus (spasi, dll)
+                return btoa(unescape(encodeURIComponent(JSON.stringify(data))));
+            } catch (e) {
+                console.error('Encode gagal:', e);
+                return '';
+            }
+        }
+
+        // Decode string URL kembali ke objek data
+        function decodeInviteData(encoded) {
+            try {
+                return JSON.parse(decodeURIComponent(escape(atob(encoded))));
+            } catch (e) {
+                console.error('Decode gagal:', e);
+                return null;
+            }
+        }
+
+        function saveData() {
+            localStorage.setItem('undanganku_data', JSON.stringify(invitations));
+        }
+
+        function escapeHtml(str) {
+            var div = document.createElement('div');
+            div.textContent = str;
+            return div.innerHTML;
+        }
+
+        /* =========================================
+           TOAST NOTIFICATION
+        ========================================= */
+        function showToast(message, type) {
+            type = type || 'info';
+            var container = document.getElementById('toastContainer');
+            var toast = document.createElement('div');
+            toast.className = 'toast ' + type;
+            var iconMap = { success: 'fa-check-circle', error: 'fa-exclamation-circle', info: 'fa-info-circle' };
+            toast.innerHTML = '<i class="fas ' + (iconMap[type] || iconMap.info) + '"></i><span>' + message + '</span>';
+            container.appendChild(toast);
+            requestAnimationFrame(function() {
+                requestAnimationFrame(function() { toast.classList.add('show'); });
+            });
+            setTimeout(function() {
+                toast.classList.remove('show');
+                setTimeout(function() { toast.remove(); }, 400);
+            }, 3500);
+        }
+
+        /* =========================================
+           VALIDASI FORM
+        ========================================= */
+        function clearErrors() {
+            var errors = document.querySelectorAll('.field-error');
+            for (var i = 0; i < errors.length; i++) {
+                errors[i].style.display = 'none';
+                errors[i].textContent = '';
+            }
+            var inputs = document.querySelectorAll('.form-input');
+            for (var j = 0; j < inputs.length; j++) {
+                inputs[j].style.borderColor = 'var(--border)';
+            }
+        }
+
+        function showFieldError(inputId, errorId, message) {
+            document.getElementById(inputId).style.borderColor = '#b44a4a';
+            var el = document.getElementById(errorId);
+            el.textContent = message;
+            el.style.display = 'block';
+        }
+
+        function validateForm() {
+            clearErrors();
+            var valid = true;
+
+            var honored = document.getElementById('inputHonored').value.trim();
+            var birthday = document.getElementById('inputBirthday').value.trim();
+            var date = document.getElementById('inputDate').value;
+            var time = document.getElementById('inputTime').value;
+            var location = document.getElementById('inputLocation').value.trim();
+            var message = document.getElementById('inputMessage').value.trim();
+
+            if (!honored) {
+                showFieldError('inputHonored', 'errorHonored', 'Nama yang terhormat wajib diisi');
+                valid = false;
+            }
+            if (!birthday) {
+                showFieldError('inputBirthday', 'errorBirthday', 'Nama yang berulang tahun wajib diisi');
+                valid = false;
+            }
+            if (!date) {
+                showFieldError('inputDate', 'errorDate', 'Tanggal wajib diisi');
+                valid = false;
+            }
+            if (!time) {
+                showFieldError('inputTime', 'errorTime', 'Waktu wajib diisi');
+                valid = false;
+            }
+            if (!location) {
+                showFieldError('inputLocation', 'errorLocation', 'Lokasi/alamat wajib diisi');
+                valid = false;
+            }
+            if (!message) {
+                showFieldError('inputMessage', 'errorMessage', 'Kalimat ucapan wajib diisi');
+                valid = false;
+            } else if (message.length > 500) {
+                showFieldError('inputMessage', 'errorMessage', 'Ucapan maksimal 500 karakter');
+                valid = false;
+            }
+
+            return valid;
+        }
+
+        /* =========================================
+           LIVE PREVIEW (mini di halaman buat)
+        ========================================= */
+        function updateLivePreview() {
+            var honored = document.getElementById('inputHonored').value.trim();
+            var birthday = document.getElementById('inputBirthday').value.trim();
+            var date = document.getElementById('inputDate').value;
+            var time = document.getElementById('inputTime').value;
+            var location = document.getElementById('inputLocation').value.trim();
+            var message = document.getElementById('inputMessage').value.trim();
+
+            document.getElementById('previewHonored').textContent = honored || '—';
+            document.getElementById('previewBirthday').textContent = birthday || '—';
+            document.getElementById('previewDate').textContent = date ? formatTanggal(date) : '—';
+            document.getElementById('previewTime').textContent = time ? formatWaktu(time) : '—';
+            document.getElementById('previewLocation').textContent = location || '—';
+            document.getElementById('previewMessage').textContent = message || '—';
+
+            var count = document.getElementById('inputMessage').value.length;
+            var counter = document.getElementById('charCount');
+            counter.textContent = count + ' / 500';
+            counter.style.color = count > 500 ? '#b44a4a' : count > 400 ? 'var(--accent)' : 'var(--muted)';
+        }
+
+        // Pasang event listener untuk live preview pada setiap input
+        var previewInputIds = ['inputHonored', 'inputBirthday', 'inputDate', 'inputTime', 'inputLocation', 'inputMessage'];
+        for (var pi = 0; pi < previewInputIds.length; pi++) {
+            (function(id) {
+                document.getElementById(id).addEventListener('input', updateLivePreview);
+                document.getElementById(id).addEventListener('change', updateLivePreview);
+            })(previewInputIds[pi]);
+        }
+
+        /* =========================================
+           BUAT LINK UNDANGAN
+        ========================================= */
+        function generateLink() {
+            if (!validateForm()) {
+                showToast('Mohon lengkapi semua field yang diperlukan', 'error');
+                return;
+            }
+
+            var data = {
+                honored: document.getElementById('inputHonored').value.trim(),
+                birthday: document.getElementById('inputBirthday').value.trim(),
+                date: document.getElementById('inputDate').value,
+                time: document.getElementById('inputTime').value,
+                location: document.getElementById('inputLocation').value.trim(),
+                message: document.getElementById('inputMessage').value.trim()
+            };
+
+            currentInviteData = data;
+            var id = generateId();
+
+            // Encode dan buat link
+            var encoded = encodeInviteData(data);
+            var baseUrl = window.location.origin + window.location.pathname;
+            var link = baseUrl + '?invite=' + encoded;
+
+            // Simpan ke localStorage
+            var record = {
+                id: id,
+                honored: data.honored,
+                birthday: data.birthday,
+                date: data.date,
+                time: data.time,
+                location: data.location,
+                message: data.message,
+                link: link,
+                createdAt: new Date().toISOString()
+            };
+            invitations.unshift(record);
+            saveData();
+
+            // Tampilkan link
+            currentGeneratedLink = link;
+            var linkText = document.getElementById('linkText');
+            linkText.textContent = link;
+            linkText.style.color = 'var(--fg)';
+            linkText.style.fontFamily = 'monospace';
+            linkText.style.fontSize = '12px';
+
+            // Tampilkan tombol aksi
+            document.getElementById('btnWhatsApp').style.display = 'inline-flex';
+            document.getElementById('btnCopy').style.display = 'inline-flex';
+            document.getElementById('btnShare').style.display = 'inline-flex';
+
+            // Animasi link box
+            var linkBox = document.getElementById('linkBox');
+            linkBox.style.borderColor = 'var(--accent)';
+            linkBox.style.borderStyle = 'solid';
+            linkBox.style.background = 'rgba(200,149,108,0.04)';
+            setTimeout(function() {
+                linkBox.style.borderColor = 'var(--border)';
+                linkBox.style.borderStyle = 'dashed';
+                linkBox.style.background = 'var(--input-bg)';
+            }, 2000);
+
+            // Animasi pulse tombol WA
+            var waBtn = document.getElementById('btnWhatsApp');
+            waBtn.classList.remove('pulse-once');
+            void waBtn.offsetWidth;
+            waBtn.classList.add('pulse-once');
+
+            showToast('Link undangan berhasil dibuat!', 'success');
+        }
+
+        /* =========================================
+           SALIN LINK
+        ========================================= */
+        function copyLink() {
+            if (!currentGeneratedLink) return;
+            var linkToCopy = currentGeneratedLink;
+
+            // Coba clipboard API modern
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(linkToCopy).then(function() {
+                    showCopyFeedback();
+                }).catch(function() {
+                    fallbackCopy(linkToCopy);
+                    showCopyFeedback();
+                });
+            } else {
+                fallbackCopy(linkToCopy);
+                showCopyFeedback();
+            }
+        }
+
+        function fallbackCopy(text) {
+            var textarea = document.createElement('textarea');
+            textarea.value = text;
+            textarea.style.position = 'fixed';
+            textarea.style.left = '-9999px';
+            textarea.style.opacity = '0';
+            document.body.appendChild(textarea);
+            textarea.focus();
+            textarea.select();
+            try { document.execCommand('copy'); } catch(e) {}
+            document.body.removeChild(textarea);
+        }
+
+        function showCopyFeedback() {
+            var linkBox = document.getElementById('linkBox');
+            var linkText = document.getElementById('linkText');
+            var originalText = linkText.textContent;
+            linkBox.classList.add('copied');
+            linkText.textContent = 'Link berhasil disalin!';
+            linkText.style.fontFamily = "'DM Sans', sans-serif";
+            linkText.style.color = 'var(--success)';
+            showToast('Link berhasil disalin ke clipboard', 'success');
+            setTimeout(function() {
+                linkBox.classList.remove('copied');
+                linkText.textContent = originalText;
+                linkText.style.fontFamily = 'monospace';
+                linkText.style.color = 'var(--fg)';
+            }, 2000);
+        }
+
+        /* =========================================
+           BAGIKAN UMUM
+        ========================================= */
+        function shareLink() {
+            if (!currentGeneratedLink) return;
+            if (navigator.share) {
+                navigator.share({
+                    title: 'Undangan Ulang Tahun',
+                    text: 'Anda diundang dalam acara ulang tahun!',
+                    url: currentGeneratedLink
+                }).catch(function() {});
+            } else {
+                copyLink();
+                showToast('Link disalin. Bagikan secara manual ke penerima', 'info');
+            }
+        }
+
+        /* =========================================
+           SHARE VIA WHATSAPP
+        ========================================= */
+        function shareWhatsApp() {
+            if (!currentGeneratedLink || !currentInviteData) return;
+
+            var d = currentInviteData;
+            var pesan = '*Undangan Ulang Tahun*\n\n' +
+                'Kepada Yth. *' + d.honored + '*\n\n' +
+                'Anda diundang dalam acara ulang tahun *' + d.birthday + '*\n\n' +
+                'Tanggal: ' + formatTanggal(d.date) + '\n' +
+                'Waktu: ' + formatWaktu(d.time) + '\n' +
+                'Lokasi: ' + d.location + '\n\n' +
+                '"' + d.message + '"\n\n' +
+                'Silakan buka link undangan ini:\n' + currentGeneratedLink;
+
+            var encodedPesan = encodeURIComponent(pesan);
+            var waUrl = 'https://wa.me/?text=' + encodedPesan;
+            window.open(waUrl, '_blank');
+            showToast('Membuka WhatsApp...', 'success');
+        }
+
+        function shareWhatsAppFromList(id) {
+            var inv = null;
+            for (var i = 0; i < invitations.length; i++) {
+                if (invitations[i].id === id) { inv = invitations[i]; break; }
+            }
+            if (!inv) return;
+
+            var pesan = '*Undangan Ulang Tahun*\n\n' +
+                'Kepada Yth. *' + inv.honored + '*\n\n' +
+                'Anda diundang dalam acara ulang tahun *' + inv.birthday + '*\n\n' +
+                'Tanggal: ' + formatTanggal(inv.date) + '\n' +
+                'Waktu: ' + formatWaktu(inv.time) + '\n' +
+                'Lokasi: ' + inv.location + '\n\n' +
+                '"' + inv.message + '"\n\n' +
+                'Silakan buka link undangan ini:\n' + inv.link;
+
+            var encodedPesan = encodeURIComponent(pesan);
+            var waUrl = 'https://wa.me/?text=' + encodedPesan;
+            window.open(waUrl, '_blank');
+            showToast('Membuka WhatsApp...', 'success');
+        }
+
+        /* =========================================
+           RESET FORM
+        ========================================= */
+        function resetForm() {
+            document.getElementById('inputHonored').value = '';
+            document.getElementById('inputBirthday').value = '';
+            document.getElementById('inputDate').value = '';
+            document.getElementById('inputTime').value = '';
+            document.getElementById('inputLocation').value = '';
+            document.getElementById('inputMessage').value = '';
+            currentGeneratedLink = '';
+            currentInviteData = null;
+            document.getElementById('linkText').textContent = 'Belum ada link yang dibuat';
+            document.getElementById('linkText').style.color = 'var(--muted)';
+            document.getElementById('linkText').style.fontFamily = 'monospace';
+            document.getElementById('btnWhatsApp').style.display = 'none';
+            document.getElementById('btnCopy').style.display = 'none';
+            document.getElementById('btnShare').style.display = 'none';
+            clearErrors();
+            updateLivePreview();
+            showToast('Form berhasil direset', 'info');
+        }
+
+        /* =========================================
+           NAVIGASI HALAMAN
+        ========================================= */
+        function switchPage(page) {
+            currentPage = page;
+            document.getElementById('pageCreate').style.display = 'none';
+            document.getElementById('pageList').style.display = 'none';
+            document.getElementById('pagePreview').style.display = 'none';
+
+            var pageMap = { create: 'pageCreate', list: 'pageList', preview: 'pagePreview' };
+            var target = document.getElementById(pageMap[page]);
+            target.style.display = 'block';
+            // Re-trigger animasi fade-up
+            target.classList.remove('fade-up');
+            void target.offsetWidth;
+            target.classList.add('fade-up');
+
+            // Update sidebar aktif
+            var navItems = document.querySelectorAll('.sidebar-nav-item');
+            for (var i = 0; i < navItems.length; i++) {
+                if (navItems[i].getAttribute('data-page') === page) {
+                    navItems[i].classList.add('active');
+                } else {
+                    navItems[i].classList.remove('active');
+                }
+            }
+
+            if (page === 'list') renderList();
+            if (page === 'preview') updateFullPreview();
+
+            closeSidebar();
+        }
+
+        /* =========================================
+           RENDER DAFTAR UNDANGAN
+        ========================================= */
+        function renderList() {
+            var searchVal = '';
+            var searchEl = document.getElementById('searchInput');
+            if (searchEl) searchVal = searchEl.value.toLowerCase();
+
+            var filtered = [];
+            for (var i = 0; i < invitations.length; i++) {
+                var inv = invitations[i];
+                if (inv.honored.toLowerCase().indexOf(searchVal) !== -1 ||
+                    inv.birthday.toLowerCase().indexOf(searchVal) !== -1 ||
+                    inv.location.toLowerCase().indexOf(searchVal) !== -1) {
+                    filtered.push(inv);
+                }
+            }
+
+            // Statistik
+            document.getElementById('statTotal').textContent = invitations.length;
+            var now = new Date();
+            var monthCount = 0;
+            var weekAgo = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
+            var weekCount = 0;
+            for (var s = 0; s < invitations.length; s++) {
+                var cd = new Date(invitations[s].createdAt);
+                if (cd.getMonth() === now.getMonth() && cd.getFullYear() === now.getFullYear()) monthCount++;
+                if (cd >= weekAgo) weekCount++;
+            }
+            document.getElementById('statMonth').textContent = monthCount;
+            document.getElementById('statWeek').textContent = weekCount;
+
+            var listEl = document.getElementById('inviteList');
+            var emptyEl = document.getElementById('emptyState');
+
+            if (filtered.length === 0) {
+                listEl.innerHTML = '';
+                emptyEl.style.display = 'block';
+                return;
+            }
+
+            emptyEl.style.display = 'none';
+            var html = '';
+            for (var f = 0; f < filtered.length; f++) {
+                var item = filtered[f];
+                var createdDate = new Date(item.createdAt);
+                var dateStr = createdDate.toLocaleDateString('id-ID', { day: 'numeric', month: 'short', year: 'numeric' });
+                var timeStr = createdDate.toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' });
+
+                html += '<div class="saved-item" style="animation:fadeUp 0.4s ' + (f * 0.05) + 's both;">' +
+                    '<div style="display:flex;align-items:start;justify-content:space-between;gap:16px;">' +
+                        '<div style="flex:1;min-width:0;" onclick="loadToPreview(\'' + item.id + '\')">' +
+                            '<div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;flex-wrap:wrap;">' +
+                                '<h4 style="font-size:15px;font-weight:600;color:var(--fg);font-family:\'DM Sans\',sans-serif;">' + escapeHtml(item.birthday) + '</h4>' +
+                                '<span class="badge" style="background:var(--glow);color:var(--accent);">Ulang Tahun</span>' +
+                            '</div>' +
+                            '<div style="display:flex;flex-wrap:wrap;gap:16px;font-size:13px;color:var(--muted);">' +
+                                '<span><i class="fas fa-user-tie" style="width:16px;color:var(--accent);font-size:11px;"></i> ' + escapeHtml(item.honored) + '</span>' +
+                                '<span><i class="fas fa-calendar-alt" style="width:16px;color:var(--accent);font-size:11px;"></i> ' + formatTanggal(item.date) + '</span>' +
+                                '<span><i class="fas fa-clock" style="width:16px;color:var(--accent);font-size:11px;"></i> ' + formatWaktu(item.time) + '</span>' +
+                            '</div>' +
+                            '<div style="font-size:12px;color:var(--muted);opacity:0.6;margin-top:8px;">' +
+                                '<i class="fas fa-clock" style="font-size:10px;"></i> Dibuat ' + dateStr + ' ' + timeStr +
+                            '</div>' +
+                        '</div>' +
+                        '<div style="display:flex;gap:6px;flex-shrink:0;flex-wrap:wrap;">' +
+                            '<button type="button" class="btn-whatsapp-sm" onclick="event.stopPropagation();shareWhatsAppFromList(\'' + item.id + '\')" title="Kirim via WhatsApp">' +
+                                '<i class="fab fa-whatsapp" style="font-size:15px;"></i>' +
+                            '</button>' +
+                            '<button type="button" class="btn-secondary" style="padding:10px 12px;" onclick="event.stopPropagation();copyInviteLink(\'' + item.id + '\')" title="Salin link">' +
+                                '<i class="fas fa-copy" style="font-size:13px;"></i>' +
+                            '</button>' +
+                            '<button type="button" class="btn-secondary" style="padding:10px 12px;color:#b44a4a;border-color:rgba(180,74,74,0.2);" onclick="event.stopPropagation();openDeleteModal(\'' + item.id + '\')" title="Hapus">' +
+                                '<i class="fas fa-trash-alt" style="font-size:13px;"></i>' +
+                            '</button>' +
+                        '</div>' +
+                    '</div>' +
+                '</div>';
+            }
+            listEl.innerHTML = html;
+        }
+
+        /* =========================================
+           LOAD KE PREVIEW PENUH
+        ========================================= */
+        function loadToPreview(id) {
+            var inv = null;
+            for (var i = 0; i < invitations.length; i++) {
+                if (invitations[i].id === id) { inv = invitations[i]; break; }
+            }
+            if (!inv) return;
+
+            setFullPreviewData(inv.honored, inv.birthday, inv.date, inv.time, inv.location, inv.message);
+            switchPage('preview');
+        }
+
+        function setFullPreviewData(honored, birthday, date, time, location, message) {
+            document.getElementById('fpHonored').textContent = honored || '—';
+            document.getElementById('fpBirthday').textContent = birthday || '—';
+            document.getElementById('fpDate').textContent = date ? formatTanggal(date) : '—';
+            document.getElementById('fpTime').textContent = time ? formatWaktu(time) : '—';
+            document.getElementById('fpLocation').textContent = location || '—';
+            document.getElementById('fpMessage').textContent = message || '—';
+        }
+
+        function updateFullPreview() {
+            if (invitations.length > 0) {
+                var inv = invitations[0];
+                setFullPreviewData(inv.honored, inv.birthday, inv.date, inv.time, inv.location, inv.message);
+            }
+        }
+
+        /* =========================================
+           SALIN LINK DARI DAFTAR
+        ========================================= */
+        function copyInviteLink(id) {
+            var inv = null;
+            for (var i = 0; i < invitations.length; i++) {
+                if (invitations[i].id === id) { inv = invitations[i]; break; }
+            }
+            if (!inv) return;
+
+            var linkToCopy = inv.link;
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(linkToCopy).then(function() {
+                    showToast('Link undangan berhasil disalin', 'success');
+                }).catch(function() {
+                    fallbackCopy(linkToCopy);
+                    showToast('Link undangan berhasil disalin', 'success');
+                });
+            } else {
+                fallbackCopy(linkToCopy);
+                showToast('Link undangan berhasil disalin', 'success');
+            }
+        }
+
+        /* =========================================
+           HAPUS UNDANGAN
+        ========================================= */
+        function openDeleteModal(id) {
+            deleteTargetId = id;
+            document.getElementById('deleteModal').classList.add('active');
+        }
+
+        function closeDeleteModal() {
+            document.getElementById('deleteModal').classList.remove('active');
+            deleteTargetId = null;
+        }
+
+        function confirmDelete() {
+            if (!deleteTargetId) return;
+            var newInvitations = [];
+            for (var i = 0; i < invitations.length; i++) {
+                if (invitations[i].id !== deleteTargetId) {
+                    newInvitations.push(invitations[i]);
+                }
+            }
+            invitations = newInvitations;
+            saveData();
+            closeDeleteModal();
+            renderList();
+            showToast('Undangan berhasil dihapus', 'success');
+        }
+
+        // Tutup modal saat klik backdrop
+        document.getElementById('deleteModal').addEventListener('click', function(e) {
+            if (e.target === this) closeDeleteModal();
+        });
+
+        /* =========================================
+           SIDEBAR MOBILE
+        ========================================= */
+        var sidebar = document.getElementById('sidebar');
+        var sidebarOverlay = document.getElementById('sidebarOverlay');
+
+        document.getElementById('hamburgerBtn').addEventListener('click', function() {
+            sidebar.classList.add('open');
+            sidebarOverlay.classList.add('open');
+        });
+
+        function closeSidebar() {
+            sidebar.classList.remove('open');
+            sidebarOverlay.classList.remove('open');
+        }
+
+        sidebarOverlay.addEventListener('click', closeSidebar);
+
+        /* =========================================
+           CEK URL PARAMS (mode tamu dari link)
+        ========================================= */
+        function checkUrlParams() {
+            var params = new URLSearchParams(window.location.search);
+            var inviteData = params.get('invite');
+            if (inviteData) {
+                var data = decodeInviteData(inviteData);
+                if (data) {
+                    // Isi preview dengan data dari link
+                    setFullPreviewData(data.honored, data.birthday, data.date, data.time, data.location, data.message);
+                    switchPage('preview');
+                    // Sembunyikan sidebar karena ini mode tamu
+                    sidebar.style.display = 'none';
+                    document.getElementById('mainContent').style.marginLeft = '0';
+                    // Sembunyikan juga mobile header
+                    var mh = document.querySelector('.mobile-header');
+                    if (mh) mh.style.display = 'none';
+                    // Tambahkan padding top karena header disembunyikan
+                    document.getElementById('mainContent').style.paddingTop = '40px';
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        /* =========================================
+           RESPONSIVE GRID
+        ========================================= */
+        function handleResize() {
+            var formGrid = document.getElementById('formGrid');
+            if (formGrid) {
+                formGrid.style.gridTemplateColumns = window.innerWidth < 900 ? '1fr' : '1fr 1fr';
+            }
+            var statsGrid = document.getElementById('statsGrid');
+            if (statsGrid) {
+                statsGrid.style.gridTemplateColumns = window.innerWidth < 640 ? '1fr' : 'repeat(3, 1fr)';
+            }
+        }
+        window.addEventListener('resize', handleResize);
+        handleResize();
+
+        /* =========================================
+           INISIALISASI
+        ========================================= */
+        if (!checkUrlParams()) {
+            // Mode admin normal — update live preview
+            updateLivePreview();
+        }
+    </script>
+</body>
+</html>
