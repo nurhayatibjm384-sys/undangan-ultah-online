@@ -3,1505 +3,649 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta property="og:image" content="https://nurhayatibjm384-sys.github.io/undangan-ultah-online/foto.jpg">
-    <title>UndanganKu — Admin Panel</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,200..700;1,9..40,200..700&family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
+    <title>Admin Undangan Ulang Tahun</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <style>
         :root {
-            --bg: #FAF7F2;
-            --fg: #2D2319;
-            --muted: #9C8B7A;
-            --accent: #C8956C;
-            --accent-hover: #B37E56;
-            --card: #FFFFFF;
-            --border: #E8DFD5;
-            --input-bg: #FDFCFA;
-            --success: #5A8F6B;
-            --glow: rgba(200, 149, 108, 0.15);
-            --wa: #25D366;
-            --wa-hover: #1EBE57;
-            --wa-glow: rgba(37, 211, 102, 0.12);
+            --bg:#0f0f0f;--bg2:#1a1a1a;--card:#222;--card-h:#2a2a2a;
+            --border:#333;--fg:#f5f0eb;--muted:#8a8580;
+            --accent:#e8a849;--accent-g:rgba(232,168,73,.25);--accent-d:#c48a30;
+            --danger:#e85454;--danger-g:rgba(232,84,84,.2);
+            --success:#4ecb71;--success-g:rgba(78,203,113,.2);
+            --wa:#25D366;--wa-d:#128C7E;
+            --warn:#fbbf24;--warn-g:rgba(251,191,36,.15);
+            --blue:#38bdf8;--blue-g:rgba(56,189,248,.12);
+            --r:14px;--rs:8px;
         }
+        *{margin:0;padding:0;box-sizing:border-box}
+        body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--fg);min-height:100vh;overflow-x:hidden}
 
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+        .bg-atm{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden}
+        .blob{position:absolute;border-radius:50%;filter:blur(120px);opacity:.4;animation:bf 20s ease-in-out infinite alternate}
+        .blob:nth-child(1){width:500px;height:500px;background:radial-gradient(circle,var(--accent-g),transparent 70%);top:-150px;right:-100px;animation-duration:18s}
+        .blob:nth-child(2){width:400px;height:400px;background:radial-gradient(circle,rgba(232,84,84,.12),transparent 70%);bottom:-100px;left:-80px;animation-duration:22s;animation-delay:-5s}
+        .blob:nth-child(3){width:300px;height:300px;background:radial-gradient(circle,rgba(78,203,113,.08),transparent 70%);top:50%;left:50%;transform:translate(-50%,-50%);animation-duration:25s;animation-delay:-10s}
+        @keyframes bf{0%{transform:translate(0,0) scale(1)}33%{transform:translate(30px,-20px) scale(1.05)}66%{transform:translate(-20px,30px) scale(.95)}100%{transform:translate(15px,15px) scale(1.02)}}
 
-        body {
-            font-family: 'DM Sans', sans-serif;
-            background: var(--bg);
-            color: var(--fg);
-            min-height: 100vh;
-            overflow-x: hidden;
-        }
+        .grid-pat{position:fixed;inset:0;background-image:linear-gradient(rgba(255,255,255,.015) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.015) 1px,transparent 1px);background-size:60px 60px;pointer-events:none;z-index:0}
 
-        h1, h2, h3, .font-display {
-            font-family: 'Playfair Display', serif;
-        }
+        .wrap{position:relative;z-index:1;max-width:920px;margin:0 auto;padding:40px 20px 80px}
 
-        .bg-decoration {
-            position: fixed;
-            inset: 0;
-            pointer-events: none;
-            z-index: 0;
-            overflow: hidden;
-        }
-        .bg-decoration::before {
-            content: '';
-            position: absolute;
-            top: -20%;
-            right: -10%;
-            width: 600px;
-            height: 600px;
-            background: radial-gradient(circle, var(--glow) 0%, transparent 70%);
-            border-radius: 50%;
-            animation: floatBlob 18s ease-in-out infinite;
-        }
-        .bg-decoration::after {
-            content: '';
-            position: absolute;
-            bottom: -15%;
-            left: -10%;
-            width: 500px;
-            height: 500px;
-            background: radial-gradient(circle, rgba(200,149,108,0.08) 0%, transparent 70%);
-            border-radius: 50%;
-            animation: floatBlob 22s ease-in-out infinite reverse;
-        }
+        /* Header */
+        .hdr{text-align:center;margin-bottom:40px;animation:fsd .8s ease-out}
+        @keyframes fsd{from{opacity:0;transform:translateY(-30px)}to{opacity:1;transform:translateY(0)}}
+        .badge{display:inline-flex;align-items:center;gap:8px;padding:6px 16px;background:var(--accent-g);border:1px solid rgba(232,168,73,.3);border-radius:50px;font-size:12px;font-weight:600;color:var(--accent);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:20px}
+        .badge i{font-size:10px;animation:pu 2s ease-in-out infinite}
+        @keyframes pu{0%,100%{opacity:1}50%{opacity:.4}}
+        .hdr h1{font-family:'Playfair Display',serif;font-weight:900;font-size:clamp(30px,6vw,50px);line-height:1.1;margin-bottom:12px;background:linear-gradient(135deg,var(--fg),var(--accent));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+        .hdr p{color:var(--muted);font-size:15px;font-weight:300;max-width:540px;margin:0 auto;line-height:1.6}
 
-        @keyframes floatBlob {
-            0%, 100% { transform: translate(0, 0) scale(1); }
-            33% { transform: translate(30px, -20px) scale(1.05); }
-            66% { transform: translate(-20px, 15px) scale(0.95); }
-        }
+        /* Stats */
+        .sg{display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:10px;margin-bottom:28px;animation:fsu .5s ease-out both;animation-delay:.05s}
+        @keyframes fsu{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
+        .sc{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:16px 12px;text-align:center;transition:all .3s ease}
+        .sc:hover{border-color:rgba(232,168,73,.2);transform:translateY(-2px)}
+        .sn{font-family:'Playfair Display',serif;font-size:26px;font-weight:900;line-height:1;margin-bottom:4px}
+        .sn.a{color:var(--accent)}.sn.g{color:var(--success)}.sn.r{color:var(--danger)}.sn.y{color:var(--warn)}.sn.b{color:var(--blue)}
+        .sl{font-size:9px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.8px}
 
-        .pattern-overlay {
-            position: fixed;
-            inset: 0;
-            pointer-events: none;
-            z-index: 0;
-            opacity: 0.025;
-            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%232D2319' fill-opacity='1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
-        }
+        /* Cards */
+        .cd{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:28px;margin-bottom:22px;transition:border-color .3s,box-shadow .3s;animation:fsu .6s ease-out both}
+        .cd:nth-child(2){animation-delay:.07s}.cd:nth-child(3){animation-delay:.12s}.cd:nth-child(4){animation-delay:.17s}.cd:nth-child(5){animation-delay:.22s}.cd:nth-child(6){animation-delay:.27s}.cd:nth-child(7){animation-delay:.32s}
+        .cd:hover{border-color:rgba(232,168,73,.2);box-shadow:0 8px 40px rgba(0,0,0,.3)}
+        .st{display:flex;align-items:center;gap:12px;margin-bottom:20px}
+        .si{width:40px;height:40px;display:flex;align-items:center;justify-content:center;border-radius:10px;font-size:16px;flex-shrink:0}
+        .si.am{background:var(--accent-g);color:var(--accent);border:1px solid rgba(232,168,73,.2)}
+        .si.gr{background:var(--success-g);color:var(--success);border:1px solid rgba(78,203,113,.2)}
+        .si.rd{background:var(--danger-g);color:var(--danger);border:1px solid rgba(232,84,84,.2)}
+        .si.bl{background:var(--blue-g);color:var(--blue);border:1px solid rgba(56,189,248,.2)}
+        .si.yl{background:var(--warn-g);color:var(--warn);border:1px solid rgba(251,191,36,.2)}
+        .si.pu{background:rgba(192,132,252,.12);color:#c084fc;border:1px solid rgba(192,132,252,.2)}
+        .st h2{font-size:18px;font-weight:700;letter-spacing:-.3px}
+        .st span{font-size:12px;color:var(--muted);font-weight:400}
 
-        .form-input {
-            width: 100%;
-            padding: 14px 16px;
-            background: var(--input-bg);
-            border: 1.5px solid var(--border);
-            border-radius: 12px;
-            font-family: 'DM Sans', sans-serif;
-            font-size: 15px;
-            color: var(--fg);
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            outline: none;
-        }
-        .form-input:focus {
-            border-color: var(--accent);
-            box-shadow: 0 0 0 4px var(--glow);
-            background: #fff;
-        }
-        .form-input::placeholder {
-            color: var(--muted);
-            opacity: 0.6;
-        }
-        textarea.form-input {
-            resize: vertical;
-            min-height: 100px;
-        }
+        /* Form */
+        .fg{margin-bottom:14px}.fg:last-child{margin-bottom:0}
+        .fl{display:block;font-size:12px;font-weight:600;color:var(--muted);margin-bottom:7px;text-transform:uppercase;letter-spacing:.8px}
+        .fi{width:100%;padding:12px 14px;background:var(--bg2);border:1px solid var(--border);border-radius:var(--rs);color:var(--fg);font-family:'DM Sans',sans-serif;font-size:14px;transition:all .3s;outline:none}
+        .fi:focus{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-g)}
+        .fi::placeholder{color:rgba(138,133,128,.5)}
+        textarea.fi{resize:vertical;min-height:140px;line-height:1.7}
+        .ih{display:flex;align-items:center;gap:6px;margin-top:6px;font-size:11px;color:var(--muted)}
+        .ih i{font-size:9px;color:var(--accent)}
+        .fr{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+        @media(max-width:500px){.fr{grid-template-columns:1fr}}
 
-        .form-label {
-            display: block;
-            font-size: 13px;
-            font-weight: 600;
-            color: var(--fg);
-            margin-bottom: 8px;
-            letter-spacing: 0.02em;
-        }
-        .form-label .label-icon {
-            color: var(--accent);
-            margin-right: 6px;
-            font-size: 12px;
-        }
+        select.fi{appearance:none;-webkit-appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%238a8580' viewBox='0 0 16 16'%3E%3Cpath d='M8 11L3 6h10z'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center;cursor:pointer}
+        select.fi option{background:var(--card);color:var(--fg)}
 
-        .btn-primary {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            padding: 16px 32px;
-            background: var(--accent);
-            color: #fff;
-            border: none;
-            border-radius: 14px;
-            font-family: 'DM Sans', sans-serif;
-            font-size: 15px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            position: relative;
-            overflow: hidden;
-        }
-        .btn-primary::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(135deg, rgba(255,255,255,0.15) 0%, transparent 50%);
-            opacity: 0;
-            transition: opacity 0.3s;
-        }
-        .btn-primary:hover {
-            background: var(--accent-hover);
-            transform: translateY(-2px);
-            box-shadow: 0 8px 30px rgba(200, 149, 108, 0.35);
-        }
-        .btn-primary:hover::before { opacity: 1; }
-        .btn-primary:active { transform: translateY(0); }
+        /* Thumbnail Upload */
+        .thumb-zone{position:relative;border:2px dashed var(--border);border-radius:var(--rs);padding:24px;text-align:center;cursor:pointer;transition:all .3s;overflow:hidden;min-height:140px;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:10px}
+        .thumb-zone:hover{border-color:var(--accent);background:rgba(232,168,73,.03)}
+        .thumb-zone.has-img{padding:0;border-style:solid;border-color:rgba(232,168,73,.3)}
+        .thumb-zone i.upload-icon{font-size:28px;color:var(--muted);opacity:.5}
+        .thumb-zone .tz-text{font-size:13px;color:var(--muted);line-height:1.4}
+        .thumb-zone .tz-text strong{color:var(--accent)}
+        .thumb-zone img{width:100%;height:200px;object-fit:cover;display:block;border-radius:6px}
+        .thumb-zone input[type=file]{position:absolute;inset:0;opacity:0;cursor:pointer;z-index:2}
+        .thumb-remove{position:absolute;top:8px;right:8px;z-index:3;width:28px;height:28px;border-radius:50%;background:rgba(0,0,0,.7);border:1px solid rgba(255,255,255,.15);color:#fff;font-size:11px;display:none;align-items:center;justify-content:center;cursor:pointer;transition:all .2s}
+        .thumb-remove:hover{background:var(--danger);border-color:var(--danger)}
+        .thumb-zone.has-img .thumb-remove{display:flex}
+        .thumb-zone.has-img .upload-icon,.thumb-zone.has-img .tz-text{display:none}
 
-        .btn-secondary {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            padding: 12px 20px;
-            background: transparent;
-            color: var(--accent);
-            border: 1.5px solid var(--border);
-            border-radius: 12px;
-            font-family: 'DM Sans', sans-serif;
-            font-size: 14px;
-            font-weight: 500;
-            cursor: pointer;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-        .btn-secondary:hover {
-            border-color: var(--accent);
-            background: var(--glow);
-        }
+        /* Image URL fallback */
+        .img-url-row{display:flex;gap:8px;align-items:center;margin-top:10px}
+        .img-url-row .fi{flex:1}
+        .img-url-or{font-size:11px;color:var(--muted);text-align:center;margin:8px 0;font-weight:500}
 
-        .btn-whatsapp {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            padding: 14px 22px;
-            background: var(--wa);
-            color: #fff;
-            border: none;
-            border-radius: 14px;
-            font-family: 'DM Sans', sans-serif;
-            font-size: 14px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            position: relative;
-            overflow: hidden;
-        }
-        .btn-whatsapp::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(135deg, rgba(255,255,255,0.18) 0%, transparent 50%);
-            opacity: 0;
-            transition: opacity 0.3s;
-        }
-        .btn-whatsapp:hover {
-            background: var(--wa-hover);
-            transform: translateY(-2px);
-            box-shadow: 0 8px 28px rgba(37, 211, 102, 0.35);
-        }
-        .btn-whatsapp:hover::before { opacity: 1; }
-        .btn-whatsapp:active { transform: translateY(0); }
-        .btn-whatsapp i { font-size: 17px; }
+        /* Buttons */
+        .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:11px 22px;border:none;border-radius:var(--rs);font-family:'DM Sans',sans-serif;font-size:13px;font-weight:600;cursor:pointer;transition:all .25s;text-decoration:none;position:relative;overflow:hidden}
+        .btn::after{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(255,255,255,.1),transparent);opacity:0;transition:opacity .25s}
+        .btn:hover::after{opacity:1}
+        .btn:active{transform:scale(.97)}
+        .btn-p{background:linear-gradient(135deg,var(--accent),var(--accent-d));color:#0f0f0f;box-shadow:0 4px 20px var(--accent-g)}
+        .btn-p:hover{box-shadow:0 6px 30px rgba(232,168,73,.4);transform:translateY(-1px)}
+        .btn-w{background:linear-gradient(135deg,var(--wa),var(--wa-d));color:#fff;box-shadow:0 4px 20px rgba(37,211,102,.25)}
+        .btn-w:hover{box-shadow:0 6px 30px rgba(37,211,102,.4);transform:translateY(-1px)}
+        .btn-gh{background:transparent;color:var(--muted);border:1px solid var(--border)}
+        .btn-gh:hover{border-color:var(--muted);color:var(--fg);background:rgba(255,255,255,.03)}
+        .btn-i{background:transparent;color:var(--muted);border:1px solid var(--border);padding:8px 10px;font-size:11px}
+        .btn-i:hover{border-color:var(--fg-muted);color:var(--fg)}
+        .bs{padding:7px 11px;font-size:11px;gap:5px;background:transparent;border:1px solid transparent}
+        .bs.dg{color:var(--danger);border-color:rgba(232,84,84,.2)}.bs.dg:hover{background:var(--danger-g);border-color:rgba(232,84,84,.4)}
+        .bs.ed{color:var(--accent);border-color:rgba(232,168,73,.2)}.bs.ed:hover{background:var(--accent-g);border-color:rgba(232,168,73,.4)}
+        .bs.sd{color:var(--wa);border-color:rgba(37,211,102,.2)}.bs.sd:hover{background:rgba(37,211,102,.1);border-color:rgba(37,211,102,.4)}
+        .bs.st{color:var(--warn);border-color:rgba(251,191,36,.2)}.bs.st:hover{background:var(--warn-g);border-color:rgba(251,191,36,.4)}
 
-        .btn-whatsapp-sm {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            padding: 10px 16px;
-            background: var(--wa);
-            color: #fff;
-            border: none;
-            border-radius: 12px;
-            font-family: 'DM Sans', sans-serif;
-            font-size: 13px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-        .btn-whatsapp-sm:hover {
-            background: var(--wa-hover);
-            transform: translateY(-1px);
-            box-shadow: 0 4px 16px rgba(37, 211, 102, 0.3);
-        }
-        .btn-whatsapp-sm:active { transform: translateY(0); }
+        /* Send mode selector */
+        .send-modes{display:flex;gap:6px;margin-top:10px;flex-wrap:wrap}
+        .mode-btn{padding:8px 14px;border-radius:var(--rs);font-size:12px;font-weight:600;cursor:pointer;transition:all .2s;border:1px solid var(--border);background:var(--bg2);color:var(--muted);display:flex;align-items:center;gap:6px}
+        .mode-btn:hover{border-color:var(--accent);color:var(--fg)}
+        .mode-btn.active{border-color:var(--wa);background:rgba(37,211,102,.08);color:var(--wa)}
+        .mode-btn .mode-check{font-size:10px;opacity:0;transition:opacity .2s}
+        .mode-btn.active .mode-check{opacity:1}
 
-        .card {
-            background: var(--card);
-            border: 1px solid var(--border);
-            border-radius: 20px;
-            box-shadow: 0 1px 3px rgba(45,35,25,0.04), 0 8px 32px rgba(45,35,25,0.06);
-            transition: box-shadow 0.4s;
-        }
-        .card:hover {
-            box-shadow: 0 1px 3px rgba(45,35,25,0.04), 0 12px 40px rgba(45,35,25,0.09);
-        }
+        /* List */
+        .lc{display:flex;flex-direction:column;gap:8px}
+        .li{display:flex;align-items:center;gap:14px;padding:14px 16px;background:var(--bg2);border:1px solid var(--border);border-radius:var(--rs);transition:all .25s;animation:ii .35s ease-out both}
+        @keyframes ii{from{opacity:0;transform:translateX(-16px)}to{opacity:1;transform:translateX(0)}}
+        .li:hover{border-color:rgba(232,168,73,.2);background:var(--card-h)}
+        .av{width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:15px;flex-shrink:0;color:#0f0f0f}
+        .inf{flex:1;min-width:0}
+        .inm{font-weight:600;font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+        .imt{font-size:11px;color:var(--muted);margin-top:3px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+        .ia{display:flex;gap:5px;flex-shrink:0;flex-wrap:wrap;justify-content:flex-end}
 
-        .link-box {
-            background: var(--input-bg);
-            border: 1.5px dashed var(--border);
-            border-radius: 14px;
-            padding: 16px 20px;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            transition: all 0.3s;
-            word-break: break-all;
-        }
-        .link-box.copied {
-            border-color: var(--success);
-            border-style: solid;
-            background: rgba(90, 143, 107, 0.05);
-        }
+        /* Badges */
+        .bdg{display:inline-flex;align-items:center;gap:4px;padding:2px 8px;border-radius:50px;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.5px}
+        .bdg-s{background:rgba(37,211,102,.12);border:1px solid rgba(37,211,102,.2);color:var(--wa)}
+        .bdg-p{background:rgba(232,168,73,.1);border:1px solid rgba(232,168,73,.2);color:var(--accent)}
+        .bdg-h{background:rgba(78,203,113,.12);border:1px solid rgba(78,203,113,.2);color:var(--success)}
+        .bdg-t{background:rgba(232,84,84,.12);border:1px solid rgba(232,84,84,.2);color:var(--danger)}
+        .bdg-m{background:var(--warn-g);border:1px solid rgba(251,191,36,.2);color:var(--warn)}
 
-        .toast-container {
-            position: fixed;
-            top: 24px;
-            right: 24px;
-            z-index: 9999;
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-        .toast {
-            padding: 14px 20px;
-            border-radius: 14px;
-            font-size: 14px;
-            font-weight: 500;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            transform: translateX(120%);
-            opacity: 0;
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            box-shadow: 0 8px 30px rgba(0,0,0,0.12);
-            max-width: 380px;
-        }
-        .toast.show {
-            transform: translateX(0);
-            opacity: 1;
-        }
-        .toast.success {
-            background: #f0f7f2;
-            color: var(--success);
-            border: 1px solid rgba(90,143,107,0.2);
-        }
-        .toast.error {
-            background: #fdf2f2;
-            color: #b44a4a;
-            border: 1px solid rgba(180,74,74,0.15);
-        }
-        .toast.info {
-            background: #fef8f0;
-            color: var(--accent);
-            border: 1px solid rgba(200,149,108,0.2);
-        }
+        .empty{text-align:center;padding:36px 20px;color:var(--muted)}
+        .empty i{font-size:36px;margin-bottom:12px;opacity:.3;display:block}
+        .empty p{font-size:13px;line-height:1.5}
 
-        .invite-preview {
-            background: linear-gradient(160deg, #FFFDF9 0%, #FBF5ED 100%);
-            border-radius: 16px;
-            border: 1px solid var(--border);
-            padding: 32px 28px;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-        }
-        .invite-preview::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; right: 0;
-            height: 4px;
-            background: linear-gradient(90deg, var(--accent), #E4C5A0, var(--accent));
-        }
-        .invite-preview .deco-line {
-            width: 60px;
-            height: 2px;
-            background: linear-gradient(90deg, transparent, var(--accent), transparent);
-            margin: 0 auto;
-        }
+        .pbox{background:var(--bg2);border:1px solid var(--border);border-radius:var(--rs);padding:20px;position:relative;margin-top:14px}
+        .pbox::before{content:'Preview';position:absolute;top:-10px;left:16px;background:var(--card);padding:0 10px;font-size:11px;font-weight:600;color:var(--accent);text-transform:uppercase;letter-spacing:1px}
+        .pc{font-size:13px;line-height:1.8;white-space:pre-wrap;word-break:break-word}
+        .pc .hn{color:var(--accent);font-weight:700}.pc .hl{color:var(--wa);font-weight:600}
 
-        .saved-item {
-            padding: 16px 20px;
-            border: 1px solid var(--border);
-            border-radius: 14px;
-            background: var(--card);
-            transition: all 0.3s;
-            cursor: pointer;
-        }
-        .saved-item:hover {
-            border-color: var(--accent);
-            box-shadow: 0 4px 20px var(--glow);
-            transform: translateY(-1px);
-        }
+        .divd{height:1px;background:var(--border);margin:8px 0 22px}
 
-        .fade-up {
-            opacity: 0;
-            transform: translateY(20px);
-            animation: fadeUp 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
-        }
-        @keyframes fadeUp {
-            to { opacity: 1; transform: translateY(0); }
-        }
+        /* Toast */
+        .tc{position:fixed;top:24px;right:24px;z-index:9999;display:flex;flex-direction:column;gap:10px}
+        .tt{display:flex;align-items:center;gap:12px;padding:14px 20px;background:var(--card);border:1px solid var(--border);border-radius:var(--rs);box-shadow:0 12px 40px rgba(0,0,0,.5);font-size:13px;font-weight:500;animation:ti .4s ease-out;min-width:260px;max-width:400px}
+        .tt.to{animation:too .3s ease-in forwards}
+        .tt-s{border-left:3px solid var(--success)}.tt-s i{color:var(--success)}
+        .tt-e{border-left:3px solid var(--danger)}.tt-e i{color:var(--danger)}
+        .tt-i{border-left:3px solid var(--accent)}.tt-i i{color:var(--accent)}
+        @keyframes ti{from{opacity:0;transform:translateX(40px)}to{opacity:1;transform:translateX(0)}}
+        @keyframes too{from{opacity:1;transform:translateX(0)}to{opacity:0;transform:translateX(40px)}}
 
-        .sidebar {
-            position: fixed;
-            left: 0; top: 0; bottom: 0;
-            width: 260px;
-            background: var(--card);
-            border-right: 1px solid var(--border);
-            padding: 32px 24px;
-            z-index: 50;
-            display: flex;
-            flex-direction: column;
-            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-        .sidebar-nav-item {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            padding: 12px 16px;
-            border-radius: 12px;
-            font-size: 14px;
-            font-weight: 500;
-            color: var(--muted);
-            cursor: pointer;
-            transition: all 0.25s;
-            margin-bottom: 4px;
-        }
-        .sidebar-nav-item:hover {
-            background: var(--glow);
-            color: var(--fg);
-        }
-        .sidebar-nav-item.active {
-            background: var(--glow);
-            color: var(--accent);
-            font-weight: 600;
-        }
-        .sidebar-nav-item i { width: 20px; text-align: center; font-size: 15px; }
+        /* Modal */
+        .mo{position:fixed;inset:0;background:rgba(0,0,0,.7);backdrop-filter:blur(8px);z-index:1000;display:flex;align-items:center;justify-content:center;padding:20px;opacity:0;visibility:hidden;transition:all .3s}
+        .mo.on{opacity:1;visibility:visible}
+        .mb{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:28px;width:100%;max-width:480px;transform:scale(.9) translateY(20px);transition:transform .3s;max-height:90vh;overflow-y:auto}
+        .mo.on .mb{transform:scale(1) translateY(0)}
+        .mt{font-size:18px;font-weight:700;margin-bottom:18px}
+        .ma{display:flex;gap:10px;margin-top:20px;justify-content:flex-end}
 
-        .main-content {
-            margin-left: 260px;
-            padding: 40px;
-            min-height: 100vh;
-            position: relative;
-            z-index: 1;
-        }
+        /* Send preview modal */
+        .send-preview-thumb{width:100%;max-height:260px;object-fit:cover;border-radius:var(--rs);margin-bottom:14px}
+        .send-preview-msg{background:var(--bg2);border:1px solid var(--border);border-radius:var(--rs);padding:16px;font-size:13px;line-height:1.7;white-space:pre-wrap;word-break:break-word;margin-bottom:14px}
 
-        .stat-card {
-            padding: 20px 24px;
-            border-radius: 16px;
-            border: 1px solid var(--border);
-            background: var(--card);
-            transition: all 0.3s;
-        }
-        .stat-card:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 24px rgba(45,35,25,0.07);
-        }
+        #confetti-canvas{position:fixed;inset:0;pointer-events:none;z-index:9998}
 
-        .mobile-header {
-            display: none;
-            position: fixed;
-            top: 0; left: 0; right: 0;
-            height: 64px;
-            background: var(--card);
-            border-bottom: 1px solid var(--border);
-            z-index: 60;
-            align-items: center;
-            padding: 0 20px;
-            justify-content: space-between;
-        }
-        .hamburger {
-            width: 40px; height: 40px;
-            display: flex; align-items: center; justify-content: center;
-            border-radius: 10px;
-            border: 1px solid var(--border);
-            background: transparent;
-            cursor: pointer;
-            color: var(--fg);
-            font-size: 18px;
-            transition: all 0.2s;
-        }
-        .hamburger:hover { background: var(--glow); }
+        ::-webkit-scrollbar{width:6px}::-webkit-scrollbar-track{background:transparent}::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px}::-webkit-scrollbar-thumb:hover{background:var(--muted)}
 
-        .sidebar-overlay {
-            display: none;
-            position: fixed;
-            inset: 0;
-            background: rgba(45,35,25,0.3);
-            backdrop-filter: blur(4px);
-            z-index: 45;
+        @media(max-width:600px){
+            .wrap{padding:24px 14px 60px}.cd{padding:18px}.sc{padding:14px 10px}.sn{font-size:22px}.ia{gap:4px}.li{padding:12px;gap:10px}.tt{min-width:auto;max-width:calc(100vw - 48px)}.tc{left:24px}
+            .send-modes{flex-direction:column}.mode-btn{width:100%}
         }
-
-        .modal-backdrop {
-            position: fixed;
-            inset: 0;
-            background: rgba(45,35,25,0.4);
-            backdrop-filter: blur(6px);
-            z-index: 100;
-            display: none;
-            align-items: center;
-            justify-content: center;
-            opacity: 0;
-            transition: opacity 0.3s;
-        }
-        .modal-backdrop.active {
-            display: flex;
-            opacity: 1;
-        }
-        .modal-box {
-            background: var(--card);
-            border-radius: 20px;
-            padding: 32px;
-            max-width: 400px;
-            width: 90%;
-            text-align: center;
-            transform: scale(0.9);
-            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-        .modal-backdrop.active .modal-box { transform: scale(1); }
-
-        @keyframes waPulse {
-            0% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.4); }
-            70% { box-shadow: 0 0 0 12px rgba(37, 211, 102, 0); }
-            100% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0); }
-        }
-        .btn-whatsapp.pulse-once {
-            animation: waPulse 0.8s ease-out;
-        }
-
-        ::-webkit-scrollbar { width: 6px; }
-        ::-webkit-scrollbar-track { background: transparent; }
-        ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
-        ::-webkit-scrollbar-thumb:hover { background: var(--muted); }
-
-        .badge {
-            display: inline-flex;
-            align-items: center;
-            padding: 4px 10px;
-            border-radius: 8px;
-            font-size: 12px;
-            font-weight: 600;
-        }
-
-        @media (max-width: 768px) {
-            .sidebar { transform: translateX(-100%); z-index: 55; }
-            .sidebar.open { transform: translateX(0); }
-            .sidebar-overlay.open { display: block; }
-            .mobile-header { display: flex; }
-            .main-content { margin-left: 0; padding: 84px 20px 40px; }
-        }
-
-        @media (prefers-reduced-motion: reduce) {
-            *, *::before, *::after {
-                animation-duration: 0.01ms !important;
-                transition-duration: 0.01ms !important;
-            }
-        }
+        @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
     </style>
 </head>
 <body>
 
-    <div class="bg-decoration"></div>
-    <div class="pattern-overlay"></div>
+<div class="bg-atm"><div class="blob"></div><div class="blob"></div><div class="blob"></div></div>
+<div class="grid-pat"></div>
+<canvas id="confetti-canvas"></canvas>
+<div class="tc" id="toastC"></div>
 
-    <div class="toast-container" id="toastContainer"></div>
+<!-- Modal: Edit Teman -->
+<div class="mo" id="mEditF"><div class="mb"><h3 class="mt">Edit Nama Teman</h3><div class="fg"><label class="fl">Nama Teman</label><input type="text" class="fi" id="efInp" maxlength="50"></div><div class="ma"><button class="btn btn-gh" onclick="clM('mEditF')"><i class="fa-solid fa-xmark"></i> Batal</button><button class="btn btn-p" onclick="svEF()"><i class="fa-solid fa-check"></i> Simpan</button></div></div></div>
 
-    <!-- Mobile header -->
-    <div class="mobile-header">
-        <button class="hamburger" id="hamburgerBtn" aria-label="Buka menu">
-            <i class="fas fa-bars"></i>
-        </button>
-        <div style="display:flex;align-items:center;gap:10px;">
-            <div style="width:32px;height:32px;background:var(--accent);border-radius:10px;display:flex;align-items:center;justify-content:center;">
-                <i class="fas fa-envelope-open-text" style="color:#fff;font-size:14px;"></i>
-            </div>
-            <span class="font-display" style="font-weight:700;font-size:18px;color:var(--fg);">UndanganKu</span>
-        </div>
-        <div style="width:40px;"></div>
+<!-- Modal: Edit Tamu -->
+<div class="mo" id="mEditG"><div class="mb"><h3 class="mt">Edit Data Tamu</h3><div class="fg"><label class="fl">Nama Tamu</label><input type="text" class="fi" id="egName" maxlength="50"></div><div class="fr"><div class="fg"><label class="fl">Status Kehadiran</label><select class="fi" id="egStat"><option value="menunggu">Menunggu Konfirmasi</option><option value="hadir">Hadir</option><option value="tidak">Tidak Hadir</option></select></div><div class="fg"><label class="fl">Jumlah Tamu</label><input type="number" class="fi" id="egCnt" min="1" max="20" value="1"></div></div><div class="fg"><label class="fl">Catatan</label><input type="text" class="fi" id="egNote" maxlength="100"></div><div class="ma"><button class="btn btn-gh" onclick="clM('mEditG')"><i class="fa-solid fa-xmark"></i> Batal</button><button class="btn btn-p" onclick="svEG()"><i class="fa-solid fa-check"></i> Simpan</button></div></div></div>
+
+<!-- Modal: Quick Status -->
+<div class="mo" id="mQS"><div class="mb" style="max-width:360px"><h3 class="mt">Ubah Status Kehadiran</h3><p style="font-size:13px;color:var(--muted);margin-bottom:16px" id="qsName"></p><div style="display:flex;flex-direction:column;gap:8px"><button class="btn btn-gh" style="justify-content:flex-start;gap:10px" onclick="setQS('hadir')"><i class="fa-solid fa-circle-check" style="color:var(--success)"></i> Hadir</button><button class="btn btn-gh" style="justify-content:flex-start;gap:10px" onclick="setQS('tidak')"><i class="fa-solid fa-circle-xmark" style="color:var(--danger)"></i> Tidak Hadir</button><button class="btn btn-gh" style="justify-content:flex-start;gap:10px" onclick="setQS('menunggu')"><i class="fa-solid fa-clock" style="color:var(--warn)"></i> Menunggu Konfirmasi</button></div><div class="ma" style="margin-top:16px"><button class="btn btn-gh" onclick="clM('mQS')"><i class="fa-solid fa-xmark"></i> Batal</button></div></div></div>
+
+<!-- Modal: Send Preview -->
+<div class="mo" id="mSend"><div class="mb" style="max-width:420px"><h3 class="mt">Konfirmasi Kirim</h3><div id="sendPreviewContent"></div><div class="ma"><button class="btn btn-gh" onclick="clM('mSend')"><i class="fa-solid fa-xmark"></i> Batal</button><button class="btn btn-w" id="sendConfirmBtn" onclick="confirmSend()"><i class="fa-brands fa-whatsapp"></i> Kirim Sekarang</button></div></div></div>
+
+<main class="wrap">
+
+    <header class="hdr">
+        <div class="badge"><i class="fa-solid fa-circle"></i> Panel Admin</div>
+        <h1>Undangan Ulang Tahun</h1>
+        <p>Kelola daftar teman, catat tamu, atur gambar, dan kirim undangan langsung lewat WhatsApp</p>
+    </header>
+
+    <div class="sg">
+        <div class="sc"><div class="sn a" id="sF">0</div><div class="sl">Teman</div></div>
+        <div class="sc"><div class="sn g" id="sS">0</div><div class="sl">Terkirim</div></div>
+        <div class="sc"><div class="sn r" id="sU">0</div><div class="sl">Belum Kirim</div></div>
+        <div class="sc"><div class="sn b" id="sG">0</div><div class="sl">Tamu Total</div></div>
+        <div class="sc"><div class="sn g" id="sH">0</div><div class="sl">Hadir</div></div>
+        <div class="sc"><div class="sn y" id="sM">0</div><div class="sl">Menunggu</div></div>
     </div>
 
-    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+    <!-- Tambah Teman -->
+    <section class="cd">
+        <div class="st"><div class="si am"><i class="fa-solid fa-user-plus"></i></div><div><h2>Tambah Teman</h2><span>Daftar teman yang akan dikirimi undangan</span></div></div>
+        <div class="fg"><label class="fl" for="fInp">Nama Teman</label><input type="text" class="fi" id="fInp" placeholder="Contoh: Rina Saputra" maxlength="50"></div>
+        <button class="btn btn-p" onclick="addF()" style="margin-top:4px"><i class="fa-solid fa-plus"></i> Tambah ke Daftar</button>
+    </section>
 
-    <!-- Sidebar -->
-    <aside class="sidebar" id="sidebar">
-        <div style="margin-bottom:40px;">
-            <div style="display:flex;align-items:center;gap:12px;margin-bottom:6px;">
-                <div style="width:40px;height:40px;background:var(--accent);border-radius:12px;display:flex;align-items:center;justify-content:center;">
-                    <i class="fas fa-envelope-open-text" style="color:#fff;font-size:16px;"></i>
-                </div>
-                <span class="font-display" style="font-weight:700;font-size:22px;color:var(--fg);">UndanganKu</span>
-            </div>
-            <p style="font-size:12px;color:var(--muted);margin-left:52px;margin-top:-2px;">Admin Panel</p>
+    <!-- Daftar Teman -->
+    <section class="cd">
+        <div class="st"><div class="si gr"><i class="fa-solid fa-users"></i></div><div><h2>Daftar Teman</h2><span id="fCnt">Belum ada teman ditambahkan</span></div></div>
+        <div id="fList" class="lc"><div class="empty"><i class="fa-solid fa-user-group"></i><p>Daftar teman masih kosong.</p></div></div>
+    </section>
+
+    <!-- Daftar Tamu -->
+    <section class="cd">
+        <div class="st"><div class="si yl"><i class="fa-solid fa-clipboard-list"></i></div><div><h2>Daftar Tamu</h2><span id="gCnt">Catat tamu yang datang ke acara</span></div></div>
+        <div style="background:var(--bg2);border:1px solid var(--border);border-radius:var(--rs);padding:18px;margin-bottom:16px">
+            <div class="fg"><label class="fl" for="gNInp">Nama Tamu</label><input type="text" class="fi" id="gNInp" placeholder="Contoh: Budi Hartono" maxlength="50"></div>
+            <div class="fr"><div class="fg"><label class="fl">Status</label><select class="fi" id="gSInp"><option value="menunggu">Menunggu Konfirmasi</option><option value="hadir">Hadir</option><option value="tidak">Tidak Hadir</option></select></div><div class="fg"><label class="fl">Jumlah</label><input type="number" class="fi" id="gCInp" min="1" max="20" value="1"></div></div>
+            <div class="fg"><label class="fl" for="gTInp">Catatan (opsional)</label><input type="text" class="fi" id="gTInp" placeholder="Contoh: bawa kue, alergi kacang" maxlength="100"></div>
+            <button class="btn btn-p" onclick="addG()" style="margin-top:4px"><i class="fa-solid fa-plus"></i> Tambah Tamu</button>
         </div>
+        <div class="divd"></div>
+        <div id="gList" class="lc"><div class="empty"><i class="fa-solid fa-clipboard-list"></i><p>Belum ada data tamu.</p></div></div>
+    </section>
 
-        <nav style="flex:1;">
-            <div class="sidebar-nav-item active" data-page="create" onclick="switchPage('create')">
-                <i class="fas fa-plus-circle"></i>
-                <span>Buat Undangan</span>
+    <!-- Thumbnail Undangan -->
+    <section class="cd">
+        <div class="st"><div class="si pu"><i class="fa-solid fa-image"></i></div><div><h2>Thumbnail Undangan</h2><span>Gambar yang akan dikirim bersama pesan WhatsApp</span></div></div>
+        <div class="fg">
+            <label class="fl">Upload Gambar</label>
+            <div class="thumb-zone" id="thumbZone">
+                <i class="fa-solid fa-cloud-arrow-up upload-icon"></i>
+                <div class="tz-text">Klik atau seret gambar ke sini<br><strong>JPG, PNG, WebP (maks 2MB)</strong></div>
+                <img id="thumbPreview" src="" alt="Preview thumbnail" style="display:none">
+                <button class="thumb-remove" id="thumbRemove" onclick="removeThumb(event)" title="Hapus gambar"><i class="fa-solid fa-xmark"></i></button>
+                <input type="file" id="thumbFile" accept="image/jpeg,image/png,image/webp" onchange="handleThumbUpload(event)">
             </div>
-            <div class="sidebar-nav-item" data-page="list" onclick="switchPage('list')">
-                <i class="fas fa-list-ul"></i>
-                <span>Daftar Undangan</span>
+            <div class="img-url-or">atau masukkan URL gambar</div>
+            <div class="img-url-row">
+                <input type="url" class="fi" id="thumbUrl" placeholder="https://contoh.com/gambar-undangan.jpg" oninput="handleThumbUrl()">
+                <button class="btn btn-i" onclick="handleThumbUrl()" title="Gunakan URL"><i class="fa-solid fa-check"></i></button>
             </div>
-            <div class="sidebar-nav-item" data-page="preview" onclick="switchPage('preview')">
-                <i class="fas fa-eye"></i>
-                <span>Preview</span>
-            </div>
-        </nav>
-
-        <div style="padding-top:20px;border-top:1px solid var(--border);">
-            <div style="display:flex;align-items:center;gap:12px;">
-                <div style="width:36px;height:36px;border-radius:10px;background:var(--glow);display:flex;align-items:center;justify-content:center;">
-                    <i class="fas fa-user" style="color:var(--accent);font-size:13px;"></i>
-                </div>
-                <div>
-                    <div style="font-size:13px;font-weight:600;color:var(--fg);">Admin</div>
-                    <div style="font-size:11px;color:var(--muted);">admin@undanganku.id</div>
-                </div>
-            </div>
+            <div class="ih"><i class="fa-solid fa-circle-info"></i> Gambar akan dikirim saat menggunakan mode "Gambar + Teks" di WhatsApp Web</div>
         </div>
-    </aside>
+    </section>
 
-    <!-- Konten Utama -->
-    <main class="main-content" id="mainContent">
+    <!-- Link Undangan -->
+    <section class="cd">
+        <div class="st"><div class="si bl"><i class="fa-solid fa-link"></i></div><div><h2>Link Undangan</h2><span>Paste link halaman undangan</span></div></div>
+        <div class="fg"><label class="fl" for="linkInp">URL Undangan</label><input type="url" class="fi" id="linkInp" placeholder="https://contoh.com/undangan-ulang-tahun" oninput="svL()"><div class="ih"><i class="fa-solid fa-circle-info"></i> Otomatis tersimpan di browser</div></div>
+    </section>
 
-        <!-- === HALAMAN BUAT UNDANGAN === -->
-        <section id="pageCreate" class="fade-up">
-            <div style="margin-bottom:36px;">
-                <h1 class="font-display" style="font-size:28px;font-weight:700;color:var(--fg);margin-bottom:6px;">Buat Undangan Baru</h1>
-                <p style="font-size:15px;color:var(--muted);">Isi detail di bawah untuk membuat undangan ulang tahun digital</p>
-            </div>
+    <!-- Template Pesan -->
+    <section class="cd">
+        <div class="st"><div class="si rd"><i class="fa-solid fa-message"></i></div><div><h2>Template Pesan WhatsApp</h2><span>Sesuaikan pesan yang dikirim</span></div></div>
+        <div class="fg"><label class="fl" for="msgInp">Isi Pesan</label><textarea class="fi" id="msgInp" oninput="svMsg();upPrev()" placeholder="Tulis pesan undangan..."></textarea><div class="ih"><i class="fa-solid fa-circle-info"></i> Gunakan <strong>[Nama Teman]</strong> dan <strong>[Link Undangan]</strong> sebagai placeholder</div></div>
+        <div class="pbox"><div class="pc" id="prevC">Pesan akan muncul di sini...</div></div>
+    </section>
 
-            <div style="display:grid;grid-template-columns:1fr 1fr;gap:28px;align-items:start;" id="formGrid">
-                <!-- Form kiri -->
-                <div class="card" style="padding:32px;">
-                    <div id="inviteForm">
-                        <div style="margin-bottom:24px;">
-                            <label class="form-label" for="inputHonored">
-                                <i class="fas fa-user-tie label-icon"></i>Nama yang Terhormat
-                            </label>
-                            <input type="text" class="form-input" id="inputHonored" placeholder="cth: Bapak Ahmad dan Ibu Sari" autocomplete="off">
-                            <p class="field-error" id="errorHonored" style="font-size:12px;color:#b44a4a;margin-top:6px;display:none;"></p>
-                        </div>
+</main>
 
-                        <div style="margin-bottom:24px;">
-                            <label class="form-label" for="inputBirthday">
-                                <i class="fas fa-birthday-cake label-icon"></i>Nama Yang Berulang Tahun
-                            </label>
-                            <input type="text" class="form-input" id="inputBirthday" placeholder="cth: Rizky Pratama" autocomplete="off">
-                            <p class="field-error" id="errorBirthday" style="font-size:12px;color:#b44a4a;margin-top:6px;display:none;"></p>
-                        </div>
+<script>
+// ==============================
+// Konstanta & State
+// ==============================
+const SKF='bday_f_v3',SKG='bday_g_v3',SKL='bday_l_v3',SKM='bday_m_v3',SKT='bday_thumb_v3';
+const COLS=['#e8a849','#e85454','#4ecb71','#38bdf8','#c084fc','#f472b6','#fb923c','#a3e635','#22d3ee','#f87171','#fbbf24','#34d399'];
+const DMSG=`Halo [Nama Teman]! \uD83D\uDC4B\nDi hari spesialku ini, aku pengen banget kamu ada di acara ulang tahunku.\nYuk, luangkan waktuku buat dateng ya! Detail tempat dan jamnya bisa cek di link ini ya:\n\uD83D\uDC49 [Link Undangan]\nDitunggu kehadiran dan keseruannya! \u2728`;
 
-                        <div style="display:grid;grid-template-columns:2fr 1fr;gap:14px;margin-bottom:24px;">
-                            <div>
-                                <label class="form-label" for="inputDate">
-                                    <i class="fas fa-calendar-alt label-icon"></i>Hari & Tanggal
-                                </label>
-                                <input type="date" class="form-input" id="inputDate">
-                                <p class="field-error" id="errorDate" style="font-size:12px;color:#b44a4a;margin-top:6px;display:none;"></p>
-                            </div>
-                            <div>
-                                <label class="form-label" for="inputTime">
-                                    <i class="fas fa-clock label-icon"></i>Waktu
-                                </label>
-                                <input type="time" class="form-input" id="inputTime">
-                                <p class="field-error" id="errorTime" style="font-size:12px;color:#b44a4a;margin-top:6px;display:none;"></p>
-                            </div>
-                        </div>
+let friends=[],guests=[],thumbData={type:'none',value:''};
+let efi=-1,egi=-1,qsi=-1,sendIdx=-1,sendMode='text';
 
-                        <div style="margin-bottom:24px;">
-                            <label class="form-label" for="inputLocation">
-                                <i class="fas fa-map-marker-alt label-icon"></i>Lokasi / Alamat
-                            </label>
-                            <textarea class="form-input" id="inputLocation" placeholder="cth: Jl. Merdeka No. 45, Jakarta Selatan" rows="2"></textarea>
-                            <p class="field-error" id="errorLocation" style="font-size:12px;color:#b44a4a;margin-top:6px;display:none;"></p>
-                        </div>
+// ==============================
+// Init
+// ==============================
+function init(){
+    loadAll();
+    renderF();renderG();upStats();upPrev();upThumbUI();
+    document.getElementById('fInp').addEventListener('keydown',e=>{if(e.key==='Enter')addF()});
+    document.getElementById('gNInp').addEventListener('keydown',e=>{if(e.key==='Enter')addG()});
+    document.getElementById('efInp').addEventListener('keydown',e=>{if(e.key==='Enter')svEF()});
+    document.getElementById('egName').addEventListener('keydown',e=>{if(e.key==='Enter')svEG()});
+    document.querySelectorAll('.mo').forEach(m=>{m.addEventListener('click',e=>{if(e.target===m)m.classList.remove('on')})});
+    document.addEventListener('keydown',e=>{if(e.key==='Escape')document.querySelectorAll('.mo.on').forEach(m=>m.classList.remove('on'))});
 
-                        <div style="margin-bottom:28px;">
-                            <label class="form-label" for="inputMessage">
-                                <i class="fas fa-heart label-icon"></i>Kalimat Ucapan
-                            </label>
-                            <textarea class="form-input" id="inputMessage" placeholder="cth: Semoga panjang umur, sehat selalu, dan segala impian tercapai. Selamat ulang tahun!" rows="4"></textarea>
-                            <div style="display:flex;justify-content:space-between;margin-top:6px;">
-                                <p class="field-error" id="errorMessage" style="font-size:12px;color:#b44a4a;display:none;"></p>
-                                <span style="font-size:12px;color:var(--muted);margin-left:auto;" id="charCount">0 / 500</span>
-                            </div>
-                        </div>
-
-                        <div style="display:flex;gap:12px;">
-                            <button type="button" class="btn-primary" style="flex:1;" id="btnGenerate" onclick="generateLink()">
-                                <i class="fas fa-link"></i>
-                                Buat Link Undangan
-                            </button>
-                            <button type="button" class="btn-secondary" onclick="resetForm()" title="Reset form">
-                                <i class="fas fa-redo-alt"></i>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Hasil kanan -->
-                <div>
-                    <!-- Link hasil -->
-                    <div class="card" style="padding:28px;margin-bottom:20px;" id="resultCard">
-                        <div style="display:flex;align-items:center;gap:10px;margin-bottom:18px;">
-                            <div style="width:36px;height:36px;border-radius:10px;background:var(--glow);display:flex;align-items:center;justify-content:center;">
-                                <i class="fas fa-link" style="color:var(--accent);font-size:14px;"></i>
-                            </div>
-                            <div>
-                                <h3 style="font-size:15px;font-weight:700;color:var(--fg);font-family:'DM Sans',sans-serif;">Link Undangan</h3>
-                                <p style="font-size:12px;color:var(--muted);">Bagikan link ini ke penerima undangan</p>
-                            </div>
-                        </div>
-                        <div class="link-box" id="linkBox">
-                            <i class="fas fa-globe" style="color:var(--muted);font-size:14px;flex-shrink:0;"></i>
-                            <span style="flex:1;font-size:13px;color:var(--muted);font-family:monospace;" id="linkText">Belum ada link yang dibuat</span>
-                        </div>
-
-                        <div style="margin-top:16px;display:flex;flex-direction:column;gap:10px;" id="linkActionsContainer">
-                            <button type="button" class="btn-whatsapp" style="width:100%;display:none;" id="btnWhatsApp" onclick="shareWhatsApp()">
-                                <i class="fab fa-whatsapp"></i>
-                                Kirim via WhatsApp
-                            </button>
-                            <div style="display:flex;gap:10px;">
-                                <button type="button" class="btn-secondary" style="flex:1;display:none;" id="btnCopy" onclick="copyLink()">
-                                    <i class="fas fa-copy"></i> Salin Link
-                                </button>
-                                <button type="button" class="btn-secondary" style="flex:1;display:none;" id="btnShare" onclick="shareLink()">
-                                    <i class="fas fa-share-alt"></i> Bagikan
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Preview mini -->
-                    <div class="card" style="padding:28px;">
-                        <div style="display:flex;align-items:center;gap:10px;margin-bottom:18px;">
-                            <div style="width:36px;height:36px;border-radius:10px;background:var(--glow);display:flex;align-items:center;justify-content:center;">
-                                <i class="fas fa-eye" style="color:var(--accent);font-size:14px;"></i>
-                            </div>
-                            <div>
-                                <h3 style="font-size:15px;font-weight:700;color:var(--fg);font-family:'DM Sans',sans-serif;">Preview Undangan</h3>
-                                <p style="font-size:12px;color:var(--muted);">Tampilan undangan yang akan diterima</p>
-                            </div>
-                        </div>
-                        <div class="invite-preview" id="miniPreview">
-                            <p style="font-size:11px;text-transform:uppercase;letter-spacing:0.15em;color:var(--muted);margin-bottom:12px;">Undangan Ulang Tahun</p>
-                            <p style="font-size:13px;color:var(--muted);margin-bottom:4px;">Kepada Yth.</p>
-                            <h2 class="font-display" style="font-size:22px;font-weight:700;color:var(--fg);margin-bottom:16px;" id="previewHonored">—</h2>
-                            <div class="deco-line" style="margin-bottom:16px;"></div>
-                            <p style="font-size:13px;color:var(--muted);margin-bottom:4px;">Anda diundang dalam acara ulang tahun</p>
-                            <h2 class="font-display" style="font-size:24px;font-weight:700;color:var(--accent);margin-bottom:16px;" id="previewBirthday">—</h2>
-                            <div class="deco-line" style="margin-bottom:16px;"></div>
-                            <div style="display:flex;justify-content:center;gap:24px;margin-bottom:16px;">
-                                <div>
-                                    <i class="fas fa-calendar-alt" style="color:var(--accent);font-size:13px;margin-bottom:4px;display:block;"></i>
-                                    <p style="font-size:13px;font-weight:600;color:var(--fg);" id="previewDate">—</p>
-                                </div>
-                                <div>
-                                    <i class="fas fa-clock" style="color:var(--accent);font-size:13px;margin-bottom:4px;display:block;"></i>
-                                    <p style="font-size:13px;font-weight:600;color:var(--fg);" id="previewTime">—</p>
-                                </div>
-                            </div>
-                            <div style="margin-bottom:16px;">
-                                <i class="fas fa-map-marker-alt" style="color:var(--accent);font-size:13px;margin-bottom:4px;display:block;"></i>
-                                <p style="font-size:13px;color:var(--fg);" id="previewLocation">—</p>
-                            </div>
-                            <div class="deco-line" style="margin-bottom:16px;"></div>
-                            <p style="font-size:13px;font-style:italic;color:var(--muted);line-height:1.7;" id="previewMessage">—</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- === HALAMAN DAFTAR UNDANGAN === -->
-        <section id="pageList" class="fade-up" style="display:none;">
-            <div style="margin-bottom:36px;">
-                <h1 class="font-display" style="font-size:28px;font-weight:700;color:var(--fg);margin-bottom:6px;">Daftar Undangan</h1>
-                <p style="font-size:15px;color:var(--muted);">Kelola semua undangan yang sudah dibuat</p>
-            </div>
-
-            <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:32px;" id="statsGrid">
-                <div class="stat-card">
-                    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;">
-                        <span style="font-size:13px;color:var(--muted);font-weight:500;">Total Undangan</span>
-                        <div style="width:32px;height:32px;border-radius:9px;background:var(--glow);display:flex;align-items:center;justify-content:center;">
-                            <i class="fas fa-envelope" style="color:var(--accent);font-size:13px;"></i>
-                        </div>
-                    </div>
-                    <p style="font-size:28px;font-weight:700;color:var(--fg);" id="statTotal">0</p>
-                </div>
-                <div class="stat-card">
-                    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;">
-                        <span style="font-size:13px;color:var(--muted);font-weight:500;">Bulan Ini</span>
-                        <div style="width:32px;height:32px;border-radius:9px;background:rgba(90,143,107,0.1);display:flex;align-items:center;justify-content:center;">
-                            <i class="fas fa-chart-line" style="color:var(--success);font-size:13px;"></i>
-                        </div>
-                    </div>
-                    <p style="font-size:28px;font-weight:700;color:var(--fg);" id="statMonth">0</p>
-                </div>
-                <div class="stat-card">
-                    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;">
-                        <span style="font-size:13px;color:var(--muted);font-weight:500;">Minggu Ini</span>
-                        <div style="width:32px;height:32px;border-radius:9px;background:rgba(200,149,108,0.1);display:flex;align-items:center;justify-content:center;">
-                            <i class="fas fa-calendar-week" style="color:var(--accent);font-size:13px;"></i>
-                        </div>
-                    </div>
-                    <p style="font-size:28px;font-weight:700;color:var(--fg);" id="statWeek">0</p>
-                </div>
-            </div>
-
-            <div style="margin-bottom:20px;position:relative;max-width:400px;">
-                <i class="fas fa-search" style="position:absolute;left:16px;top:50%;transform:translateY(-50%);color:var(--muted);font-size:14px;"></i>
-                <input type="text" class="form-input" style="padding-left:42px;" placeholder="Cari undangan..." id="searchInput" oninput="renderList()">
-            </div>
-
-            <div id="inviteList" style="display:flex;flex-direction:column;gap:12px;"></div>
-            <div id="emptyState" style="display:none;text-align:center;padding:60px 20px;">
-                <div style="width:64px;height:64px;border-radius:20px;background:var(--glow);display:inline-flex;align-items:center;justify-content:center;margin-bottom:16px;">
-                    <i class="fas fa-inbox" style="color:var(--accent);font-size:24px;"></i>
-                </div>
-                <h3 style="font-size:17px;font-weight:600;color:var(--fg);margin-bottom:6px;font-family:'DM Sans',sans-serif;">Belum ada undangan</h3>
-                <p style="font-size:14px;color:var(--muted);margin-bottom:20px;">Mulai buat undangan pertama Anda</p>
-                <button type="button" class="btn-primary" onclick="switchPage('create')">
-                    <i class="fas fa-plus"></i> Buat Undangan
-                </button>
-            </div>
-        </section>
-
-        <!-- === HALAMAN PREVIEW === -->
-        <section id="pagePreview" class="fade-up" style="display:none;">
-            <div style="margin-bottom:36px;">
-                <h1 class="font-display" style="font-size:28px;font-weight:700;color:var(--fg);margin-bottom:6px;">Preview Undangan</h1>
-                <p style="font-size:15px;color:var(--muted);">Tampilan penuh undangan yang akan diterima tamu</p>
-            </div>
-            <div style="max-width:480px;margin:0 auto;" id="fullPreviewContainer">
-                <div class="card" style="padding:0;overflow:hidden;" id="fullPreviewCard">
-                    <div style="padding:16px 20px;font-size:13px;color:var(--muted);border-bottom:1px solid var(--border);display:flex;align-items:center;gap:8px;background:var(--input-bg);">
-                        <i class="fas fa-mobile-alt" style="font-size:12px;"></i>
-                        <span>Tampilan mobile</span>
-                    </div>
-                    <div style="padding:40px 32px;text-align:center;background:linear-gradient(180deg,#FFFEFB 0%,#FBF5ED 100%);min-height:600px;" id="fullPreviewContent">
-                        <p style="font-size:11px;text-transform:uppercase;letter-spacing:0.2em;color:var(--muted);margin-bottom:20px;">Undangan Ulang Tahun</p>
-                        <p style="font-size:14px;color:var(--muted);margin-bottom:6px;">Kepada Yth.</p>
-                        <h2 class="font-display" style="font-size:28px;font-weight:700;color:var(--fg);margin-bottom:24px;word-break:break-word;" id="fpHonored">—</h2>
-                        <div style="width:80px;height:1.5px;background:linear-gradient(90deg,transparent,var(--accent),transparent);margin:0 auto 24px;"></div>
-                        <p style="font-size:14px;color:var(--muted);margin-bottom:6px;">Anda diundang dalam acara ulang tahun</p>
-                        <h2 class="font-display" style="font-size:32px;font-weight:700;color:var(--accent);margin-bottom:28px;word-break:break-word;" id="fpBirthday">—</h2>
-                        <div style="width:80px;height:1.5px;background:linear-gradient(90deg,transparent,var(--accent),transparent);margin:0 auto 28px;"></div>
-                        <div style="display:flex;justify-content:center;gap:36px;margin-bottom:28px;">
-                            <div>
-                                <i class="fas fa-calendar-alt" style="color:var(--accent);font-size:16px;margin-bottom:8px;display:block;"></i>
-                                <p style="font-size:15px;font-weight:600;color:var(--fg);" id="fpDate">—</p>
-                            </div>
-                            <div>
-                                <i class="fas fa-clock" style="color:var(--accent);font-size:16px;margin-bottom:8px;display:block;"></i>
-                                <p style="font-size:15px;font-weight:600;color:var(--fg);" id="fpTime">—</p>
-                            </div>
-                        </div>
-                        <div style="margin-bottom:28px;">
-                            <i class="fas fa-map-marker-alt" style="color:var(--accent);font-size:16px;margin-bottom:8px;display:block;"></i>
-                            <p style="font-size:14px;color:var(--fg);line-height:1.6;word-break:break-word;" id="fpLocation">—</p>
-                        </div>
-                        <div style="width:80px;height:1.5px;background:linear-gradient(90deg,transparent,var(--accent),transparent);margin:0 auto 28px;"></div>
-                        <p style="font-size:14px;font-style:italic;color:var(--muted);line-height:1.8;max-width:360px;margin:0 auto 32px;word-break:break-word;" id="fpMessage">—</p>
-                        <p style="font-size:12px;color:var(--muted);opacity:0.6;">Dibuat dengan UndanganKu</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-    </main>
-
-    <!-- Modal Hapus -->
-    <div class="modal-backdrop" id="deleteModal">
-        <div class="modal-box">
-            <div style="width:56px;height:56px;border-radius:16px;background:rgba(180,74,74,0.08);display:inline-flex;align-items:center;justify-content:center;margin-bottom:16px;">
-                <i class="fas fa-trash-alt" style="color:#b44a4a;font-size:20px;"></i>
-            </div>
-            <h3 style="font-size:18px;font-weight:700;color:var(--fg);margin-bottom:8px;font-family:'DM Sans',sans-serif;">Hapus Undangan?</h3>
-            <p style="font-size:14px;color:var(--muted);margin-bottom:24px;">Tindakan ini tidak bisa dibatalkan. Undangan akan dihapus secara permanen.</p>
-            <div style="display:flex;gap:12px;">
-                <button type="button" class="btn-secondary" style="flex:1;" onclick="closeDeleteModal()">Batal</button>
-                <button type="button" class="btn-primary" style="flex:1;background:#b44a4a;" id="confirmDeleteBtn" onclick="confirmDelete()">
-                    <i class="fas fa-trash-alt"></i> Hapus
-                </button>
-            </div>
-        </div>
-    </div>
-
-    <script>
-        /* =========================================
-           DATA STORE
-        ========================================= */
-        let invitations = JSON.parse(localStorage.getItem('undanganku_data') || '[]');
-        let currentGeneratedLink = '';
-        let currentInviteData = null;
-        let deleteTargetId = null;
-        let currentPage = 'create';
-
-        /* =========================================
-           UTILITAS
-        ========================================= */
-        function generateId() {
-            return 'inv_' + Date.now().toString(36) + Math.random().toString(36).substr(2, 5);
+    // Drag & drop untuk thumbnail
+    const tz=document.getElementById('thumbZone');
+    tz.addEventListener('dragover',e=>{e.preventDefault();tz.style.borderColor='var(--accent)';tz.style.background='rgba(232,168,73,.06)'});
+    tz.addEventListener('dragleave',()=>{tz.style.borderColor='';tz.style.background=''});
+    tz.addEventListener('drop',e=>{
+        e.preventDefault();tz.style.borderColor='';tz.style.background='';
+        if(e.dataTransfer.files.length){
+            document.getElementById('thumbFile').files=e.dataTransfer.files;
+            handleThumbUpload({target:{files:e.dataTransfer.files}});
         }
+    });
+}
 
-        function formatTanggal(dateStr) {
-            if (!dateStr) return '—';
-            const hari = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
-            const bulan = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
-            const d = new Date(dateStr + 'T00:00:00');
-            return hari[d.getDay()] + ', ' + d.getDate() + ' ' + bulan[d.getMonth()] + ' ' + d.getFullYear();
-        }
+// ==============================
+// Storage
+// ==============================
+function loadAll(){
+    try{friends=JSON.parse(localStorage.getItem(SKF))||[]}catch{friends=[]}
+    try{guests=JSON.parse(localStorage.getItem(SKG))||[]}catch{guests=[]}
+    try{thumbData=JSON.parse(localStorage.getItem(SKT))||{type:'none',value:''}}catch{thumbData={type:'none',value:''}}
+    document.getElementById('linkInp').value=localStorage.getItem(SKL)||'';
+    document.getElementById('msgInp').value=localStorage.getItem(SKM)||DMSG;
+    if(thumbData.type==='url')document.getElementById('thumbUrl').value=thumbData.value;
+}
+function svF(){localStorage.setItem(SKF,JSON.stringify(friends))}
+function svG(){localStorage.setItem(SKG,JSON.stringify(guests))}
+function svL(){localStorage.setItem(SKL,document.getElementById('linkInp').value.trim());upPrev()}
+function svMsg(){localStorage.setItem(SKM,document.getElementById('msgInp').value)}
+function svThumb(){localStorage.setItem(SKT,JSON.stringify(thumbData))}
 
-        function formatWaktu(timeStr) {
-            if (!timeStr) return '—';
-            const parts = timeStr.split(':');
-            const h = parts[0];
-            const m = parts[1];
-            return h + ':' + m + ' WIB';
-        }
-
-        // Encode data undangan ke string aman untuk URL
-        function encodeInviteData(data) {
-            try {
-                // Gunakan encodeURIComponent untuk menangani karakter khusus (spasi, dll)
-                return btoa(unescape(encodeURIComponent(JSON.stringify(data))));
-            } catch (e) {
-                console.error('Encode gagal:', e);
-                return '';
+// ==============================
+// Thumbnail
+// ==============================
+function handleThumbUpload(e){
+    const file=e.target.files[0];
+    if(!file)return;
+    if(file.size>2*1024*1024){toast('Ukuran gambar maksimal 2MB','error');return}
+    if(!['image/jpeg','image/png','image/webp'].includes(file.type)){toast('Format harus JPG, PNG, atau WebP','error');return}
+    const reader=new FileReader();
+    reader.onload=function(ev){
+        // Kompres gambar agar tidak terlalu besar untuk localStorage
+        const img=new Image();
+        img.onload=function(){
+            const cv=document.createElement('canvas');
+            let w=img.width,h=img.height;
+            const maxW=800;
+            if(w>maxW){h=Math.round(h*maxW/w);w=maxW}
+            cv.width=w;cv.height=h;
+            cv.getContext('2d').drawImage(img,0,0,w,h);
+            let dataUrl=cv.toDataURL('image/jpeg',0.7);
+            // Jika masih terlalu besar (>500KB), kompres lebih
+            if(dataUrl.length>500000){
+                dataUrl=cv.toDataURL('image/jpeg',0.4);
             }
-        }
+            thumbData={type:'base64',value:dataUrl};
+            svThumb();upThumbUI();
+            toast('Gambar berhasil diupload','success');
+        };
+        img.src=ev.target.result;
+    };
+    reader.readAsDataURL(file);
+}
 
-        // Decode string URL kembali ke objek data
-        function decodeInviteData(encoded) {
-            try {
-                return JSON.parse(decodeURIComponent(escape(atob(encoded))));
-            } catch (e) {
-                console.error('Decode gagal:', e);
-                return null;
-            }
-        }
+function handleThumbUrl(){
+    const url=document.getElementById('thumbUrl').value.trim();
+    if(!url){thumbData={type:'none',value:''};svThumb();upThumbUI();return}
+    if(!url.startsWith('http://')&&!url.startsWith('https://')){toast('URL harus diawali http:// atau https://','error');return}
+    thumbData={type:'url',value:url};
+    svThumb();upThumbUI();
+    toast('URL gambar disimpan','success');
+}
 
-        function saveData() {
-            localStorage.setItem('undanganku_data', JSON.stringify(invitations));
-        }
+function removeThumb(e){
+    e.stopPropagation();e.preventDefault();
+    thumbData={type:'none',value:''};
+    document.getElementById('thumbFile').value='';
+    document.getElementById('thumbUrl').value='';
+    svThumb();upThumbUI();
+    toast('Gambar dihapus','info');
+}
 
-        function escapeHtml(str) {
-            var div = document.createElement('div');
-            div.textContent = str;
-            return div.innerHTML;
-        }
+function upThumbUI(){
+    const zone=document.getElementById('thumbZone');
+    const preview=document.getElementById('thumbPreview');
+    if(thumbData.type==='base64'){
+        preview.src=thumbData.value;
+        preview.style.display='block';
+        zone.classList.add('has-img');
+    }else if(thumbData.type==='url'){
+        preview.src=thumbData.value;
+        preview.style.display='block';
+        preview.onerror=()=>{preview.style.display='none';zone.classList.remove('has-img')};
+        preview.onload=()=>{zone.classList.add('has-img')};
+        zone.classList.remove('has-img');
+    }else{
+        preview.style.display='none';
+        preview.src='';
+        zone.classList.remove('has-img');
+    }
+}
 
-        /* =========================================
-           TOAST NOTIFICATION
-        ========================================= */
-        function showToast(message, type) {
-            type = type || 'info';
-            var container = document.getElementById('toastContainer');
-            var toast = document.createElement('div');
-            toast.className = 'toast ' + type;
-            var iconMap = { success: 'fa-check-circle', error: 'fa-exclamation-circle', info: 'fa-info-circle' };
-            toast.innerHTML = '<i class="fas ' + (iconMap[type] || iconMap.info) + '"></i><span>' + message + '</span>';
-            container.appendChild(toast);
-            requestAnimationFrame(function() {
-                requestAnimationFrame(function() { toast.classList.add('show'); });
-            });
-            setTimeout(function() {
-                toast.classList.remove('show');
-                setTimeout(function() { toast.remove(); }, 400);
-            }, 3500);
-        }
+// ==============================
+// Render: Teman
+// ==============================
+function renderF(){
+    const box=document.getElementById('fList'),cnt=document.getElementById('fCnt');
+    if(!friends.length){box.innerHTML='<div class="empty"><i class="fa-solid fa-user-group"></i><p>Daftar teman masih kosong.</p></div>';cnt.textContent='Belum ada teman ditambahkan';return}
+    cnt.textContent=friends.length+' teman terdaftar';box.innerHTML='';
+    friends.forEach((f,i)=>{
+        const c=COLS[i%COLS.length];
+        const bg=f.sent?'<span class="bdg bdg-s"><i class="fa-solid fa-check" style="font-size:8px"></i> Terkirim</span>':'<span class="bdg bdg-p"><i class="fa-solid fa-clock" style="font-size:8px"></i> Pending</span>';
+        const el=document.createElement('div');el.className='li';el.style.animationDelay=(i*.04)+'s';
+        el.innerHTML=`<div class="av" style="background:${c}">${esc(f.name).charAt(0).toUpperCase()}</div><div class="inf"><div class="inm">${esc(f.name)}</div><div class="imt">${bg}</div></div><div class="ia"><button class="btn bs sd" onclick="openSend(${i})" title="Kirim WhatsApp"><i class="fa-brands fa-whatsapp"></i> Kirim</button><button class="btn bs ed" onclick="openEF(${i})" title="Edit"><i class="fa-solid fa-pen"></i></button><button class="btn bs dg" onclick="delF(${i})" title="Hapus"><i class="fa-solid fa-trash"></i></button></div>`;
+        box.appendChild(el);
+    });
+}
 
-        /* =========================================
-           VALIDASI FORM
-        ========================================= */
-        function clearErrors() {
-            var errors = document.querySelectorAll('.field-error');
-            for (var i = 0; i < errors.length; i++) {
-                errors[i].style.display = 'none';
-                errors[i].textContent = '';
-            }
-            var inputs = document.querySelectorAll('.form-input');
-            for (var j = 0; j < inputs.length; j++) {
-                inputs[j].style.borderColor = 'var(--border)';
-            }
-        }
+// ==============================
+// Render: Tamu
+// ==============================
+function renderG(){
+    const box=document.getElementById('gList'),cnt=document.getElementById('gCnt');
+    if(!guests.length){box.innerHTML='<div class="empty"><i class="fa-solid fa-clipboard-list"></i><p>Belum ada data tamu.</p></div>';cnt.textContent='Catat tamu yang datang ke acara';return}
+    const to=guests.reduce((s,g)=>s+(g.count||1),0);
+    cnt.textContent=guests.length+' tamu ('+to+' orang)';box.innerHTML='';
+    const sm={hadir:'<span class="bdg bdg-h"><i class="fa-solid fa-check" style="font-size:8px"></i> Hadir</span>',tidak:'<span class="bdg bdg-t"><i class="fa-solid fa-xmark" style="font-size:8px"></i> Tidak Hadir</span>',menunggu:'<span class="bdg bdg-m"><i class="fa-solid fa-clock" style="font-size:8px"></i> Menunggu</span>'};
+    guests.forEach((g,i)=>{
+        const c=COLS[(i+6)%COLS.length];
+        const mp=[sm[g.status]||sm.menunggu];
+        if(g.count>1)mp.push('<span>'+g.count+' orang</span>');
+        if(g.note)mp.push('<span style="opacity:.7">'+esc(g.note)+'</span>');
+        const el=document.createElement('div');el.className='li';el.style.animationDelay=(i*.04)+'s';
+        el.innerHTML=`<div class="av" style="background:${c}">${esc(g.name).charAt(0).toUpperCase()}</div><div class="inf"><div class="inm">${esc(g.name)}</div><div class="imt">${mp.join('<span style="color:var(--border)">|</span>')}</div></div><div class="ia"><button class="btn bs st" onclick="openQS(${i})" title="Ubah status"><i class="fa-solid fa-arrows-rotate"></i></button><button class="btn bs ed" onclick="openEG(${i})" title="Edit"><i class="fa-solid fa-pen"></i></button><button class="btn bs dg" onclick="delG(${i})" title="Hapus"><i class="fa-solid fa-trash"></i></button></div>`;
+        box.appendChild(el);
+    });
+}
 
-        function showFieldError(inputId, errorId, message) {
-            document.getElementById(inputId).style.borderColor = '#b44a4a';
-            var el = document.getElementById(errorId);
-            el.textContent = message;
-            el.style.display = 'block';
-        }
+// ==============================
+// CRUD: Teman
+// ==============================
+function addF(){
+    const inp=document.getElementById('fInp'),n=inp.value.trim();
+    if(!n){toast('Nama tidak boleh kosong','error');inp.focus();return}
+    if(n.length<2){toast('Nama minimal 2 karakter','error');inp.focus();return}
+    if(friends.some(f=>f.name.toLowerCase()===n.toLowerCase())){toast('"'+n+'" sudah ada','error');inp.focus();return}
+    friends.push({name:n,sent:false});svF();renderF();upStats();inp.value='';inp.focus();toast('"'+n+'" ditambahkan','success');
+}
+function delF(i){const n=friends[i].name;friends.splice(i,1);svF();renderF();upStats();toast('"'+n+'" dihapus','info')}
+function openEF(i){efi=i;document.getElementById('efInp').value=friends[i].name;document.getElementById('mEditF').classList.add('on');setTimeout(()=>document.getElementById('efInp').focus(),200)}
+function svEF(){
+    if(efi<0)return;const inp=document.getElementById('efInp'),v=inp.value.trim();
+    if(!v||v.length<2){toast('Nama minimal 2 karakter','error');inp.focus();return}
+    if(friends.some((f,i)=>i!==efi&&f.name.toLowerCase()===v.toLowerCase())){toast('"'+v+'" sudah ada','error');inp.focus();return}
+    const old=friends[efi].name;friends[efi].name=v;svF();renderF();clM('mEditF');toast('"'+old+'" diubah ke "'+v+'"','success');
+}
 
-        function validateForm() {
-            clearErrors();
-            var valid = true;
+// ==============================
+// CRUD: Tamu
+// ==============================
+function addG(){
+    const ni=document.getElementById('gNInp'),si=document.getElementById('gSInp'),ci=document.getElementById('gCInp'),ti=document.getElementById('gTInp');
+    const n=ni.value.trim();
+    if(!n){toast('Nama tamu tidak boleh kosong','error');ni.focus();return}
+    if(n.length<2){toast('Nama minimal 2 karakter','error');ni.focus();return}
+    guests.push({name:n,status:si.value,count:Math.max(1,Math.min(20,parseInt(ci.value)||1)),note:ti.value.trim()});
+    svG();renderG();upStats();ni.value='';ti.value='';si.value='menunggu';ci.value='1';ni.focus();toast('"'+n+'" ditambahkan ke daftar tamu','success');
+}
+function delG(i){const n=guests[i].name;guests.splice(i,1);svG();renderG();upStats();toast('"'+n+'" dihapus','info')}
+function openEG(i){
+    egi=i;const g=guests[i];
+    document.getElementById('egName').value=g.name;document.getElementById('egStat').value=g.status;
+    document.getElementById('egCnt').value=g.count;document.getElementById('egNote').value=g.note||'';
+    document.getElementById('mEditG').classList.add('on');setTimeout(()=>document.getElementById('egName').focus(),200);
+}
+function svEG(){
+    if(egi<0)return;const n=document.getElementById('egName').value.trim();
+    if(!n||n.length<2){toast('Nama minimal 2 karakter','error');return}
+    guests[egi]={name:n,status:document.getElementById('egStat').value,count:Math.max(1,Math.min(20,parseInt(document.getElementById('egCnt').value)||1)),note:document.getElementById('egNote').value.trim()};
+    svG();renderG();upStats();clM('mEditG');toast('Data "'+n+'" diperbarui','success');
+}
+function openQS(i){qsi=i;document.getElementById('qsName').textContent='Tamu: '+guests[i].name;document.getElementById('mQS').classList.add('on')}
+function setQS(s){
+    if(qsi<0)return;guests[qsi].status=s;svG();renderG();upStats();clM('mQS');
+    const lb={hadir:'Hadir',tidak:'Tidak Hadir',menunggu:'Menunggu Konfirmasi'};
+    toast('"'+guests[qsi].name+'" diubah ke '+lb[s],'success');qsi=-1;
+}
 
-            var honored = document.getElementById('inputHonored').value.trim();
-            var birthday = document.getElementById('inputBirthday').value.trim();
-            var date = document.getElementById('inputDate').value;
-            var time = document.getElementById('inputTime').value;
-            var location = document.getElementById('inputLocation').value.trim();
-            var message = document.getElementById('inputMessage').value.trim();
+// ==============================
+// Kirim WhatsApp (dengan preview & pilihan mode)
+// ==============================
+function openSend(i){
+    const link=document.getElementById('linkInp').value.trim();
+    if(!link){toast('Isi link undangan terlebih dahulu','error');document.getElementById('linkInp').focus();return}
+    if(!link.startsWith('http://')&&!link.startsWith('https://')){toast('Link harus diawali http:// atau https://','error');document.getElementById('linkInp').focus();return}
 
-            if (!honored) {
-                showFieldError('inputHonored', 'errorHonored', 'Nama yang terhormat wajib diisi');
-                valid = false;
-            }
-            if (!birthday) {
-                showFieldError('inputBirthday', 'errorBirthday', 'Nama yang berulang tahun wajib diisi');
-                valid = false;
-            }
-            if (!date) {
-                showFieldError('inputDate', 'errorDate', 'Tanggal wajib diisi');
-                valid = false;
-            }
-            if (!time) {
-                showFieldError('inputTime', 'errorTime', 'Waktu wajib diisi');
-                valid = false;
-            }
-            if (!location) {
-                showFieldError('inputLocation', 'errorLocation', 'Lokasi/alamat wajib diisi');
-                valid = false;
-            }
-            if (!message) {
-                showFieldError('inputMessage', 'errorMessage', 'Kalimat ucapan wajib diisi');
-                valid = false;
-            } else if (message.length > 500) {
-                showFieldError('inputMessage', 'errorMessage', 'Ucapan maksimal 500 karakter');
-                valid = false;
-            }
+    sendIdx=i;sendMode='text';
+    const f=friends[i];
+    const tmpl=document.getElementById('msgInp').value;
+    const msg=tmpl.replace(/\[Nama Teman\]/g,f.name).replace(/\[Link Undangan\]/g,link);
 
-            return valid;
-        }
+    // Bangun konten modal preview
+    let html='';
 
-        /* =========================================
-           LIVE PREVIEW (mini di halaman buat)
-        ========================================= */
-        function updateLivePreview() {
-            var honored = document.getElementById('inputHonored').value.trim();
-            var birthday = document.getElementById('inputBirthday').value.trim();
-            var date = document.getElementById('inputDate').value;
-            var time = document.getElementById('inputTime').value;
-            var location = document.getElementById('inputLocation').value.trim();
-            var message = document.getElementById('inputMessage').value.trim();
+    // Thumbnail jika ada
+    if(thumbData.type==='base64'){
+        html+='<img src="'+thumbData.value+'" class="send-preview-thumb" alt="Thumbnail">';
+    }else if(thumbData.type==='url'){
+        html+='<img src="'+esc(thumbData.value)+'" class="send-preview-thumb" alt="Thumbnail" onerror="this.style.display=\'none\'">';
+    }
 
-            document.getElementById('previewHonored').textContent = honored || '—';
-            document.getElementById('previewBirthday').textContent = birthday || '—';
-            document.getElementById('previewDate').textContent = date ? formatTanggal(date) : '—';
-            document.getElementById('previewTime').textContent = time ? formatWaktu(time) : '—';
-            document.getElementById('previewLocation').textContent = location || '—';
-            document.getElementById('previewMessage').textContent = message || '—';
+    // Pesan
+    html+='<div class="send-preview-msg">'+esc(msg)+'</div>';
 
-            var count = document.getElementById('inputMessage').value.length;
-            var counter = document.getElementById('charCount');
-            counter.textContent = count + ' / 500';
-            counter.style.color = count > 500 ? '#b44a4a' : count > 400 ? 'var(--accent)' : 'var(--muted)';
-        }
+    // Pilihan mode kirim
+    html+='<div class="fl" style="margin-bottom:8px">Pilih Mode Kirim</div>';
+    html+='<div class="send-modes">';
 
-        // Pasang event listener untuk live preview pada setiap input
-        var previewInputIds = ['inputHonored', 'inputBirthday', 'inputDate', 'inputTime', 'inputLocation', 'inputMessage'];
-        for (var pi = 0; pi < previewInputIds.length; pi++) {
-            (function(id) {
-                document.getElementById(id).addEventListener('input', updateLivePreview);
-                document.getElementById(id).addEventListener('change', updateLivePreview);
-            })(previewInputIds[pi]);
-        }
+    if(thumbData.type!=='none'){
+        html+='<div class="mode-btn active" id="modeImg" onclick="selectMode(\'image\')"><i class="fa-solid fa-image" style="color:var(--wa)"></i> Gambar + Teks <i class="fa-solid fa-circle-check mode-check" style="color:var(--wa)"></i></div>';
+        sendMode='image';
+    }
+    html+='<div class="mode-btn'+(thumbData.type==='none'?' active':'')+'" id="modeTxt" onclick="selectMode(\'text\')"><i class="fa-brands fa-whatsapp" style="color:var(--wa)"></i> Teks Saja <i class="fa-solid fa-circle-check mode-check" style="color:var(--wa)"></i></div>';
+    html+='</div>';
 
-        /* =========================================
-           BUAT LINK UNDANGAN
-        ========================================= */
-        function generateLink() {
-            if (!validateForm()) {
-                showToast('Mohon lengkapi semua field yang diperlukan', 'error');
-                return;
-            }
+    // Info mode gambar
+    if(thumbData.type!=='none'){
+        html+='<div class="ih" style="margin-top:10px"><i class="fa-solid fa-circle-info"></i> Mode "Gambar + Teks" membuka WhatsApp Web. Paste gambar & teks lalu pilih kontak.</div>';
+    }
 
-            var data = {
-                honored: document.getElementById('inputHonored').value.trim(),
-                birthday: document.getElementById('inputBirthday').value.trim(),
-                date: document.getElementById('inputDate').value,
-                time: document.getElementById('inputTime').value,
-                location: document.getElementById('inputLocation').value.trim(),
-                message: document.getElementById('inputMessage').value.trim()
-            };
+    // Info mode teks
+    html+='<div class="ih"><i class="fa-solid fa-circle-info"></i> Mode "Teks Saja" membuka WhatsApp langsung dengan pesan otomatis.</div>';
 
-            currentInviteData = data;
-            var id = generateId();
+    document.getElementById('sendPreviewContent').innerHTML=html;
 
-            // Encode dan buat link
-            var encoded = encodeInviteData(data);
-            var baseUrl = window.location.origin + window.location.pathname;
-            var link = baseUrl + '?invite=' + encoded;
+    // Update tombol konfirmasi
+    const btn=document.getElementById('sendConfirmBtn');
+    if(thumbData.type!=='none'){
+        btn.innerHTML='<i class="fa-solid fa-arrow-up-right-from-square"></i> Buka WhatsApp Web';
+    }else{
+        btn.innerHTML='<i class="fa-brands fa-whatsapp"></i> Kirim Sekarang';
+    }
 
-            // Simpan ke localStorage
-            var record = {
-                id: id,
-                honored: data.honored,
-                birthday: data.birthday,
-                date: data.date,
-                time: data.time,
-                location: data.location,
-                message: data.message,
-                link: link,
-                createdAt: new Date().toISOString()
-            };
-            invitations.unshift(record);
-            saveData();
+    document.getElementById('mSend').classList.add('on');
+}
 
-            // Tampilkan link
-            currentGeneratedLink = link;
-            var linkText = document.getElementById('linkText');
-            linkText.textContent = link;
-            linkText.style.color = 'var(--fg)';
-            linkText.style.fontFamily = 'monospace';
-            linkText.style.fontSize = '12px';
+function selectMode(mode){
+    sendMode=mode;
+    document.querySelectorAll('#mSend .mode-btn').forEach(b=>b.classList.remove('active'));
+    if(mode==='image')document.getElementById('modeImg').classList.add('active');
+    else document.getElementById('modeTxt').classList.add('active');
 
-            // Tampilkan tombol aksi
-            document.getElementById('btnWhatsApp').style.display = 'inline-flex';
-            document.getElementById('btnCopy').style.display = 'inline-flex';
-            document.getElementById('btnShare').style.display = 'inline-flex';
+    const btn=document.getElementById('sendConfirmBtn');
+    if(mode==='image'){
+        btn.innerHTML='<i class="fa-solid fa-arrow-up-right-from-square"></i> Buka WhatsApp Web';
+    }else{
+        btn.innerHTML='<i class="fa-brands fa-whatsapp"></i> Kirim Sekarang';
+    }
+}
 
-            // Animasi link box
-            var linkBox = document.getElementById('linkBox');
-            linkBox.style.borderColor = 'var(--accent)';
-            linkBox.style.borderStyle = 'solid';
-            linkBox.style.background = 'rgba(200,149,108,0.04)';
-            setTimeout(function() {
-                linkBox.style.borderColor = 'var(--border)';
-                linkBox.style.borderStyle = 'dashed';
-                linkBox.style.background = 'var(--input-bg)';
-            }, 2000);
+function confirmSend(){
+    if(sendIdx<0)return;
+    const f=friends[sendIdx];
+    const link=document.getElementById('linkInp').value.trim();
+    const tmpl=document.getElementById('msgInp').value;
+    const msg=tmpl.replace(/\[Nama Teman\]/g,f.name).replace(/\[Link Undangan\]/g,link);
 
-            // Animasi pulse tombol WA
-            var waBtn = document.getElementById('btnWhatsApp');
-            waBtn.classList.remove('pulse-once');
-            void waBtn.offsetWidth;
-            waBtn.classList.add('pulse-once');
-
-            showToast('Link undangan berhasil dibuat!', 'success');
-        }
-
-        /* =========================================
-           SALIN LINK
-        ========================================= */
-        function copyLink() {
-            if (!currentGeneratedLink) return;
-            var linkToCopy = currentGeneratedLink;
-
-            // Coba clipboard API modern
-            if (navigator.clipboard && navigator.clipboard.writeText) {
-                navigator.clipboard.writeText(linkToCopy).then(function() {
-                    showCopyFeedback();
-                }).catch(function() {
-                    fallbackCopy(linkToCopy);
-                    showCopyFeedback();
-                });
-            } else {
-                fallbackCopy(linkToCopy);
-                showCopyFeedback();
-            }
-        }
-
-        function fallbackCopy(text) {
-            var textarea = document.createElement('textarea');
-            textarea.value = text;
-            textarea.style.position = 'fixed';
-            textarea.style.left = '-9999px';
-            textarea.style.opacity = '0';
-            document.body.appendChild(textarea);
-            textarea.focus();
-            textarea.select();
-            try { document.execCommand('copy'); } catch(e) {}
-            document.body.removeChild(textarea);
-        }
-
-        function showCopyFeedback() {
-            var linkBox = document.getElementById('linkBox');
-            var linkText = document.getElementById('linkText');
-            var originalText = linkText.textContent;
-            linkBox.classList.add('copied');
-            linkText.textContent = 'Link berhasil disalin!';
-            linkText.style.fontFamily = "'DM Sans', sans-serif";
-            linkText.style.color = 'var(--success)';
-            showToast('Link berhasil disalin ke clipboard', 'success');
-            setTimeout(function() {
-                linkBox.classList.remove('copied');
-                linkText.textContent = originalText;
-                linkText.style.fontFamily = 'monospace';
-                linkText.style.color = 'var(--fg)';
-            }, 2000);
-        }
-
-        /* =========================================
-           BAGIKAN UMUM
-        ========================================= */
-        function shareLink() {
-            if (!currentGeneratedLink) return;
-            if (navigator.share) {
-                navigator.share({
-                    title: 'Undangan Ulang Tahun',
-                    text: 'Anda diundang dalam acara ulang tahun!',
-                    url: currentGeneratedLink
-                }).catch(function() {});
-            } else {
-                copyLink();
-                showToast('Link disalin. Bagikan secara manual ke penerima', 'info');
-            }
-        }
-
-        /* =========================================
-           SHARE VIA WHATSAPP
-        ========================================= */
-        function shareWhatsApp() {
-            if (!currentGeneratedLink || !currentInviteData) return;
-
-            var d = currentInviteData;
-            var pesan = '*Undangan Ulang Tahun*\n\n' +
-                'Kepada Yth. *' + d.honored + '*\n\n' +
-                'Anda diundang dalam acara ulang tahun *' + d.birthday + '*\n\n' +
-                'Tanggal: ' + formatTanggal(d.date) + '\n' +
-                'Waktu: ' + formatWaktu(d.time) + '\n' +
-                'Lokasi: ' + d.location + '\n\n' +
-                '"' + d.message + '"\n\n' +
-                'Silakan buka link undangan ini:\n' + currentGeneratedLink;
-
-            var encodedPesan = encodeURIComponent(pesan);
-            var waUrl = 'https://wa.me/?text=' + encodedPesan;
-            window.open(waUrl, '_blank');
-            showToast('Membuka WhatsApp...', 'success');
-        }
-
-        function shareWhatsAppFromList(id) {
-            var inv = null;
-            for (var i = 0; i < invitations.length; i++) {
-                if (invitations[i].id === id) { inv = invitations[i]; break; }
-            }
-            if (!inv) return;
-
-            var pesan = '*Undangan Ulang Tahun*\n\n' +
-                'Kepada Yth. *' + inv.honored + '*\n\n' +
-                'Anda diundang dalam acara ulang tahun *' + inv.birthday + '*\n\n' +
-                'Tanggal: ' + formatTanggal(inv.date) + '\n' +
-                'Waktu: ' + formatWaktu(inv.time) + '\n' +
-                'Lokasi: ' + inv.location + '\n\n' +
-                '"' + inv.message + '"\n\n' +
-                'Silakan buka link undangan ini:\n' + inv.link;
-
-            var encodedPesan = encodeURIComponent(pesan);
-            var waUrl = 'https://wa.me/?text=' + encodedPesan;
-            window.open(waUrl, '_blank');
-            showToast('Membuka WhatsApp...', 'success');
-        }
-
-        /* =========================================
-           RESET FORM
-        ========================================= */
-        function resetForm() {
-            document.getElementById('inputHonored').value = '';
-            document.getElementById('inputBirthday').value = '';
-            document.getElementById('inputDate').value = '';
-            document.getElementById('inputTime').value = '';
-            document.getElementById('inputLocation').value = '';
-            document.getElementById('inputMessage').value = '';
-            currentGeneratedLink = '';
-            currentInviteData = null;
-            document.getElementById('linkText').textContent = 'Belum ada link yang dibuat';
-            document.getElementById('linkText').style.color = 'var(--muted)';
-            document.getElementById('linkText').style.fontFamily = 'monospace';
-            document.getElementById('btnWhatsApp').style.display = 'none';
-            document.getElementById('btnCopy').style.display = 'none';
-            document.getElementById('btnShare').style.display = 'none';
-            clearErrors();
-            updateLivePreview();
-            showToast('Form berhasil direset', 'info');
-        }
-
-        /* =========================================
-           NAVIGASI HALAMAN
-        ========================================= */
-        function switchPage(page) {
-            currentPage = page;
-            document.getElementById('pageCreate').style.display = 'none';
-            document.getElementById('pageList').style.display = 'none';
-            document.getElementById('pagePreview').style.display = 'none';
-
-            var pageMap = { create: 'pageCreate', list: 'pageList', preview: 'pagePreview' };
-            var target = document.getElementById(pageMap[page]);
-            target.style.display = 'block';
-            // Re-trigger animasi fade-up
-            target.classList.remove('fade-up');
-            void target.offsetWidth;
-            target.classList.add('fade-up');
-
-            // Update sidebar aktif
-            var navItems = document.querySelectorAll('.sidebar-nav-item');
-            for (var i = 0; i < navItems.length; i++) {
-                if (navItems[i].getAttribute('data-page') === page) {
-                    navItems[i].classList.add('active');
-                } else {
-                    navItems[i].classList.remove('active');
-                }
-            }
-
-            if (page === 'list') renderList();
-            if (page === 'preview') updateFullPreview();
-
-            closeSidebar();
-        }
-
-        /* =========================================
-           RENDER DAFTAR UNDANGAN
-        ========================================= */
-        function renderList() {
-            var searchVal = '';
-            var searchEl = document.getElementById('searchInput');
-            if (searchEl) searchVal = searchEl.value.toLowerCase();
-
-            var filtered = [];
-            for (var i = 0; i < invitations.length; i++) {
-                var inv = invitations[i];
-                if (inv.honored.toLowerCase().indexOf(searchVal) !== -1 ||
-                    inv.birthday.toLowerCase().indexOf(searchVal) !== -1 ||
-                    inv.location.toLowerCase().indexOf(searchVal) !== -1) {
-                    filtered.push(inv);
-                }
-            }
-
-            // Statistik
-            document.getElementById('statTotal').textContent = invitations.length;
-            var now = new Date();
-            var monthCount = 0;
-            var weekAgo = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
-            var weekCount = 0;
-            for (var s = 0; s < invitations.length; s++) {
-                var cd = new Date(invitations[s].createdAt);
-                if (cd.getMonth() === now.getMonth() && cd.getFullYear() === now.getFullYear()) monthCount++;
-                if (cd >= weekAgo) weekCount++;
-            }
-            document.getElementById('statMonth').textContent = monthCount;
-            document.getElementById('statWeek').textContent = weekCount;
-
-            var listEl = document.getElementById('inviteList');
-            var emptyEl = document.getElementById('emptyState');
-
-            if (filtered.length === 0) {
-                listEl.innerHTML = '';
-                emptyEl.style.display = 'block';
-                return;
-            }
-
-            emptyEl.style.display = 'none';
-            var html = '';
-            for (var f = 0; f < filtered.length; f++) {
-                var item = filtered[f];
-                var createdDate = new Date(item.createdAt);
-                var dateStr = createdDate.toLocaleDateString('id-ID', { day: 'numeric', month: 'short', year: 'numeric' });
-                var timeStr = createdDate.toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' });
-
-                html += '<div class="saved-item" style="animation:fadeUp 0.4s ' + (f * 0.05) + 's both;">' +
-                    '<div style="display:flex;align-items:start;justify-content:space-between;gap:16px;">' +
-                        '<div style="flex:1;min-width:0;" onclick="loadToPreview(\'' + item.id + '\')">' +
-                            '<div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;flex-wrap:wrap;">' +
-                                '<h4 style="font-size:15px;font-weight:600;color:var(--fg);font-family:\'DM Sans\',sans-serif;">' + escapeHtml(item.birthday) + '</h4>' +
-                                '<span class="badge" style="background:var(--glow);color:var(--accent);">Ulang Tahun</span>' +
-                            '</div>' +
-                            '<div style="display:flex;flex-wrap:wrap;gap:16px;font-size:13px;color:var(--muted);">' +
-                                '<span><i class="fas fa-user-tie" style="width:16px;color:var(--accent);font-size:11px;"></i> ' + escapeHtml(item.honored) + '</span>' +
-                                '<span><i class="fas fa-calendar-alt" style="width:16px;color:var(--accent);font-size:11px;"></i> ' + formatTanggal(item.date) + '</span>' +
-                                '<span><i class="fas fa-clock" style="width:16px;color:var(--accent);font-size:11px;"></i> ' + formatWaktu(item.time) + '</span>' +
-                            '</div>' +
-                            '<div style="font-size:12px;color:var(--muted);opacity:0.6;margin-top:8px;">' +
-                                '<i class="fas fa-clock" style="font-size:10px;"></i> Dibuat ' + dateStr + ' ' + timeStr +
-                            '</div>' +
-                        '</div>' +
-                        '<div style="display:flex;gap:6px;flex-shrink:0;flex-wrap:wrap;">' +
-                            '<button type="button" class="btn-whatsapp-sm" onclick="event.stopPropagation();shareWhatsAppFromList(\'' + item.id + '\')" title="Kirim via WhatsApp">' +
-                                '<i class="fab fa-whatsapp" style="font-size:15px;"></i>' +
-                            '</button>' +
-                            '<button type="button" class="btn-secondary" style="padding:10px 12px;" onclick="event.stopPropagation();copyInviteLink(\'' + item.id + '\')" title="Salin link">' +
-                                '<i class="fas fa-copy" style="font-size:13px;"></i>' +
-                            '</button>' +
-                            '<button type="button" class="btn-secondary" style="padding:10px 12px;color:#b44a4a;border-color:rgba(180,74,74,0.2);" onclick="event.stopPropagation();openDeleteModal(\'' + item.id + '\')" title="Hapus">' +
-                                '<i class="fas fa-trash-alt" style="font-size:13px;"></i>' +
-                            '</button>' +
-                        '</div>' +
-                    '</div>' +
-                '</div>';
-            }
-            listEl.innerHTML = html;
-        }
-
-        /* =========================================
-           LOAD KE PREVIEW PENUH
-        ========================================= */
-        function loadToPreview(id) {
-            var inv = null;
-            for (var i = 0; i < invitations.length; i++) {
-                if (invitations[i].id === id) { inv = invitations[i]; break; }
-            }
-            if (!inv) return;
-
-            setFullPreviewData(inv.honored, inv.birthday, inv.date, inv.time, inv.location, inv.message);
-            switchPage('preview');
-        }
-
-        function setFullPreviewData(honored, birthday, date, time, location, message) {
-            document.getElementById('fpHonored').textContent = honored || '—';
-            document.getElementById('fpBirthday').textContent = birthday || '—';
-            document.getElementById('fpDate').textContent = date ? formatTanggal(date) : '—';
-            document.getElementById('fpTime').textContent = time ? formatWaktu(time) : '—';
-            document.getElementById('fpLocation').textContent = location || '—';
-            document.getElementById('fpMessage').textContent = message || '—';
-        }
-
-        function updateFullPreview() {
-            if (invitations.length > 0) {
-                var inv = invitations[0];
-                setFullPreviewData(inv.honored, inv.birthday, inv.date, inv.time, inv.location, inv.message);
-            }
-        }
-
-        /* =========================================
-           SALIN LINK DARI DAFTAR
-        ========================================= */
-        function copyInviteLink(id) {
-            var inv = null;
-            for (var i = 0; i < invitations.length; i++) {
-                if (invitations[i].id === id) { inv = invitations[i]; break; }
-            }
-            if (!inv) return;
-
-            var linkToCopy = inv.link;
-            if (navigator.clipboard && navigator.clipboard.writeText) {
-                navigator.clipboard.writeText(linkToCopy).then(function() {
-                    showToast('Link undangan berhasil disalin', 'success');
-                }).catch(function() {
-                    fallbackCopy(linkToCopy);
-                    showToast('Link undangan berhasil disalin', 'success');
-                });
-            } else {
-                fallbackCopy(linkToCopy);
-                showToast('Link undangan berhasil disalin', 'success');
-            }
-        }
-
-        /* =========================================
-           HAPUS UNDANGAN
-        ========================================= */
-        function openDeleteModal(id) {
-            deleteTargetId = id;
-            document.getElementById('deleteModal').classList.add('active');
-        }
-
-        function closeDeleteModal() {
-            document.getElementById('deleteModal').classList.remove('active');
-            deleteTargetId = null;
-        }
-
-        function confirmDelete() {
-            if (!deleteTargetId) return;
-            var newInvitations = [];
-            for (var i = 0; i < invitations.length; i++) {
-                if (invitations[i].id !== deleteTargetId) {
-                    newInvitations.push(invitations[i]);
-                }
-            }
-            invitations = newInvitations;
-            saveData();
-            closeDeleteModal();
-            renderList();
-            showToast('Undangan berhasil dihapus', 'success');
-        }
-
-        // Tutup modal saat klik backdrop
-        document.getElementById('deleteModal').addEventListener('click', function(e) {
-            if (e.target === this) closeDeleteModal();
+    if(sendMode==='image'&&thumbData.type!=='none'){
+        // Buka WhatsApp Web + copy teks ke clipboard
+        navigator.clipboard.writeText(msg).then(()=>{
+            window.open('https://web.whatsapp.com','_blank');
+            toast('Teks pesan disalin ke clipboard. Paste di WhatsApp Web lalu kirim gambarnya.','success');
+        }).catch(()=>{
+            // Fallback jika clipboard gagal
+            window.open('https://web.whatsapp.com','_blank');
+            toast('Buka WhatsApp Web. Salin pesan manual lalu kirim gambarnya.','info');
         });
+    }else{
+        // Mode teks langsung
+        window.open('https://api.whatsapp.com/send?text='+encodeURIComponent(msg),'_blank');
+        toast('Undangan untuk "'+f.name+'" dibuka di WhatsApp','success');
+        launchConfetti();
+    }
 
-        /* =========================================
-           SIDEBAR MOBILE
-        ========================================= */
-        var sidebar = document.getElementById('sidebar');
-        var sidebarOverlay = document.getElementById('sidebarOverlay');
+    friends[sendIdx].sent=true;
+    svF();renderF();upStats();
+    clM('mSend');
+    sendIdx=-1;
+}
 
-        document.getElementById('hamburgerBtn').addEventListener('click', function() {
-            sidebar.classList.add('open');
-            sidebarOverlay.classList.add('open');
-        });
+// ==============================
+// Preview
+// ==============================
+function upPrev(){
+    const t=document.getElementById('msgInp').value;
+    const l=document.getElementById('linkInp').value.trim()||'https://contoh.com/undangan';
+    if(!t.trim()){document.getElementById('prevC').innerHTML='<span style="color:var(--muted);font-style:italic">Pesan akan muncul di sini...</span>';return}
+    document.getElementById('prevC').innerHTML=t.replace(/\[Nama Teman\]/g,'<span class="hn">Rina Saputra</span>').replace(/\[Link Undangan\]/g,'<span class="hl">'+esc(l)+'</span>');
+}
 
-        function closeSidebar() {
-            sidebar.classList.remove('open');
-            sidebarOverlay.classList.remove('open');
-        }
+// ==============================
+// Statistik
+// ==============================
+function upStats(){
+    an('sF',friends.length);
+    an('sS',friends.filter(f=>f.sent).length);
+    an('sU',friends.filter(f=>!f.sent).length);
+    an('sG',guests.reduce((s,g)=>s+(g.count||1),0));
+    an('sH',guests.filter(g=>g.status==='hadir').reduce((s,g)=>s+(g.count||1),0));
+    an('sM',guests.filter(g=>g.status==='menunggu').reduce((s,g)=>s+(g.count||1),0));
+}
+function an(id,tg){
+    const el=document.getElementById(id),cur=parseInt(el.textContent)||0;
+    if(cur===tg)return;const st=performance.now(),dur=350;
+    (function s(n){const p=Math.min((n-st)/dur,1),e=1-Math.pow(1-p,3);el.textContent=Math.round(cur+(tg-cur)*e);if(p<1)requestAnimationFrame(s)})(st);
+}
 
-        sidebarOverlay.addEventListener('click', closeSidebar);
-
-        /* =========================================
-           CEK URL PARAMS (mode tamu dari link)
-        ========================================= */
-        function checkUrlParams() {
-            var params = new URLSearchParams(window.location.search);
-            var inviteData = params.get('invite');
-            if (inviteData) {
-                var data = decodeInviteData(inviteData);
-                if (data) {
-                    // Isi preview dengan data dari link
-                    setFullPreviewData(data.honored, data.birthday, data.date, data.time, data.location, data.message);
-                    switchPage('preview');
-                    // Sembunyikan sidebar karena ini mode tamu
-                    sidebar.style.display = 'none';
-                    document.getElementById('mainContent').style.marginLeft = '0';
-                    // Sembunyikan juga mobile header
-                    var mh = document.querySelector('.mobile-header');
-                    if (mh) mh.style.display = 'none';
-                    // Tambahkan padding top karena header disembunyikan
-                    document.getElementById('mainContent').style.paddingTop = '40px';
-                    return true;
-                }
-            }
-            return false;
-        }
-
-        /* =========================================
-           RESPONSIVE GRID
-        ========================================= */
-        function handleResize() {
-            var formGrid = document.getElementById('formGrid');
-            if (formGrid) {
-                formGrid.style.gridTemplateColumns = window.innerWidth < 900 ? '1fr' : '1fr 1fr';
-            }
-            var statsGrid = document.getElementById('statsGrid');
-            if (statsGrid) {
-                statsGrid.style.gridTemplateColumns = window.innerWidth < 640 ? '1fr' : 'repeat(3, 1fr)';
-            }
-        }
-        window.addEventListener('resize', handleResize);
-        handleResize();
-
-        /* =========================================
-           INISIALISASI
-        ========================================= */
-        if (!checkUrlParams()) {
-            // Mode admin normal — update live preview
-            updateLivePreview();
-        }
-    </script>
+// ==============================
+// Utilitas
+// ==============================
+function clM(id){document.getElementById(id).classList.remove('on')}
+function toast(m,t){
+    const c=document.getElementById('toastC'),ic={success:'fa-solid fa-circle-check',error:'fa-solid fa-circle-exclamation',info:'fa-solid fa-circle-info'};
+    const tt=document.createElement('div');tt.className='tt tt-'+t[0];tt.innerHTML='<i class="'+ic[t]+'"></i><span>'+esc(m)+'</span>';
+    c.appendChild(tt);setTimeout(()=>{tt.classList.add('to');tt.addEventListener('animationend',()=>tt.remove())},3500);
+}
+function esc(s){const d=document.createElement('div');d.textContent=s;return d.innerHTML}
+function launchConfetti(){
+    const cv=document.getElementById('confetti-canvas'),cx=cv.getContext('2d');
+    cv.width=innerWidth;cv.height=innerHeight;
+    const ps=[],cols=['#e8a849','#e85454','#4ecb71','#38bdf8','#c084fc','#f472b6','#fbbf24'];
+    for(let i=0;i<55;i++)ps.push({x:Math.random()*cv.width,y:-20-Math.random()*100,w:Math.max(4,Math.random()*10),h:Math.max(4,Math.random()*6),c:cols[Math.floor(Math.random()*cols.length)],vx:(Math.random()-.5)*4,vy:Math.random()*3+2,r:Math.random()*360,rs:(Math.random()-.5)*10,o:1,d:.005+Math.random()*.008});
+    let aid;(function lp(){cx.clearRect(0,0,cv.width,cv.height);let a=false;ps.forEach(p=>{if(p.o<=0)return;a=true;p.x+=p.vx;p.vy+=.05;p.y+=p.vy;p.r+=p.rs;p.o-=p.d;cx.save();cx.translate(p.x,p.y);cx.rotate(p.r*Math.PI/180);cx.globalAlpha=Math.max(0,p.o);cx.fillStyle=p.c;cx.fillRect(-p.w/2,-p.h/2,p.w,p.h);cx.restore()});if(a)aid=requestAnimationFrame(lp);else{cx.clearRect(0,0,cv.width,cv.height);cancelAnimationFrame(aid)}})();
+}
+window.addEventListener('resize',()=>{const cv=document.getElementById('confetti-canvas');cv.width=innerWidth;cv.height=innerHeight});
+init();
+</script>
 </body>
 </html>
